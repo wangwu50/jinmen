@@ -5683,24 +5683,6 @@ say("是/否加入天机宫。入门条件 : 拳掌 >= 200，御剑 >= 200，耍刀 >= 200 ", 1052, 
     do return end
 end
 
-newkdef[10130]=function()
-say("是/否加入兽王庄。入门条件 : 拳掌 >= 200，御剑 >= 200，耍刀 >= 200 ", 1052, 0,"兽王庄弟子")  --对话
-    if MPPD(0) == 0 and TrueQZ(0) >= 200 and TrueSD(0) >= 200 and JY.Person[0]["实战"] >= 100 then
-		if DrawStrBoxYesNo(-1, -1, "是否要加入？", C_WHITE, CC.DefaultFont) then	
-			JoinMP(0, 27, 1)
-			MPAttrib(0)
-			QZXS(CC.MPINFO2[27])
-			say("恭喜你加入兽王庄。 ",1052, 0,"兽王庄弟子");
-		else
-			say("你可要好生考虑。 ",1052, 0,"兽王庄弟子");
-		end	
-	else
-		say("可惜，你不符资格",1052, 0,"兽王庄弟子");	
-	end	
-	Cls()  --清屏
-    do return end
-end	
-
 --[[
 newkdef[1010]=function()
 if instruct_43(220) == false then  --判断是否有物品
@@ -18908,29 +18890,6 @@ newkdef[4100]=function()
 			instruct_0();   --  0(0)::空语句(清屏)
 			instruct_3(0,5,0,0,0,0,0,2468,2468,2468,-2,-2,-2);
 		end]]
-    
-	--乌鞘岭(代码8）：银两100，天香续命丸3，银两100，精气丸3，银两1000，五宝花蜜酒1--一剑乌鞘岭宝箱加入开局搜刮
-		if GetD(8,11,2) > 0 then			
-			instruct_3(8,11,1,0,0,0,0,2612,2612,2612,-2,-2,-2);   --  3(3):修改事件定义:当前场景:当前场景事件编号
-			instruct_32(174,100);   --  2(2):得到物品[银两][100]
-			instruct_32(1,3);   --  2(2):得到物品[天香续命丸][3]
-			instruct_0();   --  0(0)::空语句(清屏)
-		end
-	
-		if GetD(8,12,2) > 0 then
-			instruct_0();   --  0(0)::空语句(清屏)
-			instruct_32(174,100);   --  2(2):得到物品[银两][100]
-			instruct_32(12,3);   --  2(2):得到物品[精气丸][3]
-			instruct_3(8,12,1,0,0,0,0,2612,2612,2612,-2,-2,-2);   --  3(3):修改事件定义:当前场景:当前场景事件编号
-			instruct_0();   --  0(0)::空语句(清屏)
-		end
-	
-		if GetD(8,21,2) > 0 then
-			instruct_32(174,1000);   --  2(2):得到物品[银两][1000]
-			instruct_32(25,1);   --  2(2):得到物品[五宝花蜜酒][1]
-			instruct_0();   --  0(0)::空语句(清屏)
-			instruct_3(8,21,1,0,0,0,0,2612,2612,2612,-2,-2,-2);
-		end	
 		
 	--成昆居(代码9）：食材10，药材50，小还丹10，白云熊胆丸10 
 		if GetD(9,8,2) > 0 then
@@ -19559,7 +19518,7 @@ newkdef[4100]=function()
 		if GetD(98,11,2) > 0 then
 			instruct_3(98,11,0,0,0,0,0,2608,2608,2608,-2,-2,-2);   --  3(3):修改事件定义:当前场景:当前场景事件编号
 			instruct_0();   --  0(0)::空语句(清屏)
-			instruct_32(14,1);   --  2(2):得到物品[千年灵芝][1]
+			instruct_32(17,2);   --  2(2):得到物品[天山雪莲][2]
 			instruct_0();   --  0(0)::空语句(清屏)
 		end
 	
@@ -49443,19 +49402,22 @@ instruct_40(1)
 do return end
 end
 newkdef[9109]=function()
-My_Enter_SubScene(196,23,4,0)  --场景跳跃
+My_Enter_SubScene(196,23,5,2)  --场景跳跃
+--My_Enter_SubScene(196,23,4,0)
 instruct_40(3)
 do return end
 end
 
 --慕名镇进中华阁
 newkdef[9110]=function()
-My_Enter_SubScene(198,31,53,0)  --场景跳跃
+My_Enter_SubScene(198,31,52,0)  --场景跳跃
+--My_Enter_SubScene(198,31,53,0)
 instruct_40(1)
 do return end
 end
 newkdef[9111]=function()
-My_Enter_SubScene(196,59,3,0)  --场景跳跃
+--My_Enter_SubScene(196,59,3,0)  --场景跳跃
+My_Enter_SubScene(196,59,4,0) 
 instruct_40(1)
 do return end
 end
@@ -49511,12 +49473,13 @@ end
 
 --明霞岛进道场
 newkdef[9120]=function()
-My_Enter_SubScene(98,1,25,0)  --场景跳跃
+My_Enter_SubScene(98,1,25,0)  --场景跳跃  
 instruct_40(1)
 do return end
 end
 newkdef[9121]=function()
-My_Enter_SubScene(202,29,62,0)  --场景跳跃
+My_Enter_SubScene(202,29,61,0)  --场景跳跃
+--My_Enter_SubScene(202,29,62,0)
 instruct_40(1)
 do return end
 end
@@ -53191,7 +53154,7 @@ newkdef[9602]=function() --顾影怜剧情
 end
 
 newkdef[9603]=function() --万兽山庄
-    --[[say("这里怎么只有一只羊！？",0, 0)	
+    say("这里怎么只有一只羊！？",0, 0)	
 	say("你好，小村传人，我可不是一只简单的羊。",765,0)	
 	say("哇，羊居然说话了！？",0, 0)	
 	say("小村传人，你我机缘未到，我去也！",765,0)	
@@ -53199,45 +53162,7 @@ newkdef[9603]=function() --万兽山庄
 	instruct_3(-2, -2,0,0,0,0,0,0,0,0,-2,-2,-2)  --修改场景事件
 	Cls()  --清屏
 	instruct_13()  --场景变亮
-	say("唉，怎么不见了，好可惜！",0, 0)
-	]]
-	if MPPD(0) == 27 and MPDJ(0) >= 1 then	  
-		say("这里怎么只有一只羊！？",0, 0)	
-	    say("你好，我可不是一只简单的羊。",765,0)	
-	    say("哇，羊居然说话了！？",0, 0)	
-	    say("大惊小怪！我知道你想学习兽王庄的高深技巧！",765,0)	
-		say("你怎么知道！？",0, 0)
-		say("我说了，我不是一只简单的羊！",765,0)
-		say("需要什么条件！？",0, 0)
-		say("去把少林的《狮吼功》拿来给我。",765,0)
-		say("没问题！",0, 0)  	
-	    if instruct_18(69) then  --判断是否有狮吼功
-		    say("很好！接下来你听好了。",765,0)
-			instruct_14()  --场景变黑
-			instruct_13()  --场景变亮
-			say("哇！厉害",0, 0)
-	        if MPDJ(0) < 2 then
-			    JoinMP(0,27,2)
-		    end	   
-			say("还有更厉害的吗？",0, 0)
-			say("当然有！",765,0)
-			say("什么条件？快说！",0, 0)
-			say("少林寺的《金刚狮子吼》秘籍！",765,0)
-			say("好！",0, 0)
-		end 
-		if instruct_18(385) then  --判断是否有金刚狮子吼
-			say("秘籍！",0, 0)
-		    say("很好，实力不俗，兽王秘技你且看好，我只演示一遍！",765,0);
-			instruct_14()  --场景变黑
-			instruct_13()  --场景变亮
-			say("原来如此！",0, 0)
-			say("我该出去浪了，有缘再见！",765,0);
-			instruct_3(-2, -2,0,0,0,0,0,0,0,0,-2,-2,-2)  --修改场景事件
-	        if MPDJ(0) < 3 then
-			    JoinMP(0,27,3)
-		    end	    
-		end
-	end 	
+	say("唉，怎么不见了，好可惜！",0, 0)	
 	do return end  --无条件结束
 end
 
@@ -56387,7 +56312,8 @@ end
 
 --华山派-华山跳转
 newkdef[1146]=function()
-	My_Enter_SubScene(152,1,23,0)
+	--My_Enter_SubScene(152,1,23,0)
+	My_Enter_SubScene(152,2,24,1)
 	do return end
 end
 

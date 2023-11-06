@@ -2490,7 +2490,9 @@ function Game_MMap()      --主地图
 			return;
 		--无酒不欢：全套快捷键 7-30
 		elseif keypress == VK_S then	--存档
-			Menu_SaveRecord()
+			--Menu_SaveRecord()
+			Cls()
+			My_ChuangSong_Ex()
 			if JY.Status ~= GAME_MMAP  then
 				return ;
 			end
@@ -4267,7 +4269,7 @@ function SelectThing(thing,thingnum)
 		y2_2=y2_1+CC.ThingFontSize+2*CC.MenuBorderPixel
 		y3_1=y2_2+5;
 		y3_2=y3_1+h;
-		lib.LoadPNG(91, 9 * 2 , 0 , 0, 1)
+		lib.LoadPNG(91, 9 * 2 , -1 , -1, 1)
 		for y=0,ynum-1 do
 			for x=0,xnum-1 do
 				local id=y*xnum+x+xnum*cur_line
@@ -4593,7 +4595,7 @@ function SelectThing(thing,thingnum)
 		elseif keypress==VK_RETURN or keypress==VK_SPACE then
 			break;
 		--增加物品的内置说明
-		elseif keypress==VK_F1 and cur_thing ~= -1 then
+		elseif (keypress==VK_F1 or keypress==VK_H) and cur_thing ~= -1 then
 			detailed_info(cur_thing)
 		--数字1 全部
 		elseif IsViewingKungfuScrolls > 0 and keypress==49 then
@@ -5208,7 +5210,7 @@ end
 --这里是先把数据读入Byte数组中。然后定义访问相应表的方法，在访问表时直接从数组访问。
 --与以前的实现相比，从文件中读取和保存到文件的时间显著加快。而且内存占用少了
 function LoadRecord(id)       -- 读取游戏进度
-    local zipfile=string.format('data/save/Save_%d',id)
+    local zipfile=string.format(CONFIG.DataPath..'save/Save_%d',id)
 	
 	if CC.BBH~=198045761 then
 		QZXS("此存档版本不对，不能读取。请至群号198045761进行更新");
@@ -5220,7 +5222,7 @@ function LoadRecord(id)       -- 读取游戏进度
 		return -1;
 	end
     
-    Byte.unzip(zipfile, 'r.grp','d.grp','s.grp','tjm')
+    Byte.unzip(zipfile, CONFIG.DataPath..'save/r.grp',CONFIG.DataPath..'save/d.grp',CONFIG.DataPath..'save/s.grp',CONFIG.DataPath..'save/tjm')
 
     local t1=lib.GetTime();
 
@@ -5234,9 +5236,9 @@ function LoadRecord(id)       -- 读取游戏进度
 	    idx[i]=Byte.get32(data,4*(i-1));
 	end
 	
-	local grpFile = 'r.grp';
-	local sFile = 's.grp';
-	local dFile = 'd.grp';
+	local grpFile = CONFIG.DataPath..'save/r.grp';
+	local sFile = CONFIG.DataPath..'save/s.grp';
+	local dFile = CONFIG.DataPath..'save/d.grp';
 	if id == 0 then
 		grpFile = CC.R_GRPFilename[id];
 		sFile = CC.S_Filename[id];
@@ -5361,10 +5363,10 @@ function LoadRecord(id)       -- 读取游戏进度
 	   tjmload(id)
 	end
    
-	os.remove('r.grp')
-	os.remove('d.grp')
-	os.remove('s.grp')
-	os.remove('tjm');
+	os.remove(CONFIG.DataPath..'save/r.grp')
+	os.remove(CONFIG.DataPath..'save/d.grp')
+	os.remove(CONFIG.DataPath..'save/s.grp')
+	os.remove(CONFIG.DataPath..'save/tjm');
 end
 
 
@@ -5399,30 +5401,30 @@ function SaveRecord(id)         -- 写游戏进度
 	    idx[i]=Byte.get32(data,4*(i-1));
 	end
 
-	--os.remove('r.grp');
+	--os.remove(CONFIG.DataPath..'save/r.grp');
     --写R*.grp文件
-	Byte.savefile(JY.Data_Base,'r.grp',idx[0],idx[1]-idx[0]);
+	Byte.savefile(JY.Data_Base,CONFIG.DataPath..'save/r.grp',idx[0],idx[1]-idx[0]);
 
-	Byte.savefile(JY.Data_Person,'r.grp',idx[1],CC.PersonSize*JY.PersonNum);
+	Byte.savefile(JY.Data_Person,CONFIG.DataPath..'save/r.grp',idx[1],CC.PersonSize*JY.PersonNum);
 
-	Byte.savefile(JY.Data_Thing,'r.grp',idx[2],CC.ThingSize*JY.ThingNum);
+	Byte.savefile(JY.Data_Thing,CONFIG.DataPath..'save/r.grp',idx[2],CC.ThingSize*JY.ThingNum);
 
-	Byte.savefile(JY.Data_Scene,'r.grp',idx[3],CC.SceneSize*JY.SceneNum);
+	Byte.savefile(JY.Data_Scene,CONFIG.DataPath..'save/r.grp',idx[3],CC.SceneSize*JY.SceneNum);
 
-	Byte.savefile(JY.Data_Wugong,'r.grp',idx[4],CC.WugongSize*JY.WugongNum);
+	Byte.savefile(JY.Data_Wugong,CONFIG.DataPath..'save/r.grp',idx[4],CC.WugongSize*JY.WugongNum);
 
-	Byte.savefile(JY.Data_Shop,'r.grp',idx[5],CC.ShopSize*JY.ShopNum);
+	Byte.savefile(JY.Data_Shop,CONFIG.DataPath..'save/r.grp',idx[5],CC.ShopSize*JY.ShopNum);
 
-    lib.SaveSMap('s.grp','d.grp');
+    lib.SaveSMap(CONFIG.DataPath..'save/s.grp',CONFIG.DataPath..'save/d.grp');
 	
     tjmsave(id)
 	
-    local zipfile=string.format('data/save/Save_%d',id)
-    Byte.zip(zipfile, 'r.grp','d.grp','s.grp','tjm')
-    os.remove('r.grp')
-    os.remove('d.grp')
-    os.remove('s.grp')
-	os.remove('tjm');
+    local zipfile=string.format(CONFIG.DataPath..'save/Save_%d',id)
+    Byte.zip(zipfile, CONFIG.DataPath..'save/r.grp',CONFIG.DataPath..'save/d.grp',CONFIG.DataPath..'save/s.grp',CONFIG.DataPath..'save/tjm')
+    os.remove(CONFIG.DataPath..'save/r.grp')
+    os.remove(CONFIG.DataPath..'save/d.grp')
+    os.remove(CONFIG.DataPath..'save/s.grp')
+	os.remove(CONFIG.DataPath..'save/tjm');
     lib.Debug(string.format("SaveRecord time=%d",lib.GetTime()-t1));
 end
 
@@ -12335,12 +12337,18 @@ function say(s,pid,flag,name)          --个人新对话
 	local pich=130;
 	local talkxnum=30;         --对话一行字数
 	local talkynum=3;          --对话行数
-	local dx=2;
-	local dy=2;
-    local boxpicw=picw+10;
-	local boxpich=pich+10;
-	local boxtalkw=talkxnum*CC.DefaultFont+10;
-	local boxtalkh=boxpich-27;
+	--local dx=2;
+	--local dy=2;
+	local dx=CC.ScreenW/680;
+	local dy=CC.ScreenH/384;
+    --local boxpicw=picw+10;
+	--local boxpich=pich+10;
+	local boxpicw=picw+CC.ScreenW/136;
+	local boxpich=pich+CC.ScreenH/76.8;
+	--local boxtalkw=talkxnum*CC.DefaultFont+10;
+	local boxtalkw=talkxnum*CC.DefaultFont+CC.ScreenW/136;
+	--local boxtalkh=boxpich-27;
+	local boxtalkh=boxpich-CC.ScreenH/28.44;
 	local headid = pid;
 	if name == nil then 
 		headid = JY.Person[pid]["半身像"]
@@ -12384,8 +12392,28 @@ function say(s,pid,flag,name)          --个人新对话
 	else
 	   flag=1
 	end
-	
-	
+	local tx = 0
+	local ty = 0
+	local bs = 100
+	local bs1 = 60
+	local tx,ty = lib.GetPNGXY(91,312*2)
+	if CONFIG.Operation==1 then
+		bs = CC.ScreenH/13
+		tx,ty = lib.GetPNGXY(91,312*2,bs)
+		bs1 = CC.ScreenH/13
+		talkxnum = 28
+		xy[1].namex = xy[1].namex - CC.ScreenW/5
+		xy[1].namey = xy[1].namey + CC.ScreenH/5
+		xy[1].talkx = xy[1].talkx- CC.ScreenW/10
+		xy[1].talky = xy[1].talky - CC.ScreenH/20 
+
+
+
+		xy[5].namex = xy[5].namex + CC.ScreenW/25 
+		xy[5].namey = xy[5].namey - CC.ScreenH/10 
+		xy[5].talkx = xy[5].talkx + CC.ScreenW/10
+		xy[5].talky = xy[5].talky - CC.ScreenH/20 
+	end	
 
   if xy[flag].showhead == 0 then
     headid = -1
@@ -12433,7 +12461,8 @@ function say(s,pid,flag,name)          --个人新对话
 				lib.LoadPicture(CC.SayBoxFile,-1,-1);
 				lib.LoadPNG(90, headid*2, xy[flag].headx + 5 + x-76, xy[flag].heady + 5 + y-by*220, 1)
 				lib.LoadPicture(CC.SayBoxNMFile,xy[flag].namex-35,xy[flag].namey-10,1);	
-				MyDrawString(xy[flag].namex, xy[flag].namex + 96, xy[flag].namey + 1, name, C_CYGOLD, 24)				
+				MyDrawString(xy[flag].namex, xy[flag].namex + 96, xy[flag].namey + 1, name, C_CYGOLD, 24)
+				
 			end
 			page = 1
 		end
@@ -12485,8 +12514,8 @@ function say(s,pid,flag,name)          --个人新对话
 			elseif kz1==3 then
 				font=kz2
 			else
-				lib.DrawStr(xy[flag].talkx+CC.DefaultFont*cx+5,
-							xy[flag].talky+(CC.DefaultFont+talkBorder)*cy+talkBorder-by*28,
+				lib.DrawStr(xy[flag].talkx+CC.DefaultFont*cx+CC.ScreenW/272,
+							xy[flag].talky+(CC.DefaultFont+talkBorder)*cy+talkBorder-CC.ScreenH/27.428,
 							str,color,CC.DefaultFont,font,0,0, 305)
 				mydelay(t)
 				cx=cx+string.len(str)/2
@@ -12873,6 +12902,26 @@ function InputNum(str, minNum, maxNum, isEsc)
         if (key == VK_ESCAPE or ktype == 4) and isEsc ~= nil then
 			num = nil;
 			break;
+		elseif key == VK_UP then
+		    num = num + 1
+			if num > maxNum then
+				num = maxNum
+			end
+		elseif key == VK_DOWN then
+		    num = num - 1
+			if  num <= minNum then
+				num = minNum
+			end	
+		elseif key == VK_RIGHT then
+		    num = num + 10
+			if num > maxNum then
+				num = maxNum
+			end
+		elseif key == VK_LEFT then
+		    num = num - 10
+			if  num <= minNum then
+				num = minNum
+			end	
 		elseif key >= 49 and key <= 57 then
 			num = num * 10
 			num = num + key - 48
@@ -13037,8 +13086,8 @@ function SaveList()
 		--资质
 		local zz = "";
 		
-		if existFile(string.format('data/save/Save_%d',i)) then
-			Byte.loadfilefromzip(data, string.format('data/save/Save_%d',i),'r.grp', 0, len);
+		if existFile(string.format(CONFIG.DataPath..'save/Save_%d',i)) then
+			Byte.loadfilefromzip(data, string.format(CONFIG.DataPath..'save/Save_%d',i),CONFIG.DataPath..'save/r.grp', 0, len);
 			
 			local pid = GetDataFromStruct(data,0,table_struct,"队伍1");
 			
@@ -16235,17 +16284,17 @@ function NGQH(id,NGid)--这里只写有「主运」的组合
 			    return false
 			end 	
 		end	
-		--九霄怒涛
+		--九霄中华
 		if NGid == 184 and pd == true then 
-			if Curr_NG(id,184) and PersonKF(id,252) then
+			if Curr_NG(id,184) and PersonKF(id,359) then
 				return true	
 			else 
 			    return false	
 			end
 		end
-		--中华龙啸
+		--中华九霄
 		if NGid == 359 and pd == true then
-			if Curr_NG(id,359) and PersonKF(id,369) then
+			if Curr_NG(id,359) and PersonKF(id,184) then
 				return true 
 			else 
 			    return false		
@@ -18828,7 +18877,7 @@ function firstmenu2()--特殊角色
 					{749,750,751,752,748}, --护
 					{754,455,762}, --云
 					{515,763}, --花
-					{419,429,439},--百兽
+					{419,429,439,765},--百兽
 					{511,578,579,584,652,500,498,497,635,501,596,505,507,721,546}, --群
 					--{74,75,80,151,152,153,154,155,156,311,313,570,571,569,657,658,656,655,606}, --书
 					--{58,59,63,626,62,84,89,580,161,616,617,160,157,158,159,530,592,627}, --神
@@ -20718,18 +20767,18 @@ function tjmsave(id)
         end
     end
 
-	local fp_tmp=io.open('tjm',"w");
+	local fp_tmp=io.open(CONFIG.DataPath..'save/tjm',"w");
 	
 	if fp_tmp then
 		fp_tmp:close();
 		local data_header=Byte.create(4);
 		Byte.set32(data_header,0, CC.TJM);
-		Byte.savefile(data_header,'tjm', 0, 4);
+		Byte.savefile(data_header,CONFIG.DataPath..'save/tjm', 0, 4);
 		local data_keys=Byte.create(4*CC.TJM);
 		for i=0,CC.TJM-1 do
 			Byte.set32(data_keys, i*4, CC.TJMSJ[i+1]);
 		end
-		Byte.savefile(data_keys, 'tjm', 4, 4*CC.TJM);
+		Byte.savefile(data_keys, CONFIG.DataPath..'save/tjm', 4, 4*CC.TJM);
 	end
 	CC.TJMSJ = {} 
 	CC.TJM = 0
@@ -20738,19 +20787,19 @@ end
 function tjmload(id)
 	CC.TJMSJ = {} 
 	CC.TJM = 0
-	local fp_tmp=io.open('tjm',"r");
+	local fp_tmp=io.open(CONFIG.DataPath..'save/tjm',"r");
 	if fp_tmp then
 		fp_tmp:close();
    
 		local data_header=Byte.create(4);
    
-		Byte.loadfile(data_header,'tjm', 0, 4);
+		Byte.loadfile(data_header,CONFIG.DataPath..'save/tjm', 0, 4);
    
 		CC.TJM=Byte.get32(data_header,0);
    
 		local data_keys=Byte.create(4*CC.TJM);
    
-		Byte.loadfile(data_keys,'tjm', 4, 4*CC.TJM);
+		Byte.loadfile(data_keys,CONFIG.DataPath..'save/tjm', 4, 4*CC.TJM);
 		
 		for i=0,CC.TJM-1 do
 			CC.TJMSJ[i+1]=Byte.get32(data_keys, i*4);
@@ -21240,7 +21289,7 @@ function ThingMenu(flag)
 end
 
 function Team(tab)
-	local bx,by = CC.ScreenW/1360,CC.ScreenH/768
+    local bx,by = CC.ScreenW/1360,CC.ScreenH/768
 	local size = CC.DefaultFont*0.7
 	local size1 = CC.DefaultFont*0.6
 	local size2 = CC.DefaultFont*0.55
@@ -21249,6 +21298,7 @@ function Team(tab)
 	local tru = 0
 	local p = JY.Person
 	local px = 0
+	local zbx1,zby1 = -40,40
 	while true do 
 		Cls()
 		if JY.Restart == 1 then
@@ -21265,7 +21315,8 @@ function Team(tab)
 		if maxn > #menu then 
 			maxn = #menu 
 		end	 
-		lib.PicLoadCache(92,9*2,0,0,1,nil,nil,bx*1360)
+		--lib.PicLoadCache(92,9*2,0,0,1,nil,nil,bx*1360)
+		lib.PicLoadCache(92,9*2,-1,-1,1,nil,nil,bx*936)
 
 		for ii = 1,maxn do 
 			local h = 0
@@ -21280,16 +21331,22 @@ function Team(tab)
 			local nlmax = p[menu[ii+cont1][2]]['内力最大值']
 			local tl = p[menu[ii+cont1][2]]['体力']
 			local tlmax = 100
-			
-			lib.SetClip(bx*42+(ii-1)*bx*220, 0, bx*38+(ii-1)*bx*220+bx*197,by*768) --菜单背景图
-			lib.LoadPNG(90,p[menu[ii+cont1][2]]['半身像']*2,bx*138+(ii-1)*bx*220-bx*pyx,by*250,2)
+			local x1,y1 = lib.GetPNGXY(99,2*2)
+			--lib.SetClip(bx*42+(ii-1)*bx*220, 0, bx*38+(ii-1)*bx*220+bx*197,by*768) --菜单背景图
+			lib.SetClip(bx*42+(ii-1)*bx*220+zbx1, 0, bx*38+(ii-1)*bx*220+bx*197+zbx1,by*768+zby1) --菜单背景图
+			--lib.LoadPNG(90,p[menu[ii+cont1][2]]['半身像']*2,bx*138+(ii-1)*bx*220-bx*pyx,by*250,2)
+			lib.LoadPNG(90,p[menu[ii+cont1][2]]['半身像']*2,bx*138+(ii-1)*bx*220-bx*pyx+zbx1-x1*4,by*250+zby1-y1*4.4,1)
 			lib.SetClip(0,0,0,0)
 			
-			lib.PicLoadCache(92,15*2,bx*138+(ii-1)*bx*220,by*425,2,256,nil,bx*170)
-			
-			DrawString(bx*138+(ii-1)*bx*220-string.len(menu[ii+cont1][1])*size/4,by*440,menu[ii+cont1][1],C_WHITE,size)
+			--lib.PicLoadCache(92,15*2,bx*138+(ii-1)*bx*220,by*425,2,256,nil,bx*170)
+			lib.PicLoadCache(92,15*2,bx*138+(ii-1)*bx*220+zbx1,by*425+zby1,2,256,nil,bx*170)
+			--DrawString(bx*138+(ii-1)*bx*220-string.len(menu[ii+cont1][1])*size/4,by*440,menu[ii+cont1][1],C_WHITE,size)
 			if ii == cont or px == ii then 
-				lib.PicLoadCache(92,10*2,bx*138+(ii-1)*bx*220, CC.ScreenH/2,2,256,nil,bx*200) --菜单背景图
+				--lib.PicLoadCache(92,10*2,bx*138+(ii-1)*bx*220, CC.ScreenH/2,2,256,nil,bx*200) --菜单背景图
+				lib.PicLoadCache(92,10*2,bx*138+(ii-1)*bx*220+zbx1, CC.ScreenH/2+zby1,2,256,nil,bx*200) 
+			DrawString(bx*138+(ii-1)*bx*220-string.len(menu[ii+cont1][1])*size/4+zbx1,by*440+zby1,menu[ii+cont1][1],C_RED,size)
+			else
+			DrawString(bx*138+(ii-1)*bx*220-string.len(menu[ii+cont1][1])*size/4+zbx1,by*440+zby1,menu[ii+cont1][1],C_WHITE,size)
 			end
 
 			h = h + 1
@@ -21299,40 +21356,55 @@ function Team(tab)
 				tfid = JY.Base['畅想']
 			end	
 			if RWWH[tfid] ~= nil then 
-				DrawString(bx*60+(ii-1)*bx*220,by*440+h*by*30,'称号：'..RWWH[tfid],LimeGreen,size)
+				--DrawString(bx*60+(ii-1)*bx*220,by*440+h*by*30,'称号：'..RWWH[tfid],LimeGreen,size)
+				DrawString(bx*60+(ii-1)*bx*220+zbx1,by*440+h*by*30+zby1,'称号：'..RWWH[tfid],LimeGreen,size)
 			end
 			
 			h = h + 1
 			
 			if RWTFLB[tfid] ~= nil then 
-				DrawString(bx*60+(ii-1)*bx*220,by*440+h*by*30,'天赋：'..RWTFLB[tfid],LimeGreen,size)
+				--DrawString(bx*60+(ii-1)*bx*220,by*440+h*by*30,'天赋：'..RWTFLB[tfid],LimeGreen,size)
+				DrawString(bx*60+(ii-1)*bx*220+zbx1,by*440+h*by*30+zby1,'天赋：'..RWTFLB[tfid],LimeGreen,size)
 			end
 			
 			h = h + 1
 			
-			lib.PicLoadCache(92,11*2,bx*138+(ii-1)*bx*220,by*450+h*by*30+size1/2,2,256,nil,bx*160)
+			--lib.PicLoadCache(92,11*2,bx*138+(ii-1)*bx*220,by*450+h*by*30+size1/2,2,256,nil,bx*160)
 			
-			lib.SetClip(bx*138+(ii-1)*bx*220-bx*71, by*450+h*by*30+size1/2-by*12, bx*138+(ii-1)*bx*220-bx*71+bx*142*(sm/smmax),by*450+h*by*30+size1/2+by*12)
-			lib.PicLoadCache(92,12*2,bx*138+(ii-1)*bx*220,by*450+h*by*30+size1/2,2,150,nil,bx*160)
+			--lib.SetClip(bx*138+(ii-1)*bx*220-bx*71, by*450+h*by*30+size1/2-by*12, bx*138+(ii-1)*bx*220-bx*71+bx*142*(sm/smmax),by*450+h*by*30+size1/2+by*12)
+			--lib.PicLoadCache(92,12*2,bx*138+(ii-1)*bx*220,by*450+h*by*30+size1/2,2,150,nil,bx*160)
+			lib.PicLoadCache(92,11*2,bx*138+(ii-1)*bx*220+zbx1,by*450+h*by*30+size1/2+zby1,2,256,nil,bx*160)
+			
+			lib.SetClip(bx*138+(ii-1)*bx*220-bx*71+zbx1, by*450+h*by*30+size1/2-by*12, bx*138+(ii-1)*bx*220-bx*71+bx*142*(sm/smmax)+zbx1,by*450+h*by*30+size1/2+by*12+zby1)
+			lib.PicLoadCache(92,12*2,bx*138+(ii-1)*bx*220+zbx1,by*450+h*by*30+size1/2+zby1,2,150,nil,bx*160)
 			lib.SetClip(0,0,0,0)
 
-			DrawString(bx*70+(ii-1)*bx*220,by*450+h*by*30,'命  '..p[menu[ii+cont1][2]]['生命'],C_WHITE,size1)
+			--DrawString(bx*70+(ii-1)*bx*220,by*450+h*by*30,'命  '..p[menu[ii+cont1][2]]['生命'],C_WHITE,size1)
+			DrawString(bx*70+(ii-1)*bx*220+zbx1,by*450+h*by*30+zby1,'命  '..p[menu[ii+cont1][2]]['生命'],C_WHITE,size1)
 			h = h + 1
 			
-			lib.PicLoadCache(92,11*2,bx*138+(ii-1)*bx*220,by*450+h*by*30+size1/2,2,256,nil,bx*160)
-			lib.SetClip(bx*138+(ii-1)*bx*220-bx*71, by*450+h*by*30+size1/2-by*12, bx*138+(ii-1)*bx*220-bx*71+bx*142*(nl/nlmax),by*450+h*by*30+size1/2+by*12)
-			lib.PicLoadCache(92,13*2,bx*138+(ii-1)*bx*220,by*450+h*by*30+size1/2,2,150,nil,bx*160)
+			--lib.PicLoadCache(92,11*2,bx*138+(ii-1)*bx*220,by*450+h*by*30+size1/2,2,256,nil,bx*160)
+			--lib.SetClip(bx*138+(ii-1)*bx*220-bx*71, by*450+h*by*30+size1/2-by*12, bx*138+(ii-1)*bx*220-bx*71+bx*142*(nl/nlmax),by*450+h*by*30+size1/2+by*12)
+			--lib.PicLoadCache(92,13*2,bx*138+(ii-1)*bx*220,by*450+h*by*30+size1/2,2,150,nil,bx*160)
+			lib.PicLoadCache(92,11*2,bx*138+(ii-1)*bx*220+zbx1,by*450+h*by*30+size1/2+zby1,2,256,nil,bx*160)
+			lib.SetClip(bx*138+(ii-1)*bx*220-bx*71+zbx1, by*450+h*by*30+size1/2-by*12, bx*138+(ii-1)*bx*220-bx*71+bx*142*(nl/nlmax)+zbx1,by*450+h*by*30+size1/2+by*12+zby1)
+			lib.PicLoadCache(92,13*2,bx*138+(ii-1)*bx*220+zbx1,by*450+h*by*30+size1/2+zby1,2,150,nil,bx*160)
 			lib.SetClip(0,0,0,0)
 
-			DrawString(bx*70+(ii-1)*bx*220,by*450+h*by*30,'内  '..p[menu[ii+cont1][2]]['内力'],C_WHITE,size1)
+			--DrawString(bx*70+(ii-1)*bx*220,by*450+h*by*30,'内  '..p[menu[ii+cont1][2]]['内力'],C_WHITE,size1)
+			DrawString(bx*70+(ii-1)*bx*220+zbx1,by*450+h*by*30+zby1,'内  '..p[menu[ii+cont1][2]]['内力'],C_WHITE,size1)
 			h = h + 1
 			
-			lib.PicLoadCache(92,11*2,bx*138+(ii-1)*bx*220,by*450+h*by*30+size1/2,2,256,nil,bx*160)
-			lib.SetClip(bx*138+(ii-1)*bx*220-bx*71, by*450+h*by*30+size1/2-by*12, bx*138+(ii-1)*bx*220-bx*71+bx*142*(tl/tlmax),by*450+h*by*30+size1/2+by*12)
-			lib.PicLoadCache(92,14*2,bx*138+(ii-1)*bx*220,by*450+h*by*30+size1/2,2,150,nil,bx*160)
+			--lib.PicLoadCache(92,11*2,bx*138+(ii-1)*bx*220,by*450+h*by*30+size1/2,2,256,nil,bx*160)
+			--lib.SetClip(bx*138+(ii-1)*bx*220-bx*71, by*450+h*by*30+size1/2-by*12, bx*138+(ii-1)*bx*220-bx*71+bx*142*(tl/tlmax),by*450+h*by*30+size1/2+by*12)
+			--lib.PicLoadCache(92,14*2,bx*138+(ii-1)*bx*220,by*450+h*by*30+size1/2,2,150,nil,bx*160)
+			lib.PicLoadCache(92,11*2,bx*138+(ii-1)*bx*220+zbx1,by*450+h*by*30+size1/2+zby1,2,256,nil,bx*160)
+			lib.SetClip(bx*138+(ii-1)*bx*220-bx*71+zbx1, by*450+h*by*30+size1/2-by*12+zby1, bx*138+(ii-1)*bx*220-bx*71+bx*142*(tl/tlmax)+zbx1,by*450+h*by*30+size1/2+by*12)
+			lib.PicLoadCache(92,14*2,bx*138+(ii-1)*bx*220+zbx1,by*450+h*by*30+size1/2+zby1,2,150,nil,bx*160)
 			lib.SetClip(0,0,0,0)
 
-			DrawString(bx*70+(ii-1)*bx*220,by*450+h*by*30,'体  '..p[menu[ii+cont1][2]]['体力'],C_WHITE,size1)
+			--DrawString(bx*70+(ii-1)*bx*220,by*450+h*by*30,'体  '..p[menu[ii+cont1][2]]['体力'],C_WHITE,size1)
+			DrawString(bx*70+(ii-1)*bx*220+zbx1,by*450+h*by*30+zby1,'体  '..p[menu[ii+cont1][2]]['体力'],C_WHITE,size1)
 		end
 	  
 		ShowScreen()
@@ -27511,7 +27583,7 @@ local nk,dk,hk,bk,xk,fk = 100-nskx(id,100),100-zdkx(id,100),100-zskx(id,100),100
    local i = 0
    --背景图
    --lib.PicLoadCache(99,121*2,CC.ScreenW/2,CC.ScreenH/2,2,256,nil,bx*1360)
-   lib.LoadPNG(91, 149 * 2 ,0 , 0, 1)
+   lib.LoadPNG(91, 149 * 2 ,-1 , -1, 1)
    --人物半身像
    pngxy(90,psx(id,'半身像')*2,bx*200,CC.ScreenH-by*300,2)
    --门派
@@ -33195,7 +33267,7 @@ function QUANZHANGQX(teamid)
 		--lib.PicLoadCache(92,jm[i+cont1][2]*2,(i)*w-num*w+sx+aa,y-CC.ScreenH/768*30,2,240,nil,CC.ScreenW/1360*85)
 		if pg == 1 then	
 			--lib.PicLoadCache(92,67*2,bx*212,by*33,1)
-			lib.PicLoadCache(92,67*2,0,0,1)
+			lib.PicLoadCache(92,67*2,-1,-1,1)
 			--lib.PicLoadCache(92,67*2,bx*212,by*33,2,240,nil,CC.ScreenW/1360*85)
 			DrawString(bx*212+bx*515-string.len(JY.Person[id]["姓名"])/2*size1,by*33+ by*73, JY.Person[id]["姓名"], C_CYGOLD, size1)
 			if wxds3>0 then
@@ -33279,7 +33351,7 @@ function QUANZHANGQX(teamid)
 			end
 		--指法
 		elseif pg == 2 then
-			lib.PicLoadCache(92,111*2,0,0,1)	
+			lib.PicLoadCache(92,111*2,-1,-1,1)	
 			DrawString(bx*212+bx*515-string.len(JY.Person[id]["姓名"])/2*size1,by*33+ by*73, JY.Person[id]["姓名"], C_CYGOLD, size1)
 			if wxds3>0 then
 			DrawString(bx*212+bx*380,by*33+by*125,"武学点数 "..wxds.." ("..wxds1.."/500 +"..wxds2.."/250 +"..wxds3.."/1500 -"..wxds4..")",C_CYGOLD,size)	
@@ -33359,7 +33431,7 @@ function QUANZHANGQX(teamid)
 			end	
 		--剑法
 		elseif pg == 3 then
-			lib.PicLoadCache(92,112*2,0,0,1)
+			lib.PicLoadCache(92,112*2,-1,-1,1)
 			DrawString(bx*212+bx*515-string.len(JY.Person[id]["姓名"])/2*size1, by*33+by*73, JY.Person[id]["姓名"], C_CYGOLD, size1)
 			if wxds3>0 then
 			DrawString(bx*212+bx*380,by*33+by*125,"武学点数 "..wxds.." ("..wxds1.."/500 +"..wxds2.."/250 +"..wxds3.."/1500 -"..wxds4..")",C_CYGOLD,size)	
@@ -33439,7 +33511,7 @@ function QUANZHANGQX(teamid)
 			end		
 		--耍刀
 		elseif pg == 4 then
-			lib.PicLoadCache(92,113*2,0,0,1)
+			lib.PicLoadCache(92,113*2,-1,-1,1)
 			DrawString(bx*212+bx*515-string.len(JY.Person[id]["姓名"])/2*size1,by*33+ by*73, JY.Person[id]["姓名"], C_CYGOLD, size1)
 			if wxds3>0 then
 			DrawString(bx*212+bx*380,by*33+by*125,"武学点数 "..wxds.." ("..wxds1.."/500 +"..wxds2.."/250 +"..wxds3.."/1500 -"..wxds4..")",C_CYGOLD,size)	
@@ -33525,7 +33597,7 @@ function QUANZHANGQX(teamid)
 			end	
 		--奇门
 		elseif pg == 5 then
-			lib.PicLoadCache(92,114*2,0,0,1)
+			lib.PicLoadCache(92,114*2,0-1,-1,1)
 			DrawString(bx*212+bx*515-string.len(JY.Person[id]["姓名"])/2*size1, by*33+by*73, JY.Person[id]["姓名"], C_CYGOLD, size1)
 			if wxds3>0 then
 			DrawString(bx*212+bx*380,by*33+by*125,"武学点数 "..wxds.." ("..wxds1.."/500 +"..wxds2.."/250 +"..wxds3.."/1500 -"..wxds4..")",C_CYGOLD,size)	
