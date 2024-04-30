@@ -2554,7 +2554,7 @@ newkdef[10011]=function()
 			elseif r == 3 then
 			    instruct_2(27, 1)      --通犀地龙丸
 				instruct_2(174, -20000);	--花200000两
-			    Cls()  --清屏	
+			    Cls()  --清屏				
 		    end
 			--instruct_32(234,-1)  --得到或失去物品
 	    else
@@ -2736,7 +2736,7 @@ newkdef[10016]=function()
     local money = 888
 	--local diyid = JY.Base["队伍" .. p]
 	if instruct_31(888) then
-	    local r = JYMsgBox("黑拳赛", "请选择以下您觉得有能力赚钱的挑战者，记住给钱", {"吃货三妹","神州双绝","宗主夫妇","退出"}, 4, 305)
+	    local r = JYMsgBox("黑拳赛", "请选择以下您觉得有能力赚钱的挑战者，记住给钱", {"吃货三妹","神州双绝","雪羽宗主","退出"}, 4, 305)
 		Cls()
 		if r == 1 then 
 		    say(JY.Person[0]["姓名"].."支付"..money.."两银子给竹老板！", 178, 0,"旺财")
@@ -2788,7 +2788,7 @@ newkdef[10016]=function()
 	        else
 		        say("不错，这是奖励。", 178, 0,"旺财")
 			    say("嘿嘿嘿！",0,0)
-				instruct_2(174, 15000)
+				instruct_2(174, 8888)
 			    Cls()
 			    do return end  --无条件结束事件
 		    end	
@@ -2851,7 +2851,7 @@ newkdef[10018]=function()
     local money = 300
 	--local diyid = JY.Base["队伍" .. p]
 	if instruct_31(300) then
-	    local r = JYMsgBox("擂台赛", "请选择以下您觉得有能力赚钱的挑战者，记住给钱", {"四大名捕","真武七截","天龙五本","三大神僧","退出"}, 5, 305)
+	    local r = JYMsgBox("擂台赛", "请选择以下您觉得有能力赚钱的挑战者，记住给钱", {"四大名捕","不三不四","蒙古三杰","渔樵耕读","退出"}, 5, 305)
 		Cls()
 		if r == 1 then 
 		    say(JY.Person[0]["姓名"].."支付"..money.."两银子给竹老板！", 201, 0,"酱爆")
@@ -2877,7 +2877,7 @@ newkdef[10018]=function()
 	        else
 		        say("不错，这是奖励。", 201, 0,"酱爆")
 			    say("嘿嘿嘿！",0,0)
-				instruct_2(174, 5000)
+				instruct_2(174, 1000)
 			    Cls()
 			    do return end  --无条件结束事件
 		    end	
@@ -2891,7 +2891,7 @@ newkdef[10018]=function()
 	        else
 		        say("不错，这是奖励。", 201, 0,"酱爆")
 			    say("嘿嘿嘿！",0,0)
-				instruct_2(174, 5000)
+				instruct_2(174, 1500)
 			    Cls()
 			    do return end  --无条件结束事件
 		    end	
@@ -2905,7 +2905,7 @@ newkdef[10018]=function()
 	        else
 		        say("不错，这是奖励。", 201, 0,"酱爆")
 			    say("嘿嘿嘿！",0,0)
-				instruct_2(174, 6000)
+				instruct_2(174, 1500)
 			    Cls()
 			    do return end  --无条件结束事件
 		    end			
@@ -3327,11 +3327,11 @@ newkdef[10033]=function()
     local money = 300
 	--local diyid = JY.Base["队伍" .. p]
 	if instruct_31(10) then
-	    local r = JYMsgBox("擂台赛", "请选择以下您觉得有能力赚技能点的挑战者，记住给钱", {"一百","一百一","一百二","一百三","一百四","退出"}, 6, 305)
+	    local r = JYMsgBox("擂台赛", "请选择以下您觉得有能力赚技能点的挑战者，记住给钱", {"五十","六十","七十","八十","九十","退出"}, 6, 305)
 		Cls()
 		if r == 1 then 
 		    say(JY.Person[0]["姓名"].."支付"..money.."两银子给竹老板！", 451, 0,"如烟")
-			instruct_2(174, -1000)
+			instruct_2(174, -600)
 		    if WarMain(409, 0) == false then  --战斗开始
 			    say("骚年，你还需要提升自己的实力！", 451, 0,"如烟")
 		        say("………………",0,0)
@@ -3339,14 +3339,14 @@ newkdef[10033]=function()
 	        else
 		        say("不错，这是奖励。", 451, 0,"如烟")
 			    say("嘿嘿嘿！",0,0)
-				JY.Person[523]["声望"] = JY.Person[523]["声望"] + 100
-                QZXS("获得100点技能点")
+				JY.Person[523]["声望"] = JY.Person[523]["声望"] + 50
+                QZXS("获得50点技能点")
 			    Cls()
 			    do return end  --无条件结束事件
 		    end	
 		elseif r == 2 then	
 		    say(JY.Person[0]["姓名"].."支付"..money.."两银子给竹老板！", 451, 0,"如烟")
-		    instruct_2(174, -1000)
+		    instruct_2(174, -700)
 		    if WarMain(410, 0) == false then  --战斗开始
 			    say("骚年，你还需要提升自己的实力！", 451, 0,"如烟")
 		        say("………………",0,0)
@@ -3354,14 +3354,14 @@ newkdef[10033]=function()
 	        else
 		        say("不错，这是奖励。", 451, 0,"如烟")
 			    say("嘿嘿嘿！",0,0)
-				JY.Person[523]["声望"] = JY.Person[523]["声望"] + 110
-                QZXS("获得100点技能点")
+				JY.Person[523]["声望"] = JY.Person[523]["声望"] + 60
+                QZXS("获得60点技能点")
 			    Cls()
 			    do return end  --无条件结束事件
 		    end	
 		elseif r == 3 then	
 		    say(JY.Person[0]["姓名"].."支付"..money.."两银子给竹老板！", 451, 0,"如烟")
-		    instruct_2(174, -1000)
+		    instruct_2(174, -800)
 		    if WarMain(411, 0) == false then  --战斗开始
 			    say("骚年，你还需要提升自己的实力！", 451, 0,"如烟")
 		        say("………………",0,0)
@@ -3369,14 +3369,14 @@ newkdef[10033]=function()
 	        else
 		        say("不错，这是奖励。", 451, 0,"如烟")
 			    say("嘿嘿嘿！",0,0)
-				JY.Person[523]["声望"] = JY.Person[523]["声望"] + 120
-                QZXS("获得120点技能点")
+				JY.Person[523]["声望"] = JY.Person[523]["声望"] + 70
+                QZXS("获得70点技能点")
 			    Cls()
 			    do return end  --无条件结束事件
 		    end	
 		elseif r == 4 then	
 		    say(JY.Person[0]["姓名"].."支付"..money.."两银子给竹老板！", 451, 0,"如烟")
-		    instruct_2(174, -1000)
+		    instruct_2(174, -900)
 		    if WarMain(412, 0) == false then  --战斗开始
 			    say("骚年，你还需要提升自己的实力！", 451, 0,"如烟")
 		        say("………………",0,0)
@@ -3384,8 +3384,8 @@ newkdef[10033]=function()
 	        else
 		        say("不错，这是奖励。", 451, 0,"如烟")
 			    say("嘿嘿嘿！",0,0)
-				JY.Person[523]["声望"] = JY.Person[523]["声望"] + 130
-                QZXS("获得130点技能点")
+				JY.Person[523]["声望"] = JY.Person[523]["声望"] + 80
+                QZXS("获得80点技能点")
 			    Cls()
 			    do return end  --无条件结束事件
 		    end			
@@ -3399,8 +3399,8 @@ newkdef[10033]=function()
 	        else
 		        say("不错，这是奖励。", 451, 0,"如烟")
 			    say("嘿嘿嘿！",0,0)
-				JY.Person[523]["声望"] = JY.Person[523]["声望"] + 140
-                QZXS("获得140点技能点")
+				JY.Person[523]["声望"] = JY.Person[523]["声望"] + 90
+                QZXS("获得90点技能点")
 			    Cls()
 			    do return end  --无条件结束事件
 		    end				
@@ -4170,11 +4170,11 @@ newkdef[10060]=function()
 			say("三长老您好！", 0, 1)
 			say("你好！有什么事吗？", 759, 0) 	
             if WarMain(457, 0) == false then  --战斗开始
-                say("年轻人，你还要多多磨炼。", 759, 0)
+                say("年轻人，你还要多多磨炼。", 743, 0)
 				say("明白！", 0, 1)  
 		        do return end  --无条件结束事件
 	        else	
-		        say("潜质不错，这套秘籍是霍大哥让我送给你的，好好拿去参详。", 759, 0)
+		        say("潜质不错，这套秘籍是霍大哥让我送给你的，好好拿去参详。", 743, 0)
 				say("多谢三长老！", 0, 1)
 				JoinMP(0, 22, 2)
 			    instruct_2(539, 1)  --龙啸九天秘籍
@@ -4207,7 +4207,7 @@ newkdef[10061]=function()
 			say("你叫我什么？", 747, 0)
 			say("不对，谢谢柳姐姐！", 0, 1)
 			say("下次不要叫错了。", 747, 0)
-			instruct_2(540, 1)  --唯识剑意秘籍
+instruct_2(540, 1)  --唯识剑意秘籍
 			instruct_2(544, 1)  --万剑归宗秘籍
 			instruct_2(438, 1)  --苍龙令
 			do return end       --无条件结束事件
@@ -5707,7 +5707,7 @@ newkdef[10131]=function()
         say("此段剧情需要复活戒指。",0,2)
 	    do return end  --无条件结束事件
     end
-    if JY.Base["天书数量"] >= 8 then 
+    if JY.Base["标准"] > 0 and JY.Base["天书数量"] >= 8 then 
 		say("独孤前辈好！", 0, 1)
 		say("哈哈哈哈！原来是小村少年。", 592, 0)
 		say("前辈神龙见首不见尾，想不到会在中华阁遇到前辈。", 0, 1)
@@ -5734,152 +5734,6 @@ newkdef[10131]=function()
 	    end	
 	end
 end
-
-newkdef[10132]=function()
-    say("骚年，要遥控骰子、免伤卡、福神吗？", 1066, 0,"白霜霜")
-	say("真的假的？这都能直接买？多少钱？", 0, 1)
-	say("市价30000两。", 1066, 0,"白霜霜")
-	say(".................那么贵？", 0, 1)
-	say("已经很便宜了，要不是竹老板看着南贤北丑的面子才不会做这赔本生意。", 1066, 0,"白霜霜")
-	say("............又是中华阁！", 0, 1)
-	say("那么，你要买吗？", 1066, 0,"白霜霜")
-	say("..........好，我买（我的钱啊！！！！）", 0, 1)
-	if instruct_31(30000) then
-	    JY.Person[318]["受伤程度"] = JY.Person[318]["受伤程度"] + 1
-        JY.Person[318]["医疗能力"] = JY.Person[318]["医疗能力"] + 1
-        JY.Person[318]["抗毒能力"] = JY.Person[318]["抗毒能力"] + 1
-	    instruct_2(174, -30000);	--花300000两
-		QZXS("获得摇空色子、免伤卡、福神卡各一个，使用老虎机时可显示。")
-	else
-        say("骚年您的钱不够！", 1066, 0,"白霜霜")	
-	end	
-end 
-
-newkdef[10133]=function()
-    if instruct_43(302) == false then  --护身戒指
-        say("此段剧情需要护身戒指。",0,2)
-	    do return end  --无条件结束事件
-    end
-	if JY.Base["天书数量"] >= 8 then 
-		say("小朋友你终于来了！", 1073, 0,"公孙南")
-		say("老人家您是？", 0, 1)
-		say("老朽复姓公孙，单名一个南，你可以叫我南老头。", 1073, 0,"公孙南")
-		say("公孙...南？您认识我？", 0, 1)
-		say('大名鼎鼎的小村传人'..JY.Person[0]['姓名']..'老朽还是认识的', 1073, 0,"公孙南")
-		say("哈哈哈哈！想不到我已经那么有名了。", 0, 1)
-		say("小朋友，据老朽所知你在华山得到谢宗主的指点创造出自己的武学，天赋过人啊！", 1073, 0,"公孙南")
-		say(".........这你都知道？你想怎么样？", 0, 1)
-		say("小朋友莫慌，老朽只是受人所托来帮助你再次提升，你可否愿意？", 1073, 0,"公孙南")
-		say(".........有什么条件？", 0, 1)
-		say("简单，小朋友只需将护身戒指借于老朽复刻一枚即可。", 1073, 0,"公孙南")
-		say("如此简单？", 0, 1)
-		say("如此简单！", 1073, 0,"公孙南")
-		say("好！给你！", 0, 1)
-		instruct_14()  --场景变黑
-		instruct_13()  --场景变亮
-		say("感谢小朋友，现在物归原主。", 1073, 0,"公孙南")
-		say("那么如何提升呢？", 0, 1)
-		say("接下来就看小朋友的实力是否能经得住这四神封绝阵的考验了？", 1073, 0,"公孙南")
-		say("好的，放马过来！", 0, 1)
-		if WarMain(468, 0) == false then  --战斗开始
-		    say("咱们后会有期！", 1073, 0,"公孙南")
-		    say("多谢前辈赐教！", 0, 1)
-			instruct_2(348,3)  --无极丹
-			instruct_2(281,5)  --商会令牌
-		    instruct_3(-2,-2,0,0,0,0,0,0,0,0,0,-2,-2)  --修改场景事件
-		    do return end  --无条件结束事件
-	    else	
-	        say("咱们后会有期！", 1073, 0,"公孙南")
-		    say("多谢前辈赐教！", 0, 1)
-			instruct_2(348,3)  --无极丹
-			instruct_2(281,5)  --商会令牌
-	        say("原来是这样，我悟了！", 0, 1)
-	        Cat('融合武功2',0,6)
-			QZXS("成功再次自创内功！")
-		    instruct_3(-2,-2,0,0,0,0,0,0,0,0,0,-2,-2)  --修改场景事件
-		    do return end  --无条件结束事件	
-	    end	
-	end 
-end 	
-
-newkdef[10134]=function()
-    if instruct_43(114) == false then  --独孤九剑秘籍
-        say("此段剧情需要独孤九剑秘籍触发。",0,2)
-	    do return end  --无条件结束事件
-    end
-    say("此段剧情需要笑傲江湖天书触发。",0,2)
-    if instruct_18(151) then  --笑傲江湖
-		say("咦！好像是东方不败！", 0, 1)
-        addevent(-2,48,1,nil,nil,4139*2)
-	    instruct_19(31,58)
-		say("<口吐鲜血>咳咳..咳咳..咳咳..想不到中华阁真是卧虎藏龙，看来取《玄武真功》绝非易事。", 27, 0)
-		say("真的是你啊！东方不败！你不是被任我行关起来了吗？", 0, 1)
-		say("哼！又是你...小村传人，看针！！！", 27, 0)
-		if WarMain(469) == false then
-		    Cls()
-		    instruct_15()
-		    Cls()
-		    do return end
-	    end
-		say("你在黑木崖时没那么差？", 0, 1)
-		say("要不是身受重伤，就凭你一人是不可能战胜我的。", 27, 0)
-		say("<坏笑>嘿嘿！原来你受伤了。", 0, 1)
-		say("哼，事到如今，要杀要剐悉随尊便！", 27, 0)
-		say("好！", 0, 1)
-		instruct_14()  --场景变黑
-		instruct_13()  --场景变亮
-		say("小村传人，你什么意思？", 27, 0)
-		say("嘿嘿，你想让我杀你，我就偏偏要救你，现在你的这条命就是我的了。", 0, 1)
-		say("哼！", 27, 0)
-		say("你不想欠我也可以，答应我一件事。", 0, 1)
-		say("如果我不答应呢？", 27, 0)
-		say("没关系啊，我就飞鸽传书黑木崖，让任我行来捉你。", 0, 1)
-		say("呵呵呵！笑话，区区任我行我会放在眼里？", 27, 0)
-		say("那我就让南贤老头广邀江湖豪杰追杀你。", 0, 1)
-		say("你......！", 27, 0)
-		say("嘿嘿！怕了吧？", 0, 1)
-		say("好，算你狠！！！", 27, 0)
-        say("走吧！", 0, 1)
-		say("哼！贱人！！！", 27, 0)
-		say("嘿嘿！彼此彼此！！！", 0, 1)
-		instruct_10(777)  --东方不败加入队伍
-		null(-2,48)
-	    addevent(-2,-2,-2,-2,-2,-2)
-		instruct_2(348,1)  --无极丹
-		instruct_2(316,5)  --地灵丹
-	end	
-	do return end  --无条件结束事件	
-end 	
-
-
-newkdef[10135]=function()
-    say("有需要我帮忙的地方吗？",777,0)
-    Cls()  --清屏
-    if instruct_9() then  --是否要求加入
-	    if instruct_20() == false then  --判断队伍是否已满
-		    instruct_10(777)  --加入队伍
-		    instruct_14()  --场景变黑
-		    instruct_3(-2, -2,0,0,0,0,0,0,0,0,-2,-2,-2)  --修改场景事件
-		    Cls()  --清屏
-		    instruct_13()  --场景变亮
-		    do return end  --无条件结束事件
-	    end
-	    say("你的队伍已满，我无法加入。",777,0)
-	    Cls()  --清屏
-	    do return end  --无条件结束事件
-    end
-    do return end
-end
-
-newkdef[10136]=function()
-    --东方不败离队事件
-    say("东方，你先回小村，有需要时，我再去找你帮忙。",0,1);
-    instruct_0();   --  0(0)::空语句(清屏)
-    instruct_21(777);   --  21(15):离队
-    instruct_3(70,25,1,0,10135,0,0,4137*2,4137*2,4137*2,-2,-2,-2)  --修改场景事件
-    do return end
-end
-
 --[[
 newkdef[1010]=function()
 if instruct_43(220) == false then  --判断是否有物品
@@ -22228,7 +22082,6 @@ if DrawStrBoxYesNo(-1, -1, "是否要挑战真·少林罗汉阵法？", C_WHITE, CC.DefaultFo
 	instruct_13()  --场景变亮
 	say(JY.Person[0]["外号"].."好俊的功夫。", 114, 0)  --对话
 	instruct_2(547,1)
-	SetTF(0,9723,1)    --万般皆通
 	--乔峰的音箱
 	if JY.Base["畅想"] == 50 then
 		dark()
@@ -42072,7 +41925,7 @@ say("前辈请进招！！！",0,0)
 		if (TrueYJ(0) >= 500) or (Xishu_sum(0) >= 1500) then
 			--CC.TG[9982] = 1
 			SetTF(0,9982,1)
-			SetTF(0,9772,1)
+SetTF(0,9772,1)
 			SetTF(457,9772,1)		    
 			SetTF(592,9772,1)
 			SetJX(592,1)
@@ -49639,19 +49492,22 @@ instruct_40(1)
 do return end
 end
 newkdef[9109]=function()
-My_Enter_SubScene(196,23,4,0)  --场景跳跃
+My_Enter_SubScene(196,23,5,2)  --场景跳跃
+--My_Enter_SubScene(196,23,4,0)
 instruct_40(3)
 do return end
 end
 
 --慕名镇进中华阁
 newkdef[9110]=function()
-My_Enter_SubScene(198,31,53,0)  --场景跳跃
+My_Enter_SubScene(198,31,52,0)  --场景跳跃
+--My_Enter_SubScene(198,31,53,0)
 instruct_40(1)
 do return end
 end
 newkdef[9111]=function()
-My_Enter_SubScene(196,59,3,0)  --场景跳跃
+--My_Enter_SubScene(196,59,3,0)  --场景跳跃
+My_Enter_SubScene(196,59,4,0) 
 instruct_40(1)
 do return end
 end
@@ -49695,24 +49551,25 @@ end
 
 --剑冢进埋剑崖
 newkdef[9118]=function()
-My_Enter_SubScene(201,34,56,0)  --场景跳跃
+My_Enter_SubScene(201,34,55,0)  --场景跳跃
 instruct_40(1)
 do return end
 end
 newkdef[9119]=function()
-My_Enter_SubScene(7,28,9,0)  --场景跳跃
+My_Enter_SubScene(7,28,10,0)  --场景跳跃
 instruct_40(1)
 do return end
 end
 
 --明霞岛进道场
 newkdef[9120]=function()
-My_Enter_SubScene(98,1,25,0)  --场景跳跃
+My_Enter_SubScene(98,2,25,0)  --场景跳跃
 instruct_40(1)
 do return end
 end
 newkdef[9121]=function()
-My_Enter_SubScene(202,29,62,0)  --场景跳跃
+My_Enter_SubScene(202,29,61,0)  --场景跳跃
+--My_Enter_SubScene(202,29,62,0)
 instruct_40(1)
 do return end
 end
@@ -49767,7 +49624,7 @@ end
 
 --中华阁别院进封玉楼
 newkdef[9130]=function()
-My_Enter_SubScene(186,51,60,0)  --场景跳跃
+My_Enter_SubScene(186,51,59,0)  --场景跳跃
 instruct_40(1)
 do return end
 end
@@ -53407,36 +53264,36 @@ newkdef[9603]=function() --万兽山庄
 		say("需要什么条件！？",0, 0)
 		say("去把少林的《狮吼功》拿来给我。",765,0)
 		say("没问题！",0, 0)  	
-		if instruct_43(69) == false then  --狮吼功秘籍
+	    if instruct_43(69) == false then  --狮吼功秘籍
             say("此段剧情需要有狮吼功秘籍触发。",0,2)
 	        do return end  --无条件结束事件
-        end	
-		say("很好！接下来你听好了。",765,0)
-		instruct_14()  --场景变黑
-		instruct_13()  --场景变亮
-		say("哇！厉害",0, 0)
-	    if MPDJ(0) < 2 then
-		    JoinMP(0,27,2)
-	    end	   
-		say("还有更厉害的吗？",0, 0)
-		say("当然有！",765,0)
-		say("什么条件？快说！",0, 0)
-		say("少林寺的《金刚狮子吼》秘籍！",765,0)
-		say("好！",0, 0) 
-		if instruct_43(385) == false then  --金刚狮子吼秘籍
+        end
+		    say("很好！接下来你听好了。",765,0)
+			instruct_14()  --场景变黑
+			instruct_13()  --场景变亮
+			say("哇！厉害",0, 0)
+	        if MPDJ(0) < 2 then
+			    JoinMP(0,27,2)
+		    end	   
+			say("还有更厉害的吗？",0, 0)
+			say("当然有！",765,0)
+			say("什么条件？快说！",0, 0)
+			say("少林寺的《金刚狮子吼》秘籍！",765,0)
+			say("好！",0, 0)
+if instruct_43(385) == false then  --金刚狮子吼秘籍
             say("此段剧情需要有金刚狮子吼秘籍触发。",0,2)
 	        do return end  --无条件结束事件
-        end		
-		say("秘籍！",0, 0)
-	    say("很好，实力不俗，兽王秘技你且看好，我只演示一遍！",765,0);
-		instruct_14()  --场景变黑
-		instruct_13()  --场景变亮
-		say("原来如此！",0, 0)
-		say("我该出去浪了，有缘再见！",765,0);
-		instruct_3(-2, -2,0,0,0,0,0,0,0,0,-2,-2,-2)  --修改场景事件
-	    if MPDJ(0) < 3 then
- 	        JoinMP(0,27,3)
-	    end	    
+		end 
+					say("秘籍！",0, 0)
+		    say("很好，实力不俗，兽王秘技你且看好，我只演示一遍！",765,0);
+			instruct_14()  --场景变黑
+			instruct_13()  --场景变亮
+			say("原来如此！",0, 0)
+			say("我该出去浪了，有缘再见！",765,0);
+			instruct_3(-2, -2,0,0,0,0,0,0,0,0,-2,-2,-2)  --修改场景事件
+	        if MPDJ(0) < 3 then
+			    JoinMP(0,27,3)
+		    		end
 	end 	
 	do return end  --无条件结束
 end
@@ -56582,7 +56439,8 @@ end
 
 --华山派-华山跳转
 newkdef[1146]=function()
-	My_Enter_SubScene(152,1,23,0)
+	--My_Enter_SubScene(152,1,23,0)
+My_Enter_SubScene(152,2,24,1)
 	do return end
 end
 

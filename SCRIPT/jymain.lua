@@ -164,8 +164,77 @@ function JY_Main_sub()		--真正的游戏主程序入口
 		
 	end
 end
-
+function limitXY(num, minv, maxv)
+  return (num - minv) % maxv + 1
+end
 function TitleSelection()
+  local r = 1
+  local id = 2
+  local zoom = CC.ScreenW / 30
+  local w, h = lib.GetPNGXY(91, 6, zoom)
+  w = w + w / 2
+  local x, y = CC.ScreenW / 2 - w * 3 / 2.5, CC.ScreenH / 3*2 - h / 3
+  for i = 1, h, 2 do
+    Cls()
+    lib.SetClip(0, CC.ScreenH / 2 - i, CC.ScreenW, CC.ScreenH / 2 + i)
+    --lib.Background(0, CC.ScreenH / 2 - h, CC.ScreenW, CC.ScreenH / 2 + h, 120)
+    for j = 1, 3 do
+      if r ~= j then
+        id = 2
+      else
+        id = 5
+      end
+      lib.LoadPNG(91, (id + j) * 2, x + (j - 1) * w, y, 1, 0, zoom)
+    end
+    lib.SetClip()
+    ShowScreen()
+    lib.Delay(5)
+  end
+  while true do
+    Cls()
+    if 1 == JY.Restart then
+      return
+    end
+    --lib.Background(0, CC.ScreenH / 2 - h, CC.ScreenW, CC.ScreenH / 3 * 2 + h, 120)
+    for j = 1, 3 do
+      if r ~= j then
+        id = 2
+      else
+        id = 5
+      end
+      lib.LoadPNG(91, (id + j) * 2, x + (j - 1) * w, y, 1, 0, zoom)
+    end
+    ShowScreen()
+    local keypress, ktype, mx, my = lib.GetKey()
+    lib.Delay(CC.Frame)
+    if keypress == VK_DOWN or keypress == VK_RIGHT then
+      r = limitXY(r + 1, 1, 3)
+    elseif keypress == VK_UP or keypress == VK_LEFT then
+      r = limitXY(r - 1, 1, 3)
+    elseif keypress == VK_RETURN then
+      for i = 1, h, 2 do
+        Cls()
+        lib.SetClip(0, CC.ScreenH / 2 - h + i, CC.ScreenW, CC.ScreenH / 3 + h - i)
+        --lib.Background(0, CC.ScreenH / 2 - h, CC.ScreenW, CC.ScreenH / 2 + h, 120)
+        for j = 1, 3 do
+          if r ~= j then
+            id = 2
+          else
+            id = 5
+          end
+          lib.LoadPNG(91, (id + j) * 2, x + (j - 1) * w, y, 1, 0, zoom)
+        end
+        lib.SetClip()
+        ShowScreen()
+        lib.Delay(5)
+      end
+      break
+    end
+  end
+  return r
+end
+
+function TitleSelection2()
 	local choice = 1
 	local pyx = 150
 	local pyy = 50
@@ -245,7 +314,7 @@ function StartMenu()
 	Cls()
 	local menuReturn = TitleSelection()
     if menuReturn == 1 then        --重新开始游戏
-    Cls()
+   Cls()
 
 		NewGame();   		       --设置新游戏数据
 		
@@ -405,7 +474,7 @@ function StartMenu()
         
         CC.TGJL = {}
 	elseif menuReturn == 2 then         --载入旧的进度
-		lib.LoadPNG(91, 501 * 2 , 0 , 0, 1)
+		lib.LoadPNG(91, 501 * 2 , -1 , -1, 1)
     	DrawStrBox(-1,CC.ScreenH*1/6-20,"读取进度",LimeGreen,CC.Fontbig,C_GOLD);
 		--DrawStrBox(104,CC.ScreenH*1/6+26,string.format("%-6s %-4s %-10s %-4s %-4s %-4s %-10s","存档名", "主角", "姓名", "难度", "资质", "天书", "位置"),C_ORANGE,CC.DefaultFont,C_GOLD);
 		--DrawString(200,CC.ScreenH*1/6+26,  string.format("%-6s %-4s %-10s %-4s %-4s %-4s %-10s","存档名", "主角", "姓名", "难度", "资质", "天书", "位置"), C_ORANGE, CC.DefaultFont)
@@ -1050,11 +1119,12 @@ function NewGame()     --选择新游戏，设置主角初始属性
 	JY.Base["周目"] = CC.Week
 	JY.Base["碎片"] = CC.Sp
 	JY.Status = GAME_NEWNAME
-	lib.PlayMPEG(CONFIG.DataPath .. "/avi/1.mp4",VK_ESCAPE) --视频文件
+	--lib.PlayMPEG(CONFIG.DataPath .. "/avi/1.mp4",VK_ESCAPE) --视频文件
     Cls()
 	
 	--选择标主还是畅想
-	lib.LoadPicture(CC.BG01File,-1,-1)	
+	
+	lib.LoadPicture(CC.BG01File,-1,-1)
 	local xz = Moshixz()
 	--local player_type = JYMsgBox("主角选择", "选择你想要的主角模式*", {"标准主角","畅想主角"}, 2, 903)
 	
@@ -1107,6 +1177,7 @@ function NewGame()     --选择新游戏，设置主角初始属性
 			JY.Base["武功数量"] = 15
 		end	
 		--标准主角+特殊主角
+		lib.FillColor(0,0,0,0,0);
 		lib.LoadPicture(CC.BG01File,-1,-1)
 		if player_type == 3 then
 			if ts == 1 then 
@@ -1555,6 +1626,7 @@ function NewGame()     --选择新游戏，设置主角初始属性
 			JY.Base["武功数量"] = 15
 		end	
 		--标准主角+特殊主角
+		lib.FillColor(0,0,0,0,0);
 		lib.LoadPicture(CC.BG01File,-1,-1)
 		if player_type == 2 then
 				
@@ -1764,6 +1836,7 @@ function NewGame()     --选择新游戏，设置主角初始属性
 	GAME_START2()	
 
 	ClsN()
+	lib.FillColor(0,0,0,0,0);
 	lib.LoadPicture(CC.BG01File,-1,-1)	
 	TGTF1()
     TGTF()
@@ -2490,7 +2563,9 @@ function Game_MMap()      --主地图
 			return;
 		--无酒不欢：全套快捷键 7-30
 		elseif keypress == VK_S then	--存档
-			Menu_SaveRecord()
+			--Menu_SaveRecord()
+Cls()
+			My_ChuangSong_Ex()
 			if JY.Status ~= GAME_MMAP  then
 				return ;
 			end
@@ -4255,7 +4330,8 @@ function SelectThing(thing,thingnum)
 		original_thing = thing
 		original_thingnum = thingnum
 	end
-	
+	local zoom = CC.ScreenH / 14.5
+  	local pw, ph = lib.GetPNGXY(91, 18, zoom)
 	while true do
 		if JY.Restart == 1 then
 			break
@@ -4267,7 +4343,8 @@ function SelectThing(thing,thingnum)
 		y2_2=y2_1+CC.ThingFontSize+2*CC.MenuBorderPixel
 		y3_1=y2_2+5;
 		y3_2=y3_1+h;
-		lib.LoadPNG(91, 9 * 2 , 0 , 0, 1)
+		lib.FillColor(0, 0, 0, 0, 0)
+		lib.LoadPNG(91, 18, CC.ScreenW / 2 - pw / 2, CC.ScreenH / 2 - ph / 2, 1, 0, zoom)
 		for y=0,ynum-1 do
 			for x=0,xnum-1 do
 				local id=y*xnum+x+xnum*cur_line
@@ -4546,7 +4623,8 @@ function SelectThing(thing,thingnum)
 				local boxy = y3_1 + CC.ThingGapOut + y * (CC.ThingPicHeight + CC.ThingGapIn)
 
 				if thing[id] >= 0 then
-					lib.PicLoadCache(2, thing[id] * 2, boxx + 1, boxy + 1, 1)
+				lib.LoadPNG(2, thing[id] * 2, boxx + 1, boxy + 1, 1, 0, CC.ScreenH / 7.5)
+				--lib.PicLoadCache(2, thing[id] * 2, boxx + 1, boxy + 1, 1)
 				end
 				--无酒不欢：修改选择框
 				if boxcolor == S_Yellow then
@@ -4593,7 +4671,7 @@ function SelectThing(thing,thingnum)
 		elseif keypress==VK_RETURN or keypress==VK_SPACE then
 			break;
 		--增加物品的内置说明
-		elseif keypress==VK_F1 and cur_thing ~= -1 then
+		elseif (keypress==VK_F1 or keypress==VK_H) and cur_thing ~= -1 then
 			detailed_info(cur_thing)
 		--数字1 全部
 		elseif IsViewingKungfuScrolls > 0 and keypress==49 then
@@ -5208,7 +5286,7 @@ end
 --这里是先把数据读入Byte数组中。然后定义访问相应表的方法，在访问表时直接从数组访问。
 --与以前的实现相比，从文件中读取和保存到文件的时间显著加快。而且内存占用少了
 function LoadRecord(id)       -- 读取游戏进度
-    local zipfile=string.format('data/save/Save_%d',id)
+    local zipfile=string.format(CONFIG.DataPath..'save/Save_%d',id)
 	
 	if CC.BBH~=198045761 then
 		QZXS("此存档版本不对，不能读取。请至群号198045761进行更新");
@@ -5220,7 +5298,7 @@ function LoadRecord(id)       -- 读取游戏进度
 		return -1;
 	end
     
-    Byte.unzip(zipfile, 'r.grp','d.grp','s.grp','tjm')
+    Byte.unzip(zipfile, CONFIG.DataPath..'save/r.grp',CONFIG.DataPath..'save/d.grp',CONFIG.DataPath..'save/s.grp',CONFIG.DataPath..'save/tjm')
 
     local t1=lib.GetTime();
 
@@ -5234,9 +5312,9 @@ function LoadRecord(id)       -- 读取游戏进度
 	    idx[i]=Byte.get32(data,4*(i-1));
 	end
 	
-	local grpFile = 'r.grp';
-	local sFile = 's.grp';
-	local dFile = 'd.grp';
+	local grpFile = CONFIG.DataPath..'save/r.grp';
+	local sFile = CONFIG.DataPath..'save/s.grp';
+	local dFile = CONFIG.DataPath..'save/d.grp';
 	if id == 0 then
 		grpFile = CC.R_GRPFilename[id];
 		sFile = CC.S_Filename[id];
@@ -5361,10 +5439,10 @@ function LoadRecord(id)       -- 读取游戏进度
 	   tjmload(id)
 	end
    
-	os.remove('r.grp')
-	os.remove('d.grp')
-	os.remove('s.grp')
-	os.remove('tjm');
+	os.remove(CONFIG.DataPath..'save/r.grp')
+	os.remove(CONFIG.DataPath..'save/d.grp')
+	os.remove(CONFIG.DataPath..'save/s.grp')
+	os.remove(CONFIG.DataPath..'save/tjm');
 end
 
 
@@ -5399,30 +5477,30 @@ function SaveRecord(id)         -- 写游戏进度
 	    idx[i]=Byte.get32(data,4*(i-1));
 	end
 
-	--os.remove('r.grp');
+	--os.remove(CONFIG.DataPath..'save/r.grp');
     --写R*.grp文件
-	Byte.savefile(JY.Data_Base,'r.grp',idx[0],idx[1]-idx[0]);
+	Byte.savefile(JY.Data_Base,CONFIG.DataPath..'save/r.grp',idx[0],idx[1]-idx[0]);
 
-	Byte.savefile(JY.Data_Person,'r.grp',idx[1],CC.PersonSize*JY.PersonNum);
+	Byte.savefile(JY.Data_Person,CONFIG.DataPath..'save/r.grp',idx[1],CC.PersonSize*JY.PersonNum);
 
-	Byte.savefile(JY.Data_Thing,'r.grp',idx[2],CC.ThingSize*JY.ThingNum);
+	Byte.savefile(JY.Data_Thing,CONFIG.DataPath..'save/r.grp',idx[2],CC.ThingSize*JY.ThingNum);
 
-	Byte.savefile(JY.Data_Scene,'r.grp',idx[3],CC.SceneSize*JY.SceneNum);
+	Byte.savefile(JY.Data_Scene,CONFIG.DataPath..'save/r.grp',idx[3],CC.SceneSize*JY.SceneNum);
 
-	Byte.savefile(JY.Data_Wugong,'r.grp',idx[4],CC.WugongSize*JY.WugongNum);
+	Byte.savefile(JY.Data_Wugong,CONFIG.DataPath..'save/r.grp',idx[4],CC.WugongSize*JY.WugongNum);
 
-	Byte.savefile(JY.Data_Shop,'r.grp',idx[5],CC.ShopSize*JY.ShopNum);
+	Byte.savefile(JY.Data_Shop,CONFIG.DataPath..'save/r.grp',idx[5],CC.ShopSize*JY.ShopNum);
 
-    lib.SaveSMap('s.grp','d.grp');
+    lib.SaveSMap(CONFIG.DataPath..'save/s.grp',CONFIG.DataPath..'save/d.grp');
 	
     tjmsave(id)
 	
-    local zipfile=string.format('data/save/Save_%d',id)
-    Byte.zip(zipfile, 'r.grp','d.grp','s.grp','tjm')
-    os.remove('r.grp')
-    os.remove('d.grp')
-    os.remove('s.grp')
-	os.remove('tjm');
+    local zipfile=string.format(CONFIG.DataPath..'save/Save_%d',id)
+    Byte.zip(zipfile, CONFIG.DataPath..'save/r.grp',CONFIG.DataPath..'save/d.grp',CONFIG.DataPath..'save/s.grp',CONFIG.DataPath..'save/tjm')
+    os.remove(CONFIG.DataPath..'save/r.grp')
+    os.remove(CONFIG.DataPath..'save/d.grp')
+    os.remove(CONFIG.DataPath..'save/s.grp')
+	os.remove(CONFIG.DataPath..'save/tjm');
     lib.Debug(string.format("SaveRecord time=%d",lib.GetTime()-t1));
 end
 
@@ -5814,10 +5892,6 @@ function AddPersonAttrib(id, str, value)
 		--张三丰
 		if match_ID(id, 5) then
 			attribmax = 8000
-		end
-		--东方不败
-		if match_ID(id, 27) or match_ID(id, 777) then
-			attribmax = 7000
 		end
 		--剑太一
 		if match_ID(id, 774) then
@@ -6583,9 +6657,9 @@ function AddPersonAttrib(id, str, value)
 	local add = newvalue - oldvalue
 	local showstr = ""
 	if add > 0 then
-		showstr = string.format("%s 增加 %d", str, add)
+		showstr = string.format("%s 增加 %s", str, add)
 	elseif add < 0 then
-		showstr = string.format("%s 减少 %d", str, -add)
+		showstr = string.format("%s 减少 %s", str, -add)
 	end
 	return add, showstr
 end
@@ -7697,7 +7771,7 @@ function CanUseThing(id, personid)
      or id == 277 or  id == 291 or id == 319 or id == 324 or id == 332)  then
 		return true
 	--王语嫣，随便修炼秘籍
-	elseif (match_ID(personid, 76) or match_ID(personid, 637) or match_ID(personid, 774) or match_ID(personid, 9723)) and JY.Thing[id]["类型"] == 2 then
+	elseif (match_ID(personid, 76) or match_ID(personid, 637) or match_ID(personid, 774))  and JY.Thing[id]["类型"] == 2 then
 		return true	
 	--主角学圣火
 	elseif id == 70 and personid == 0 then
@@ -9578,7 +9652,7 @@ function UseThing_Type2(id)
 			if (personid == 0 and JY.Base["标准"] == 3) or (personid == 0 and JY.Base["畅想"] == 652 ) or (personid == 0 and JY.Base["畅想"] == 189 ) then
 				say("嗯……我看看，这套武功的精妙之处其实不在于是否自宫。看我如何以剑入道克服这个问题！",0,1)
 				yes = 1
-			elseif (personid == 0 and JY.Base["标准"] == 5) or (personid == 0 and JY.Base["标准"] == 7) or (personid == 0 and JY.Base["标准"] == 8) then 
+elseif (personid == 0 and JY.Base["标准"] == 5) or (personid == 0 and JY.Base["标准"] == 7) or (personid == 0 and JY.Base["标准"] == 8) then 
 				say("武功本身无优势之分，但跟要看使用者！",0,1)
 				yes = 1
 			--主角打赢葵花尊者，可以直接学
@@ -12342,12 +12416,18 @@ function say(s,pid,flag,name)          --个人新对话
 	local pich=130;
 	local talkxnum=30;         --对话一行字数
 	local talkynum=3;          --对话行数
-	local dx=2;
-	local dy=2;
-    local boxpicw=picw+10;
-	local boxpich=pich+10;
-	local boxtalkw=talkxnum*CC.DefaultFont+10;
-	local boxtalkh=boxpich-27;
+	--local dx=2;
+	--local dy=2;
+    local dx=CC.ScreenW/680;
+	local dy=CC.ScreenH/384;
+    --local boxpicw=picw+10;
+	--local boxpich=pich+10;
+	local boxpicw=picw+CC.ScreenW/136;
+	local boxpich=pich+CC.ScreenH/76.8;
+	--local boxtalkw=talkxnum*CC.DefaultFont+10;
+	local boxtalkw=talkxnum*CC.DefaultFont+CC.ScreenW/136;
+	--local boxtalkh=boxpich-27;
+local boxtalkh=boxpich-CC.ScreenH/28.44;
 	local headid = pid;
 	if name == nil then 
 		headid = JY.Person[pid]["半身像"]
@@ -12391,8 +12471,19 @@ function say(s,pid,flag,name)          --个人新对话
 	else
 	   flag=1
 	end
-	
-	
+	local tx = 0
+	local ty = 0
+	local bs = 100
+	local bs1 = 60
+	local tx,ty = lib.GetPNGXY(91,312*2)
+	if CONFIG.Operation==1 then
+		
+		xy[1].talkx = xy[1].talkx- CC.ScreenW/5
+		xy[1].talky = xy[1].talky - CC.ScreenH/20 
+
+		xy[5].talkx = xy[5].talkx + CC.ScreenW/10
+		xy[5].talky = xy[5].talky - CC.ScreenH/20 
+	end	
 
   if xy[flag].showhead == 0 then
     headid = -1
@@ -12441,6 +12532,7 @@ function say(s,pid,flag,name)          --个人新对话
 				lib.LoadPNG(90, headid*2, xy[flag].headx + 5 + x-76, xy[flag].heady + 5 + y-by*220, 1)
 				lib.LoadPicture(CC.SayBoxNMFile,xy[flag].namex-35,xy[flag].namey-10,1);	
 				MyDrawString(xy[flag].namex, xy[flag].namex + 96, xy[flag].namey + 1, name, C_CYGOLD, 24)				
+
 			end
 			page = 1
 		end
@@ -12492,8 +12584,8 @@ function say(s,pid,flag,name)          --个人新对话
 			elseif kz1==3 then
 				font=kz2
 			else
-				lib.DrawStr(xy[flag].talkx+CC.DefaultFont*cx+5,
-							xy[flag].talky+(CC.DefaultFont+talkBorder)*cy+talkBorder-by*28,
+				lib.DrawStr(xy[flag].talkx+CC.DefaultFont*cx+CC.ScreenW/272,
+							xy[flag].talky+(CC.DefaultFont+talkBorder)*cy+talkBorder-CC.ScreenH/27.428,
 							str,color,CC.DefaultFont,font,0,0, 305)
 				mydelay(t)
 				cx=cx+string.len(str)/2
@@ -12880,6 +12972,26 @@ function InputNum(str, minNum, maxNum, isEsc)
         if (key == VK_ESCAPE or ktype == 4) and isEsc ~= nil then
 			num = nil;
 			break;
+elseif key == VK_UP then
+		    num = num + 1
+			if num > maxNum then
+				num = maxNum
+			end
+		elseif key == VK_DOWN then
+		    num = num - 1
+			if  num <= minNum then
+				num = minNum
+			end	
+		elseif key == VK_RIGHT then
+		    num = num + 10
+			if num > maxNum then
+				num = maxNum
+			end
+		elseif key == VK_LEFT then
+		    num = num - 10
+			if  num <= minNum then
+				num = minNum
+			end	
 		elseif key >= 49 and key <= 57 then
 			num = num * 10
 			num = num + key - 48
@@ -13044,8 +13156,8 @@ function SaveList()
 		--资质
 		local zz = "";
 		
-		if existFile(string.format('data/save/Save_%d',i)) then
-			Byte.loadfilefromzip(data, string.format('data/save/Save_%d',i),'r.grp', 0, len);
+		if existFile(string.format(CONFIG.DataPath..'save/Save_%d',i)) then
+			Byte.loadfilefromzip(data, string.format(CONFIG.DataPath..'save/Save_%d',i),CONFIG.DataPath..'save/r.grp', 0, len);
 			
 			local pid = GetDataFromStruct(data,0,table_struct,"队伍1");
 			
@@ -13451,11 +13563,6 @@ function get_skill_power(personid,wugongid, wugonglvl)
 		local pw2 = JY.Wugong[354]['灼烧系数']
 		power = math.modf((JY.Wugong[pw1]["攻击力"..wugonglvl] + JY.Wugong[pw2]["攻击力"..wugonglvl])*0.7)
 	end	
-	if wugongid == 381 then	
-		local pw1 = JY.Wugong[381]['冰封系数']
-		local pw2 = JY.Wugong[381]['灼烧系数']
-		power = math.modf((JY.Wugong[pw1]["攻击力"..wugonglvl] + JY.Wugong[pw2]["攻击力"..wugonglvl])*0.7)
-	end	
 	if wugongid == 379 then
 		power = power + math.modf(wugonglvl*90)
 	end	
@@ -13508,7 +13615,7 @@ function get_skill_power(personid,wugongid, wugonglvl)
 	
 	if wugongid == 313 and PersonKF(personid, 105) then
 		power = power + 300
-		if Curr_NG(personid,105) or match_ID(personid,27) or match_ID(personid,777) then
+		if Curr_NG(personid,105) or match_ID(personid,27) then
 			power = power + 200
 		end	
 	end
@@ -14218,12 +14325,6 @@ function Curr_NG(personid, NGid)
 				return true
 			end
 		end		
-		--第二次融合内功无需主运即可享受主运效果
-		if PersonKF(personid,381) then
-			if NGid == JY.Wugong[381]['灼烧系数'] or NGid == JY.Wugong[381]['冰封系数'] then
-				return true
-			end
-		end		
 		--天罡的判定
 		if personid == 0 and JY.Base["标准"] == 6 then
 			--如果是天内，并且已经学会，则自动主运
@@ -14444,7 +14545,7 @@ function Curr_NG(personid, NGid)
 	 		if match_ID(id,26) and (ng == 88 or ng == 219) then
 	 			return true
 	 		end
-	 		if (match_ID(id,27) or match_ID(id,777) or match_ID(id,26)) and ng == 105 then
+	 		if match_ID(id,27) and ng == 105 then
 	 			return true
 	 		end	
 	 		if match_ID(id,641) and ng == 93 then
@@ -15008,7 +15109,7 @@ function ZFZH(id,WGid,NGid)
 	    if WGid == 226 and NGid == 105 then
 			if PersonKF(id,226) and (PersonKF(id,126) or PersonKF(id,127)) and PersonKF(id,201) and Curr_NG(id,105) then 
                 return true
-			elseif JXPD(id,27,2) or match_ID(id,777) then
+			elseif JXPD(id,27,2) then
 	            return true
 			end
 		end
@@ -15572,7 +15673,7 @@ function WGZH(id,WGid1,WGid2)
 	    if WGid1 == 226 and WGid2 == 126 then
 			if PersonKF(id,226) and PersonKF(id,126) then 
                 return true
-			elseif JXPD(id,27,2) or match_ID(id,511) or match_ID(id,777) then
+			elseif JXPD(id,27,2) or match_ID(id,511) then
 	            return true
 			end
 		end	
@@ -15580,7 +15681,7 @@ function WGZH(id,WGid1,WGid2)
 	    if WGid1 == 226 and WGid2 == 126 then
 			if PersonKF(id,226) and PersonKF(id,127) then 
                 return true
-			elseif JXPD(id,27,2) or match_ID(id,511) or match_ID(id,777) then
+			elseif JXPD(id,27,2) or match_ID(id,511) then
 	            return true
 			end
 		end	
@@ -15588,7 +15689,7 @@ function WGZH(id,WGid1,WGid2)
 	    if WGid1 == 226 and WGid2 == 201 then
 			if PersonKF(id,226) and (PersonKF(id,126) or PersonKF(id,127)) and PersonKF(id,201) then 
                 return true
-			elseif JXPD(id,27,2) or match_ID(id,511) or match_ID(id,777) then
+			elseif JXPD(id,27,2) or match_ID(id,511) then
 	            return true
 			end
 		end	
@@ -15809,8 +15910,6 @@ function NGQH(id,NGid)--这里只写有「主运」的组合
 			return true
 		elseif match_ID(id,635) and (NGid == 180) then 
 		    return true 	
-		elseif (match_ID(id,27) or match_ID(id,777)) and (NGid == 105) then
-		    return true 	
 		end	
 		local pd = false
 		if JY.Status == GAME_WMAP then
@@ -15975,7 +16074,7 @@ function NGQH(id,NGid)--这里只写有「主运」的组合
 			    return true	
 			elseif match_ID(id,762) and Curr_NG(id,105) then
 			    return true 	
-			elseif match_ID(id,27) or match_ID(id,92) or match_ID(id,773) or match_ID(id,777) then
+			elseif match_ID(id,27) or match_ID(id,92) or match_ID(id,773) then
    			    return true	
 			elseif match_ID(id,769) and Curr_NG(id,105) then 
 			    return true 	
@@ -16841,10 +16940,6 @@ function match_ID(personid, id)
 	--森罗六合
 	if WAR.ZDDH == 453 and (personid == 520 or personid == 524 or personid == 743 or personid == 747 or personid == 758 or personid == 759 or personid == 760)  
 	    and (id == 520 or id == 524 or id == 743 or id == 747 or id == 758 or id == 759 or id == 760) and JY.Person[id]["生命"] > 0 then
-		return true
-	end
-	--四神封绝阵
-	if WAR.ZDDH == 468 and (personid == 5 or personid == 27 or personid == 50 or personid == 114) and (id == 5 or id == 27 or id == 50 or id == 114) and JY.Person[id]["生命"] > 0 then
 		return true
 	end
 	return false
@@ -20742,18 +20837,18 @@ function tjmsave(id)
         end
     end
 
-	local fp_tmp=io.open('tjm',"w");
+	local fp_tmp=io.open(CONFIG.DataPath..'save/tjm',"w");
 	
 	if fp_tmp then
 		fp_tmp:close();
 		local data_header=Byte.create(4);
 		Byte.set32(data_header,0, CC.TJM);
-		Byte.savefile(data_header,'tjm', 0, 4);
+		Byte.savefile(data_header,CONFIG.DataPath..'save/tjm', 0, 4);
 		local data_keys=Byte.create(4*CC.TJM);
 		for i=0,CC.TJM-1 do
 			Byte.set32(data_keys, i*4, CC.TJMSJ[i+1]);
 		end
-		Byte.savefile(data_keys, 'tjm', 4, 4*CC.TJM);
+		Byte.savefile(data_keys, CONFIG.DataPath..'save/tjm', 4, 4*CC.TJM);
 	end
 	CC.TJMSJ = {} 
 	CC.TJM = 0
@@ -20762,19 +20857,19 @@ end
 function tjmload(id)
 	CC.TJMSJ = {} 
 	CC.TJM = 0
-	local fp_tmp=io.open('tjm',"r");
+	local fp_tmp=io.open(CONFIG.DataPath..'save/tjm',"r");
 	if fp_tmp then
 		fp_tmp:close();
    
 		local data_header=Byte.create(4);
    
-		Byte.loadfile(data_header,'tjm', 0, 4);
+		Byte.loadfile(data_header,CONFIG.DataPath..'save/tjm', 0, 4);
    
 		CC.TJM=Byte.get32(data_header,0);
    
 		local data_keys=Byte.create(4*CC.TJM);
    
-		Byte.loadfile(data_keys,'tjm', 4, 4*CC.TJM);
+		Byte.loadfile(data_keys,CONFIG.DataPath..'save/tjm', 4, 4*CC.TJM);
 		
 		for i=0,CC.TJM-1 do
 			CC.TJMSJ[i+1]=Byte.get32(data_keys, i*4);
@@ -21134,19 +21229,21 @@ function ShowStatus()
 	else
 		xx = xx..'/'..'悠闲'
 	end		
-	lib.LoadPNG(91, 39*2, 0, 0, 1)
+	--lib.LoadPNG(91, 39*2, 0, 0, 1)
+	lib.LoadPNG(91, 78, 0, 0, 1, 0, CC.ScreenW / 27)
 	--头像贴图
-	lib.LoadPNG(1, hid*2, x3, y3, 2)
+	lib.LoadPNG(1, hid*2, x3, y3, 2, 255)
 		
 	--背景图
-	lib.LoadPNG(91, 40*2, 0, 0, 1)
+	--lib.LoadPNG(91, 40*2, 0, 0, 1)
+	lib.LoadPNG(91, 80, 0, 0, 1, 0, CC.ScreenW / 27)
 	--生命条
 	lib.SetClip(x1-w,y1-h,(x1-w)+(w*2)*(sm/smmax),y1+h)
-	lib.LoadPNG(91, 41*2, x1, y1, 2)
+	lib.LoadPNG(91, 41*2, x1, y1, 2, 255)
 	lib.SetClip(0,0,0,0)
 	--内力条
 	lib.SetClip(x2-w,y2-h,(x2-w)+(w*2)*(nl/nlmax),y2+h)
-	lib.LoadPNG(91, 42*2, x2, y2, 2)
+	lib.LoadPNG(91, 42*2, x2, y2, 2, 255)
 	lib.SetClip(0,0,0,0)
 	
 	--姓名
@@ -21273,6 +21370,7 @@ function Team(tab)
 	local tru = 0
 	local p = JY.Person
 	local px = 0
+-- local zbx1,zby1 = -40,40
 	while true do 
 		Cls()
 		if JY.Restart == 1 then
@@ -21289,8 +21387,9 @@ function Team(tab)
 		if maxn > #menu then 
 			maxn = #menu 
 		end	 
-		lib.PicLoadCache(92,9*2,0,0,1,nil,nil,bx*1360)
-
+		--lib.PicLoadCache(92,9*2,0,0,1,nil,nil,bx*1360)
+		-- lib.PicLoadCache(92,9*2,-1,-1,1,nil,nil,bx*936)
+		lib.LoadPNG(92, 18, -1, -1, 1)
 		for ii = 1,maxn do 
 			local h = 0
 			local pyx = 0
@@ -21304,16 +21403,26 @@ function Team(tab)
 			local nlmax = p[menu[ii+cont1][2]]['内力最大值']
 			local tl = p[menu[ii+cont1][2]]['体力']
 			local tlmax = 100
-			
+			local x1,y1 = lib.GetPNGXY(99,2*2)
 			lib.SetClip(bx*42+(ii-1)*bx*220, 0, bx*38+(ii-1)*bx*220+bx*197,by*768) --菜单背景图
-			lib.LoadPNG(90,p[menu[ii+cont1][2]]['半身像']*2,bx*138+(ii-1)*bx*220-bx*pyx,by*250,2)
+			-- lib.SetClip(bx*42+(ii-1)*bx*220+zbx1, 0, bx*38+(ii-1)*bx*220+bx*197+zbx1,by*768+zby1) --菜单背景图
+			--lib.LoadPNG(90,p[menu[ii+cont1][2]]['半身像']*2,bx*138+(ii-1)*bx*220-bx*pyx,by*250,2)
+			-- lib.LoadPNG(90,p[menu[ii+cont1][2]]['半身像']*2,bx*138+(ii-1)*bx*220-bx*pyx+zbx1-x1*4,by*250+zby1-y1*4.4,1)
+      		lib.LoadPNG(90, p[menu[ii + cont1][2]]["半身像"] * 2, bx * 138 + (ii - 1) * bx * 220 - bx * pyx, by * 250, 2, 255)
+
 			lib.SetClip(0,0,0,0)
 			
-			lib.PicLoadCache(92,15*2,bx*138+(ii-1)*bx*220,by*425,2,256,nil,bx*170)
-			
-			DrawString(bx*138+(ii-1)*bx*220-string.len(menu[ii+cont1][1])*size/4,by*440,menu[ii+cont1][1],C_WHITE,size)
+			--lib.PicLoadCache(92,15*2,bx*138+(ii-1)*bx*220,by*425,2,256,nil,bx*170)
+			--lib.PicLoadCache(92,15*2,bx*138+(ii-1)*bx*220+zbx1,by*425+zby1,2,256,nil,bx*170)
+			lib.LoadPNG(92, 30, bx * 138 + (ii - 1) * bx * 220, by * 425, 2, 255)
+			--DrawString(bx*138+(ii-1)*bx*220-string.len(menu[ii+cont1][1])*size/4,by*440,menu[ii+cont1][1],C_WHITE,size)
 			if ii == cont or px == ii then 
-				lib.PicLoadCache(92,10*2,bx*138+(ii-1)*bx*220, CC.ScreenH/2,2,256,nil,bx*200) --菜单背景图
+				--lib.PicLoadCache(92,10*2,bx*138+(ii-1)*bx*220, CC.ScreenH/2,2,256,nil,bx*200) --菜单背景图
+			--lib.PicLoadCache(92,10*2,bx*138+(ii-1)*bx*220+zbx1, CC.ScreenH/2+zby1,2,256,nil,bx*200) 
+			lib.LoadPNG(92, 20, bx * 138 + (ii - 1) * bx * 220, CC.ScreenH / 2, 2, 255)
+			DrawString(bx*138+(ii-1)*bx*220-string.len(menu[ii+cont1][1])*size/4,by*440,menu[ii+cont1][1],C_RED,size)
+			else
+			DrawString(bx*138+(ii-1)*bx*220-string.len(menu[ii+cont1][1])*size/4,by*440,menu[ii+cont1][1],C_WHITE,size)
 			end
 
 			h = h + 1
@@ -21324,39 +21433,56 @@ function Team(tab)
 			end	
 			if RWWH[tfid] ~= nil then 
 				DrawString(bx*60+(ii-1)*bx*220,by*440+h*by*30,'称号：'..RWWH[tfid],LimeGreen,size)
+-- DrawString(bx*60+(ii-1)*bx*220+zbx1,by*440+h*by*30+zby1,'称号：'..RWWH[tfid],LimeGreen,size)
 			end
 			
 			h = h + 1
 			
 			if RWTFLB[tfid] ~= nil then 
 				DrawString(bx*60+(ii-1)*bx*220,by*440+h*by*30,'天赋：'..RWTFLB[tfid],LimeGreen,size)
+-- DrawString(bx*60+(ii-1)*bx*220+zbx1,by*440+h*by*30+zby1,'天赋：'..RWTFLB[tfid],LimeGreen,size)
 			end
 			
 			h = h + 1
 			
-			lib.PicLoadCache(92,11*2,bx*138+(ii-1)*bx*220,by*450+h*by*30+size1/2,2,256,nil,bx*160)
+			--lib.PicLoadCache(92,11*2,bx*138+(ii-1)*bx*220,by*450+h*by*30+size1/2,2,256,nil,bx*160)
+			
+			--lib.SetClip(bx*138+(ii-1)*bx*220-bx*71, by*450+h*by*30+size1/2-by*12, bx*138+(ii-1)*bx*220-bx*71+bx*142*(sm/smmax),by*450+h*by*30+size1/2+by*12)
+			lib.PicLoadCache(92,12*2,bx*138+(ii-1)*bx*220,by*450+h*by*30+size1/2,2,150,nil,bx*160)
+-- lib.PicLoadCache(92,11*2,bx*138+(ii-1)*bx*220+zbx1,by*450+h*by*30+size1/2+zby1,2,256,nil,bx*160)
 			
 			lib.SetClip(bx*138+(ii-1)*bx*220-bx*71, by*450+h*by*30+size1/2-by*12, bx*138+(ii-1)*bx*220-bx*71+bx*142*(sm/smmax),by*450+h*by*30+size1/2+by*12)
-			lib.PicLoadCache(92,12*2,bx*138+(ii-1)*bx*220,by*450+h*by*30+size1/2,2,150,nil,bx*160)
+			-- lib.PicLoadCache(92,12*2,bx*138+(ii-1)*bx*220+zbx1,by*450+h*by*30+size1/2+zby1,2,150,nil,bx*160)
+			lib.PicLoadCache(92, 24, bx * 138 + (ii - 1) * bx * 220, by * 450 + h * by * 30 + size1 / 2, 2, 150, nil, bx * 160)
+
 			lib.SetClip(0,0,0,0)
 
 			DrawString(bx*70+(ii-1)*bx*220,by*450+h*by*30,'命  '..p[menu[ii+cont1][2]]['生命'],C_WHITE,size1)
+-- DrawString(bx*70+(ii-1)*bx*220+zbx1,by*450+h*by*30+zby1,'命  '..p[menu[ii+cont1][2]]['生命'],C_WHITE,size1)
 			h = h + 1
 			
 			lib.PicLoadCache(92,11*2,bx*138+(ii-1)*bx*220,by*450+h*by*30+size1/2,2,256,nil,bx*160)
 			lib.SetClip(bx*138+(ii-1)*bx*220-bx*71, by*450+h*by*30+size1/2-by*12, bx*138+(ii-1)*bx*220-bx*71+bx*142*(nl/nlmax),by*450+h*by*30+size1/2+by*12)
 			lib.PicLoadCache(92,13*2,bx*138+(ii-1)*bx*220,by*450+h*by*30+size1/2,2,150,nil,bx*160)
+			-- lib.PicLoadCache(92,11*2,bx*138+(ii-1)*bx*220+zbx1,by*450+h*by*30+size1/2+zby1,2,256,nil,bx*160)
+			-- lib.SetClip(bx*138+(ii-1)*bx*220-bx*71+zbx1, by*450+h*by*30+size1/2-by*12, bx*138+(ii-1)*bx*220-bx*71+bx*142*(nl/nlmax)+zbx1,by*450+h*by*30+size1/2+by*12+zby1)
+			-- lib.PicLoadCache(92,13*2,bx*138+(ii-1)*bx*220+zbx1,by*450+h*by*30+size1/2+zby1,2,150,nil,bx*160)
 			lib.SetClip(0,0,0,0)
 
 			DrawString(bx*70+(ii-1)*bx*220,by*450+h*by*30,'内  '..p[menu[ii+cont1][2]]['内力'],C_WHITE,size1)
+-- DrawString(bx*70+(ii-1)*bx*220+zbx1,by*450+h*by*30+zby1,'内  '..p[menu[ii+cont1][2]]['内力'],C_WHITE,size1)
 			h = h + 1
 			
 			lib.PicLoadCache(92,11*2,bx*138+(ii-1)*bx*220,by*450+h*by*30+size1/2,2,256,nil,bx*160)
 			lib.SetClip(bx*138+(ii-1)*bx*220-bx*71, by*450+h*by*30+size1/2-by*12, bx*138+(ii-1)*bx*220-bx*71+bx*142*(tl/tlmax),by*450+h*by*30+size1/2+by*12)
 			lib.PicLoadCache(92,14*2,bx*138+(ii-1)*bx*220,by*450+h*by*30+size1/2,2,150,nil,bx*160)
+-- lib.PicLoadCache(92,11*2,bx*138+(ii-1)*bx*220+zbx1,by*450+h*by*30+size1/2+zby1,2,256,nil,bx*160)
+-- 			lib.SetClip(bx*138+(ii-1)*bx*220-bx*71+zbx1, by*450+h*by*30+size1/2-by*12+zby1, bx*138+(ii-1)*bx*220-bx*71+bx*142*(tl/tlmax)+zbx1,by*450+h*by*30+size1/2+by*12)
+-- 			lib.PicLoadCache(92,14*2,bx*138+(ii-1)*bx*220+zbx1,by*450+h*by*30+size1/2+zby1,2,150,nil,bx*160)
 			lib.SetClip(0,0,0,0)
 
 			DrawString(bx*70+(ii-1)*bx*220,by*450+h*by*30,'体  '..p[menu[ii+cont1][2]]['体力'],C_WHITE,size1)
+-- DrawString(bx*70+(ii-1)*bx*220+zbx1,by*450+h*by*30+zby1,'体  '..p[menu[ii+cont1][2]]['体力'],C_WHITE,size1)
 		end
 	  
 		ShowScreen()
@@ -24109,7 +24235,7 @@ function MPTX(id,mp,dj)
 	if match_ID(id,26) and mp == 12 then
 		return true
 	end
-	if (match_ID(id,27) or match_ID(id,777) or match_ID(id,26)) and mp == 12 then
+	if match_ID(id,27) and mp == 12 then
 		return true
 	end
 	if match_ID(id,641) and mp == 13 then
@@ -24487,7 +24613,7 @@ function AnqiWG(id,aq)
 	if aq == 460 and (JXPD(id,57,1) or (match_ID(id,57) and inteam(id) == false)) then--透骨针
 		return true
 	end	
-	if aq == 469 and (match_ID(id,456) or JXPD(id,27,1) or (match_ID(id,27) and inteam(id) == false) or match_ID(id,27)) then --黑血神针
+	if aq == 469 and (match_ID(id,456) or JXPD(id,27,1) or (match_ID(id,27) and inteam(id) == false)) then --黑血神针
 		return true
 	end
 	if aq == 486 and ((match_ID(id,161) and MPTX(id,24)) or match_ID(id,517)) then--细雨花
@@ -27388,7 +27514,7 @@ function PersonStatus(t,page)
 	local size = CC.DefaultFont*0.7
 	local size1 = CC.DefaultFont*0.6
 	local size2 = CC.DefaultFont*0.55
-	local h = by*size1*1.2
+	local h = by*size1*1
 	local cx = 1 
 	local cx1 = 1
 	local cot = {0,0,0,0,0}
@@ -27434,7 +27560,8 @@ local nk,dk,hk,bk,xk,fk = 100-nskx(id,100),100-zdkx(id,100),100-zskx(id,100),100
    Cls()
    
    local p = JY.Person[id]
-   local picx,picy = lib.GetPNGXY(1,psx(id,'半身像')*2)
+   local zoom = CC.ScreenW / 30
+   local picx, picy = lib.GetPNGXY(90, psx(id, "半身像") * 2, zoom)
    local lb = {{},{},{},{},{}}
    local lb1 = {}
    local lb2 = {nil,nil,nil,nil,nil}
@@ -27535,9 +27662,9 @@ local nk,dk,hk,bk,xk,fk = 100-nskx(id,100),100-zdkx(id,100),100-zskx(id,100),100
    local i = 0
    --背景图
    --lib.PicLoadCache(99,121*2,CC.ScreenW/2,CC.ScreenH/2,2,256,nil,bx*1360)
-   lib.LoadPNG(91, 149 * 2 ,0 , 0, 1)
+   lib.LoadPNG(91, 149 * 2 ,-1 , -1, 1)
    --人物半身像
-   pngxy(90,psx(id,'半身像')*2,bx*200,CC.ScreenH-by*300,2)
+   lib.LoadPNG(90, psx(id, "半身像") * 2, CC.ScreenW / 32, CC.ScreenH / 2.8, 1, 0, zoom)
    --门派
    -- if MPPD(id) ~= nil and MPPD(id) > 0 then 
 	  -- DrawString(bx*30,by*70,CC.MP[MPPD(id)][1]..CC.MPDJ[MPPD(id)][MPDJ(id)],C_ORANGE,size)
@@ -28549,26 +28676,39 @@ local nk,dk,hk,bk,xk,fk = 100-nskx(id,100),100-zdkx(id,100),100-zskx(id,100),100
 	end
    --装备显示
 	local pyl = -40
-	lib.LoadPNG(91,166*2,bx*450+pyl,by*470,1)
+	-- lib.LoadPNG(91,166*2,bx*450+pyl,by*470,1)
+	lib.LoadPNG(91, 332, CC.ScreenW / 3.31, CC.ScreenH / 1.65, 1, 0, CC.ScreenW / 26)
    
 	if p["武器"] > -1 then
-		lib.PicLoadCache(2,p["武器"] * 2,bx*450+pyl,by*470,1,0,0,-1,-1,0,0,72)
-		lib.PicLoadCache(92,58*2,bx*450+pyl,by*470,1)
-		DrawString(bx*450+pyl,by*470, "LV"..JY.Thing[p["武器"]]["装备等级"], M_DeepSkyBlue, size*0.5)
-		DrawString( bx*450+pyl,by*470+75, JY.Thing[p["武器"]]["名称"],C_RED , size*0.5)
+		-- lib.PicLoadCache(2,p["武器"] * 2,bx*450+pyl,by*470,1,0,0,-1,-1,0,0,72)
+		-- lib.PicLoadCache(92,58*2,bx*450+pyl,by*470,1)
+		lib.LoadPNG(2, p["武器"] * 2, CC.ScreenW / 3.31, CC.ScreenH / 1.63, 1, 0, CC.ScreenW / 18)
+      	lib.LoadPNG(92, 116, 100, 100, 1)
+		-- DrawString(bx*450+pyl,by*470, "LV"..JY.Thing[p["武器"]]["装备等级"], M_DeepSkyBlue, size*0.5)
+		-- DrawString( bx*450+pyl,by*470+75, JY.Thing[p["武器"]]["名称"],C_RED , size*0.5)
+		DrawString(CC.ScreenW / 3.31, CC.ScreenH / 1.65, "LV" .. JY.Thing[p["武器"]]["装备等级"], M_DeepSkyBlue, size * 0.5)
+      	DrawString(CC.ScreenW / 3.31, CC.ScreenH / 1.38, JY.Thing[p["武器"]]["名称"], C_RED, size * 0.5)
 
 	end
 	if p["防具"] > -1 then
-		lib.PicLoadCache(2,p["防具"] * 2,bx*450+pyl+75,by*470,1,0,0,-1,-1,0,0,72)
-		lib.PicLoadCache(92,58*2,bx*450+pyl+75,by*470,1)
-		DrawString( bx*450+pyl+78,by*470, "LV"..JY.Thing[p["防具"]]["装备等级"], M_DeepSkyBlue, size*0.5)
-		DrawString( bx*450+pyl+78,by*470+75, JY.Thing[p["防具"]]["名称"], C_ORANGE, size*0.5)
+		-- lib.PicLoadCache(2,p["防具"] * 2,bx*450+pyl+75,by*470,1,0,0,-1,-1,0,0,72)
+		-- lib.PicLoadCache(92,58*2,bx*450+pyl+75,by*470,1)
+		lib.LoadPNG(2, p["防具"] * 2, CC.ScreenW / 2.78, CC.ScreenH / 1.63, 1, 0, CC.ScreenW / 18)
+      	lib.LoadPNG(92, 116, bx * 450 + pyl + 75, by * 470, 1)
+		-- DrawString( bx*450+pyl+78,by*470, "LV"..JY.Thing[p["防具"]]["装备等级"], M_DeepSkyBlue, size*0.5)
+		-- DrawString( bx*450+pyl+78,by*470+75, JY.Thing[p["防具"]]["名称"], C_ORANGE, size*0.5)
+		DrawString(CC.ScreenW / 2.78, CC.ScreenH / 1.65, "LV" .. JY.Thing[p["防具"]]["装备等级"], M_DeepSkyBlue, size * 0.5)
+  	    DrawString(CC.ScreenW / 2.78, CC.ScreenH / 1.38, JY.Thing[p["防具"]]["名称"], C_ORANGE, size * 0.5)
 	end		
 	if p["坐骑"] > -1 then
-		lib.PicLoadCache(2,p["坐骑"] * 2,bx*450+pyl+150,by*470,1,0,0,-1,-1,0,0,72)
-		lib.PicLoadCache(92,58*2,bx*450+pyl+150,by*470,1)
-		DrawString( bx*450+pyl+154,by*470, "LV"..JY.Thing[p["坐骑"]]["装备等级"], M_DeepSkyBlue, size*0.5)
-		DrawString( bx*450+pyl+154,by*470+75, JY.Thing[p["坐骑"]]["名称"], M_Yellow, size*0.5)
+		-- lib.PicLoadCache(2,p["坐骑"] * 2,bx*450+pyl+150,by*470,1,0,0,-1,-1,0,0,72)
+		-- lib.PicLoadCache(92,58*2,bx*450+pyl+150,by*470,1)
+		lib.LoadPNG(2, p["坐骑"] * 2, CC.ScreenW / 2.4, CC.ScreenH / 1.63, 1, 0, CC.ScreenW / 18)
+     	lib.LoadPNG(92, 116, bx * 450 + pyl + 150, by * 470, 1)
+		-- DrawString( bx*450+pyl+154,by*470, "LV"..JY.Thing[p["坐骑"]]["装备等级"], M_DeepSkyBlue, size*0.5)
+		-- DrawString( bx*450+pyl+154,by*470+75, JY.Thing[p["坐骑"]]["名称"], M_Yellow, size*0.5)
+		DrawString(CC.ScreenW / 2.4, CC.ScreenH / 1.65, "LV" .. JY.Thing[p["坐骑"]]["装备等级"], M_DeepSkyBlue, size * 0.5)
+      	DrawString(CC.ScreenW / 2.4, CC.ScreenH / 1.38, JY.Thing[p["坐骑"]]["名称"], M_Yellow, size * 0.5)
 	end
 	--套装显示
 	if (p["武器"] > -1 and p["防具"] > -1 and p["坐骑"] > -1) then
@@ -28584,32 +28724,33 @@ local nk,dk,hk,bk,xk,fk = 100-nskx(id,100),100-zdkx(id,100),100-zskx(id,100),100
 			end
 			--local n= #ItemInfo[p["武器"]]
 			--say("数组长度"..#ItemInfo[p["武器"]],0,1)
-			DrawString( bx*450+pyl,by*470+90, string.sub(ItemInfo[p["武器"]][3], 3 , 12), C_GOLD, size*0.7)
+			-- DrawString( bx*450+pyl,by*470+90, string.sub(ItemInfo[p["武器"]][3], 3 , 12), C_GOLD, size*0.7)
+			DrawString(CC.ScreenW / 3.31, CC.ScreenH / 1.34, string.sub(ItemInfo[p["武器"]][3], 3, 12), C_GOLD, size * 0.7)
 			--tjm(bx*450+pyl,by*470+20+100,"◆特效："..Xguo[Setmeal[p["武器"]][4]]..'*'.."◆特效："..FJXguo[Setmeal[p["武器"]][5]].."*".."◆特效："..ZqXguo[Setmeal[p["武器"]][6]].."*".."◆"..CC.PTFSM[Setmeal[p["武器"]][7]][1]..":"..CC.PTFSM[Setmeal[p["武器"]][7]][2],C_GOLD,size*0.5,14,size*0.5)
 			if n < 5 and n ~= 0 then
-				DrawString(bx*450+pyl,by*470+20+100, "◆"..string.sub(ItemInfo[p["武器"]][4]..":"..Xguo[Setmeal[p["武器"]][4]], 9 , -1), color, size*0.5)
-				DrawString(bx*450+pyl,by*470+40+100,"◆"..string.sub(ItemInfo[p["武器"]][4]..":"..FJXguo[Setmeal[p["武器"]][5]], 9 , -1), color, size*0.5)
-				DrawString(bx*450+pyl,by*470+60+100,"◆"..string.sub(ItemInfo[p["武器"]][4]..":"..ZqXguo[Setmeal[p["武器"]][6]], 9 , -1), color, size*0.5)
-				tjm(bx*450+pyl,by*470+80+100,"◆"..CC.PTFSM[Setmeal[p["武器"]][7]][1]..":"..CC.PTFSM[Setmeal[p["武器"]][7]][2],C_RED,size*0.5,13,size*0.5)
+				DrawString(CC.ScreenW / 3.31, CC.ScreenH / 1.29, "◆" .. string.sub(ItemInfo[p["武器"]][4] .. ":" .. Xguo[Setmeal[p["武器"]][4]], 9, -1), color, size * 0.5)
+				DrawString(CC.ScreenW / 3.31, CC.ScreenH / 1.29 + size * 0.5, "◆" .. string.sub(ItemInfo[p["武器"]][4] .. ":" .. FJXguo[Setmeal[p["武器"]][5]], 9, -1), color, size * 0.5)
+				DrawString(CC.ScreenW / 3.31, CC.ScreenH / 1.29 + size * 0.5 * 2, "◆" .. string.sub(ItemInfo[p["武器"]][4] .. ":" .. ZqXguo[Setmeal[p["武器"]][6]], 9, -1), color, size * 0.5)
+				tjm(CC.ScreenW / 3.31, CC.ScreenH / 1.29 + size * 0.5 * 3, "◆" .. CC.PTFSM[Setmeal[p["武器"]][7]][1] .. ":" .. CC.PTFSM[Setmeal[p["武器"]][7]][2], C_RED, size * 0.5, 13, size * 0.5)
 			end
 			if n >= 5 then
-				DrawString(bx*450+pyl,by*470+20+100, "◆"..string.sub(ItemInfo[p["武器"]][4]..":"..Xguo[Setmeal[p["武器"]][4]], 9 , -1), color, size*0.5)
-				DrawString(bx*450+pyl,by*470+40+100,"◆"..string.sub(ItemInfo[p["武器"]][4]..":"..FJXguo[Setmeal[p["武器"]][5]], 9 , -1), color, size*0.5)
-				DrawString(bx*450+pyl,by*470+60+100,"◆"..string.sub(ItemInfo[p["武器"]][4]..":"..ZqXguo[Setmeal[p["武器"]][6]], 9 , -1), color, size*0.5)
-				tjm(bx*450+pyl,by*470+80+100,"◆"..CC.PTFSM[Setmeal[p["武器"]][7]][1]..":"..CC.PTFSM[Setmeal[p["武器"]][7]][2],C_RED,size*0.5,13,size*0.5)
+				DrawString(CC.ScreenW / 3.31, CC.ScreenH / 1.29, "◆" .. string.sub(ItemInfo[p["武器"]][4] .. ":" .. Xguo[Setmeal[p["武器"]][4]], 9, -1), color, size * 0.5)
+				DrawString(CC.ScreenW / 3.31, CC.ScreenH / 1.29 + size * 0.5, "◆" .. string.sub(ItemInfo[p["武器"]][4] .. ":" .. FJXguo[Setmeal[p["武器"]][5]], 9, -1), color, size * 0.5)
+				DrawString(CC.ScreenW / 3.31, CC.ScreenH / 1.29 + size * 0.5 * 2, "◆" .. string.sub(ItemInfo[p["武器"]][4] .. ":" .. ZqXguo[Setmeal[p["武器"]][6]], 9, -1), color, size * 0.5)
+				tjm(CC.ScreenW / 3.31, CC.ScreenH / 1.29 + size * 0.5 * 3, "◆" .. CC.PTFSM[Setmeal[p["武器"]][7]][1] .. ":" .. CC.PTFSM[Setmeal[p["武器"]][7]][2], C_RED, size * 0.5, 13, size * 0.5)
 			end
 			if n > 7 then
-				DrawString(bx*450+pyl,by*470+20+100, "◆"..string.sub(ItemInfo[p["武器"]][4]..":"..Xguo[Setmeal[p["武器"]][4]], 9 , -1), color, size*0.5)
-				DrawString(bx*450+pyl,by*470+40+100,"◆"..string.sub(ItemInfo[p["武器"]][4]..":"..FJXguo[Setmeal[p["武器"]][5]], 9 , -1), color, size*0.5)
-				DrawString(bx*450+pyl,by*470+60+100,"◆"..string.sub(ItemInfo[p["武器"]][4]..":"..ZqXguo[Setmeal[p["武器"]][6]], 9 , -1), color, size*0.5)
-				tjm(bx*450+pyl,by*470+80+100,"◆"..CC.PTFSM[Setmeal[p["武器"]][7]][1]..":"..CC.PTFSM[Setmeal[p["武器"]][7]][2],C_RED,size*0.5,13,size*0.5)
+				DrawString(CC.ScreenW / 3.31, CC.ScreenH / 1.29, "◆" .. string.sub(ItemInfo[p["武器"]][4] .. ":" .. Xguo[Setmeal[p["武器"]][4]], 9, -1), color, size * 0.5)
+				DrawString(CC.ScreenW / 3.31, CC.ScreenH / 1.29 + size * 0.5, "◆" .. string.sub(ItemInfo[p["武器"]][4] .. ":" .. FJXguo[Setmeal[p["武器"]][5]], 9, -1), color, size * 0.5)
+				DrawString(CC.ScreenW / 3.31, CC.ScreenH / 1.29 + size * 0.5 * 2, "◆" .. string.sub(ItemInfo[p["武器"]][4] .. ":" .. ZqXguo[Setmeal[p["武器"]][6]], 9, -1), color, size * 0.5)
+				tjm(CC.ScreenW / 3.31, CC.ScreenH / 1.29 + size * 0.5 * 3, "◆" .. CC.PTFSM[Setmeal[p["武器"]][7]][1] .. ":" .. CC.PTFSM[Setmeal[p["武器"]][7]][2], C_RED, size * 0.5, 13, size * 0.5)
 			end
 			if n > 9 then
 				--DrawString( diyx/5+ax*8-240, diyy/4+ax*3+200+40-20,"◆"..CC.PTFSM[Setmeal[p["武器"]][7]][1]..":"..CC.PTFSM[Setmeal[p["武器"]][7]][2], C_RED, size*0.5)
-				DrawString(bx*450+pyl,by*470+20+100, "◆"..string.sub(ItemInfo[p["武器"]][4]..":"..Xguo[Setmeal[p["武器"]][4]], 9 , -1), color, size*0.5)
-				DrawString(bx*450+pyl,by*470+40+100,"◆"..string.sub(ItemInfo[p["武器"]][4]..":"..FJXguo[Setmeal[p["武器"]][5]], 9 , -1), color, size*0.5)
-				DrawString(bx*450+pyl,by*470+60+100,"◆"..string.sub(ItemInfo[p["武器"]][4]..":"..ZqXguo[Setmeal[p["武器"]][6]], 9 , -1), color, size*0.5)
-				tjm(bx*450+pyl,by*470+80+100,"◆"..CC.PTFSM[Setmeal[p["武器"]][7]][1]..":"..CC.PTFSM[Setmeal[p["武器"]][7]][2],C_RED,size*0.5,13,size*0.5)
+				DrawString(CC.ScreenW / 3.31, CC.ScreenH / 1.29, "◆" .. string.sub(ItemInfo[p["武器"]][4] .. ":" .. Xguo[Setmeal[p["武器"]][4]], 9, -1), color, size * 0.5)
+				DrawString(CC.ScreenW / 3.31, CC.ScreenH / 1.29 + size * 0.5, "◆" .. string.sub(ItemInfo[p["武器"]][4] .. ":" .. FJXguo[Setmeal[p["武器"]][5]], 9, -1), color, size * 0.5)
+				DrawString(CC.ScreenW / 3.31, CC.ScreenH / 1.29 + size * 0.5 * 2, "◆" .. string.sub(ItemInfo[p["武器"]][4] .. ":" .. ZqXguo[Setmeal[p["武器"]][6]], 9, -1), color, size * 0.5)
+				tjm(CC.ScreenW / 3.31, CC.ScreenH / 1.29 + size * 0.5 * 3, "◆" .. CC.PTFSM[Setmeal[p["武器"]][7]][1] .. ":" .. CC.PTFSM[Setmeal[p["武器"]][7]][2], C_RED, size * 0.5, 13, size * 0.5)
 			end
 			--DrawString( bx*zb2[3][1]+5-250,by*zb2[3][2]+2, string.sub(ItemInfo[p["武器"]][5], 5 , -1), M_YellowGreen, size*0.5)
 			--DrawString( bx*zb2[3][1]+5-250,by*zb2[3][2]+2+20,string.sub(ItemInfo[p["武器"]][7], 5 , -1), M_YellowGreen, size*0.5)
@@ -28735,7 +28876,8 @@ local nk,dk,hk,bk,xk,fk = 100-nskx(id,100),100-zdkx(id,100),100-zskx(id,100),100
        --if yg[k][2] == 1 then
 	   ----lib.LoadPNG(91, 18 * 2 ,dx*500, dy*90 + h * (i), 1)
 	    --  lib.LoadPNG(91,160*2,bx*1242,by*60+i*by*48+by*18,1)
-		  lib.LoadPNG(91,160*2,bx*1125+size1,by*60+i*bx*48+bx*18-size1,1)
+		--   lib.LoadPNG(91,160*2,bx*1125+size1,by*60+i*bx*48+bx*18-size1,1)
+		  lib.LoadPNG(91, 320, bx * 1125 + size1, by * 60 + i * bx * 48 + bx * 18 - size1, 1, 0, CC.ScreenW / 26)
 		  if k ~= 3 and psx(id,yg[k][1]) > 0 then 
 		     str = JY.Wugong[psx(id,yg[k][1])]['名称']
 		  elseif k == 3 and psx(id,yg[k][1]) > 1 then
@@ -29211,11 +29353,12 @@ local nk,dk,hk,bk,xk,fk = 100-nskx(id,100),100-zdkx(id,100),100-zskx(id,100),100
    
    --生命内力大小
 	local ww = bx*78
-	--local h = bx*7
+	local zm = CC.ScreenW / 24
+	local pw, ph = lib.GetPNGXY(91, 70, zm)
 	--生命坐标
-	local x1,y1 = bx*200,bx*640
+	local x1, y1 = CC.ScreenW / 32 + picx / 2 - pw / 2, CC.ScreenH / 2.8 + picy
 	--内力坐标
-	local x2,y2 = bx*200,bx*658
+	local x2, y2 = x1, y1 + ph
 	--生命
 	local sm = JY.Person[id]['生命']
 	--内力
@@ -29224,16 +29367,16 @@ local nk,dk,hk,bk,xk,fk = 100-nskx(id,100),100-zdkx(id,100),100-zskx(id,100),100
 	local smmax = JY.Person[id]['生命最大值']
 	--最大内力
 	local nlmax = JY.Person[id]['内力最大值']
-	lib.LoadPNG(91, 35*2, x1, y1, 2)
-	lib.LoadPNG(91, 35*2, x2, y2, 2)
+	lib.LoadPNG(91, 70, x1, y1, 1, 0, zm)
+    lib.LoadPNG(91, 70, x2, y2, 1, 0, zm)
 	--生命条
-	lib.SetClip(x1-ww,y1-bx*7,(x1-ww)+(ww*2)*(sm/smmax),y1+bx*7)
-	lib.LoadPNG(91, 31*2, x1, y1, 2)
+	lib.SetClip(x1, y1, x1 + sm / smmax * pw, y1 + ph)
+	lib.LoadPNG(91, 62, x1, y1, 1, 0, zm)
 	
 	lib.SetClip(0,0,0,0)
 	--内力条
-	lib.SetClip(x2-ww,y2-bx*7,(x2-ww)+(ww*2)*(nl/nlmax),y2+bx*7)
-	lib.LoadPNG(91, 32*2, x2, y2, 2)
+	lib.SetClip(x2, y2, x2 + nl / nlmax * pw, y2 + ph)
+	lib.LoadPNG(91, 64, x2, y2, 1, 0, zm)
 	
 	lib.SetClip(0,0,0,0)
 	-- --内力属性
@@ -29260,11 +29403,11 @@ local nk,dk,hk,bk,xk,fk = 100-nskx(id,100),100-zdkx(id,100),100-zskx(id,100),100
 	local smwz = sm..'/'..smmax
 	--内力数字
 	local nlwz = nl..'/'..nlmax--..'（'..strcl..'）'
-	
+	local se = ph / 1.23
 	--生命
-	DrawString(x1-string.len(smwz)/4*size2,y1-size2/2,smwz,C_WHITE,size2)
+	DrawString(x1 + pw / 2 - #smwz * se / 4, y1, smwz, C_WHITE, se)
 	--内力
-	DrawString(x2-string.len(nlwz)/4*size2,y2-size2/2,nlwz,cl,size2)
+	DrawString(x2 + pw / 2 - #nlwz * se / 4, y2, nlwz, cl, se)
    
    
    i = 0
@@ -32815,7 +32958,7 @@ function tjm31(zx,zy,x, y, fanwei, cx, cy)
   
   --say("测试"..num,0,1)
   for i = 1,num do 
-      --menu[xy[i][1]+4][xy[i][2]+4] = 1
+      menu[xy[i][1]+4][xy[i][2]+4] = 1
   end
   
   for i = 1,19 do 
@@ -33219,7 +33362,7 @@ function QUANZHANGQX(teamid)
 		--lib.PicLoadCache(92,jm[i+cont1][2]*2,(i)*w-num*w+sx+aa,y-CC.ScreenH/768*30,2,240,nil,CC.ScreenW/1360*85)
 		if pg == 1 then	
 			--lib.PicLoadCache(92,67*2,bx*212,by*33,1)
-			lib.PicLoadCache(92,67*2,0,0,1)
+			lib.LoadPNG(92, 134, -1, -1, 1)
 			--lib.PicLoadCache(92,67*2,bx*212,by*33,2,240,nil,CC.ScreenW/1360*85)
 			DrawString(bx*212+bx*515-string.len(JY.Person[id]["姓名"])/2*size1,by*33+ by*73, JY.Person[id]["姓名"], C_CYGOLD, size1)
 			if wxds3>0 then
@@ -33303,7 +33446,7 @@ function QUANZHANGQX(teamid)
 			end
 		--指法
 		elseif pg == 2 then
-			lib.PicLoadCache(92,111*2,0,0,1)	
+			lib.LoadPNG(92, 222, -1, -1, 1)
 			DrawString(bx*212+bx*515-string.len(JY.Person[id]["姓名"])/2*size1,by*33+ by*73, JY.Person[id]["姓名"], C_CYGOLD, size1)
 			if wxds3>0 then
 			DrawString(bx*212+bx*380,by*33+by*125,"武学点数 "..wxds.." ("..wxds1.."/500 +"..wxds2.."/250 +"..wxds3.."/1500 -"..wxds4..")",C_CYGOLD,size)	
@@ -33383,7 +33526,7 @@ function QUANZHANGQX(teamid)
 			end	
 		--剑法
 		elseif pg == 3 then
-			lib.PicLoadCache(92,112*2,0,0,1)
+			lib.LoadPNG(92, 224, -1, -1, 1)
 			DrawString(bx*212+bx*515-string.len(JY.Person[id]["姓名"])/2*size1, by*33+by*73, JY.Person[id]["姓名"], C_CYGOLD, size1)
 			if wxds3>0 then
 			DrawString(bx*212+bx*380,by*33+by*125,"武学点数 "..wxds.." ("..wxds1.."/500 +"..wxds2.."/250 +"..wxds3.."/1500 -"..wxds4..")",C_CYGOLD,size)	
@@ -33463,7 +33606,7 @@ function QUANZHANGQX(teamid)
 			end		
 		--耍刀
 		elseif pg == 4 then
-			lib.PicLoadCache(92,113*2,0,0,1)
+			lib.LoadPNG(92, 226, -1, -1, 1)
 			DrawString(bx*212+bx*515-string.len(JY.Person[id]["姓名"])/2*size1,by*33+ by*73, JY.Person[id]["姓名"], C_CYGOLD, size1)
 			if wxds3>0 then
 			DrawString(bx*212+bx*380,by*33+by*125,"武学点数 "..wxds.." ("..wxds1.."/500 +"..wxds2.."/250 +"..wxds3.."/1500 -"..wxds4..")",C_CYGOLD,size)	
@@ -33549,7 +33692,7 @@ function QUANZHANGQX(teamid)
 			end	
 		--奇门
 		elseif pg == 5 then
-			lib.PicLoadCache(92,114*2,0,0,1)
+			lib.LoadPNG(92, 228, -1, -1, 1)
 			DrawString(bx*212+bx*515-string.len(JY.Person[id]["姓名"])/2*size1, by*33+by*73, JY.Person[id]["姓名"], C_CYGOLD, size1)
 			if wxds3>0 then
 			DrawString(bx*212+bx*380,by*33+by*125,"武学点数 "..wxds.." ("..wxds1.."/500 +"..wxds2.."/250 +"..wxds3.."/1500 -"..wxds4..")",C_CYGOLD,size)	
