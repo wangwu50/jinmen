@@ -5,9 +5,9 @@
 local function char(aa)
 	local str = ""
 	local names = 
-		{{1,"一" },
+		{{1,"一"},
 		{2, "二"},
-		{3,"三" },
+		{3, "三"},
 		{4, "四"},
 		{5, "五"},
 		{6, "六"},
@@ -235,7 +235,7 @@ function samedie() --全圍
 newkdef[30015] = function() --赌博	
 	Cls()
 	local nexty = CC.ScreenH/2-CC.DefaultFont*4 + CC.SingleLineHeight
-	say("本店最近兼职游乐业，客官要不要玩点东西？赌博每局二百两，游戏每局三千两。",220,0,"兼职小二") 	
+	say("本店最近兼职游乐业，客官要不要玩点东西？赌博每局二百两，游戏每局五百两。",220,0,"兼职小二") 	
 	local menuItem = {
 			{"赌博",nil,1},   
 			{"游戏",nil,1},
@@ -251,7 +251,7 @@ newkdef[30015] = function() --赌博
 		do return end
 	end	
 	if r == 2 then
-		if instruct_31(3000) == false then
+		if instruct_31(500) == false then
 			Cls()
 			say("您身上的钱不够。",220,0,"兼职小二") 		
 			do return end
@@ -266,7 +266,7 @@ newkdef[30015] = function() --赌博
 		newkdef[4001]()
 		do return end
 	end
-	if instruct_31(200) == false then
+	if instruct_31(500) == false then
 		Cls()
 		say("您身上的钱不够。",220,0,"兼职小二") 		
 		do return end
@@ -330,7 +330,7 @@ newkdef[4000] = function() --游戏
 	local gf = {CONFIG.DataPath .. "game.idx", CONFIG.DataPath .. "game.grp"}
 	local nexty = CC.ScreenH/2-CC.DefaultFont*4 + CC.SingleLineHeight
 	lib.PicLoadFile(gf[1], gf[2], 8)
-	if instruct_31(5000) == false then
+	if instruct_31(500) == false then
 		Cls()
 		say("您身上的钱不够。",220,0,"兼职小二") 		
 		do return end
@@ -353,7 +353,7 @@ newkdef[4000] = function() --游戏
 		do return end
 	end
 	local win = false
-	instruct_2(174, -5000)		
+	instruct_2(174, -500)		
 	if r == 1 then
 		win = plant(-1, math.random(1, 2), 1)
 		if win then
@@ -361,7 +361,7 @@ newkdef[4000] = function() --游戏
 			instruct_2(math.random(0, 35), math.random(1, 2))
 			instruct_2(174, math.random(5) * 100)
 			
-			local n = math.random(500,1500)
+			local n = math.random(50,100)
 			JY.Thing[203]["未知7"] = JY.Thing[203]["未知7"] + n
 			DrawStrBoxWaitKey("您的积分增加了"..n.."点", C_GOLD, CC.DefaultFont,nil,LimeGreen)
 			--tb(jiadian(100))
@@ -371,28 +371,28 @@ newkdef[4000] = function() --游戏
 		local coin, item, treasure = mining()
 		local total = coin * 2 + item * 10 + treasure * 200
 		local aaa = 0
-		-- for i = coin, 1, -1 do
-			-- aaa = aaa + math.random(10, 50)		
-		-- end
-		-- instruct_2(174, aaa)
-		-- for i = item, 1, -1 do
-			-- instruct_2(math.random(0, 35), math.random(1, 2))
-		-- end
-		-- if treasure ~= 0 then
-			-- tb("恭喜挖到宝藏！")
-			-- instruct_2(174, math.random(1000, 2000))
-		-- end		
-		--tb(jiadian(total))	
+		for i = coin, 1, -1 do
+			aaa = aaa + math.random(10, 50)		
+		end
+		instruct_2(174, aaa)
+		for i = item, 1, -1 do
+			instruct_2(math.random(0, 35), math.random(1, 2))
+		end
+		if treasure ~= 0 then
+			tb("恭喜挖到宝藏！")
+			instruct_2(174, math.random(10000, 20000))
+		end		
+		tb("客官有兴趣再来一次！")--(jiadian(total))	
 		do return end
 	elseif r == 3 then
 		win = chess2()
 		if win then
 			say("恭喜！这是您的奖品！",220,0,"兼职小二") 
-			AddPersonAttrib(0, "暗器技巧", math.random(3, 5))
+			AddPersonAttrib(0, "暗器技巧", math.random(13, 25))
 			tb(JY.Person[0]["姓名"].."暗器技巧提升！")	
 			instruct_2(174, math.random(3) * 100)
 			--tb(jiadian(200))	
-			local n = math.random(500,1500)
+			local n = math.random(50,100)
 			JY.Thing[203]["未知7"] = JY.Thing[203]["未知7"] + n
 			DrawStrBoxWaitKey("您的积分增加了"..n.."点", C_GOLD, CC.DefaultFont,nil,LimeGreen)
 			do return end
@@ -401,13 +401,14 @@ newkdef[4000] = function() --游戏
 		win = puzzle()
 		if win then
 			say("恭喜！这是您的奖品！",220,0,"兼职小二") 
-			AddPersonAttrib(0, "拳掌功夫", math.random(3, 4))
-			AddPersonAttrib(0, "御剑能力", math.random(4, 4))
-			AddPersonAttrib(0, "耍刀技巧", math.random(3, 4))
-			AddPersonAttrib(0, "特殊兵器", math.random(3, 4))
-			tb(JY.Person[0]["姓名"].."四系兵器值提升！")	
-			instruct_2(174, math.random(3, 5) * 100)
-			local n = math.random(500,1500)
+			AddPersonAttrib(0, "拳掌功夫", math.random(9, 12))
+			AddPersonAttrib(0, "指法技巧", math.random(9, 12))
+			AddPersonAttrib(0, "御剑能力", math.random(9, 12))
+			AddPersonAttrib(0, "耍刀技巧", math.random(9, 12))
+			AddPersonAttrib(0, "特殊兵器", math.random(9, 12))
+			tb(JY.Person[0]["姓名"].."五系兵器值提升！")	
+			instruct_2(174, math.random(6, 10) * 100)
+			local n = math.random(50,100)
 			JY.Thing[203]["未知7"] = JY.Thing[203]["未知7"] + n
 			DrawStrBoxWaitKey("您的积分增加了"..n.."点", C_GOLD, CC.DefaultFont,nil,LimeGreen)
 			--tb(jiadian(250))				
@@ -424,7 +425,7 @@ newkdef[4000] = function() --游戏
 				
 		instruct_2(174, math.random(2) * 100)
 		
-		local n = math.random(500,1500)
+		local n = math.random(50,100)
 		JY.Thing[203]["未知7"] = JY.Thing[203]["未知7"] + n
 		DrawStrBoxWaitKey("您的积分增加了"..n.."点", C_GOLD, CC.DefaultFont,nil,LimeGreen)
 		--tb(jiadian(total * 2))		
@@ -443,8 +444,8 @@ newkdef[4001] = function() --积分换奖
 	DrawStrBox(x1, y1, "现有"..JY.Thing[203]["未知7"].."点积分可用",C_WHITE, CC.DefaultFont);
 	local menu = {
 		{"物品", nil, 1},
-	--	{"装备", nil, 1},
-	--	{"秘籍", nil, 1},
+		{"装备", nil, 1},
+		{"秘籍", nil, 1},
 	--	{"印信", nil, 1},
 	}
 	local r = ShowMenu(menu,#menu,0,x1,y1+CC.SingleLineHeight,0,0,1,1,CC.DefaultFont,C_ORANGE,C_WHITE);
@@ -453,28 +454,28 @@ newkdef[4001] = function() --积分换奖
 	local price = {}
 	if r == 1 then
 		list = {8, 14}
-		--list = {2, 6, 8, 11, 13, 14, 15, 16, 17, 256, 257, 258, 28, 29, 30, 31, 32, 33, 34, 35}
-		-- for i = 0, JY.ThingNum - 1 do
-			-- if JY.Thing[i]["类型"] == 3 then
-				-- list[#list + 1] = i
-			-- end
-		-- end
-	-- elseif r == 2 then
-		-- --list = {53,41,42,62,46,39,45,48,50,230,245,243,248}
-		-- for i = 0, JY.ThingNum - 1 do
-			-- if JY.Thing[i]["类型"] == 1 then
-				-- list[#list + 1] = i
-			-- end
-		-- end		
-	-- elseif r == 3 then
-		-- if (JY.Thing[203]["未知7"] or 0) < 3 then
-			-- do return end
-		-- end
-		-- for i = 0, JY.ThingNum - 1 do
-			-- if JY.Thing[i]["类型"] == 2 then
-				-- list[#list + 1] = i
-			-- end
-		-- end
+		list = {2, 6, 8, 11, 13, 14, 15, 16, 17, 256, 257, 258, 28, 29, 30, 31, 32, 33, 34, 35}
+		for i = 0, JY.ThingNum - 1 do
+			 if JY.Thing[i]["类型"] == 3 then
+				 list[#list + 1] = i
+			 end
+		 end
+	elseif r == 2 then
+		list = {53,41,42,62,46,39,45,48,50,230,245,243,248}
+		for i = 0, JY.ThingNum - 1 do
+			if JY.Thing[i]["类型"] == 1 then
+				list[#list + 1] = i
+			end
+		end		
+	elseif r == 3 then
+		if (JY.Thing[203]["未知7"] or 0) < 3 then
+			do return end
+		end
+		for i = 0, JY.ThingNum - 1 do
+			if JY.Thing[i]["类型"] == 2 then
+				list[#list + 1] = i
+			end
+		end
 	-- elseif r == 4 then
 		-- if (JY.Thing[203]["未知6"] or 0) < 5 then
 			-- do return end
@@ -684,7 +685,7 @@ function plant(need, number, flag)
 	end
 	if number <= 0 then
 		tb("终于采到了所需要的药草，累死了")
-		local n = math.random(500,1500)
+		local n = math.random(50,100)
 		JY.Thing[203]["未知7"] = JY.Thing[203]["未知7"] + n
 		DrawStrBoxWaitKey("您的积分增加了"..n.."点", C_GOLD, CC.DefaultFont,nil,LimeGreen)
 		return true
@@ -841,7 +842,7 @@ function mining()
     end
 	--instruct_2(list[math.random(#list)], 1)
 	--instruct_2(174, math.random(500, 2000))
-	local n = math.random(500,1500)
+	local n = math.random(50,100)
 	JY.Thing[203]["未知7"] = JY.Thing[203]["未知7"] + n
 	DrawStrBoxWaitKey("您的积分增加了"..n.."点", C_GOLD, CC.DefaultFont,nil,LimeGreen)
   end
@@ -981,7 +982,7 @@ function chess()
   if win == true then
     tb("恭喜！你赢了！")
 	
-	local n = math.random(500,1500)
+	local n = math.random(50,100)
 	JY.Thing[203]["未知7"] = JY.Thing[203]["未知7"] + n
 	DrawStrBoxWaitKey("您的积分增加了"..n.."点", C_GOLD, CC.DefaultFont,nil,LimeGreen)
 	
@@ -1120,7 +1121,7 @@ function chess2()
   end
   if win == true then
     tb("恭喜！你赢了！")
-	local n = math.random(500,1500)
+	local n = math.random(50,100)
 	JY.Thing[203]["未知7"] = JY.Thing[203]["未知7"] + n
 	DrawStrBoxWaitKey("您的积分增加了"..n.."点", C_GOLD, CC.DefaultFont,nil,LimeGreen)
   end
@@ -1311,7 +1312,7 @@ function puzzle()
   end
   if win == true then
     tb("恭喜！你赢了！")
-	local n = math.random(500,1500)
+	local n = math.random(50,100)
 	JY.Thing[203]["未知7"] = JY.Thing[203]["未知7"] + n
 	DrawStrBoxWaitKey("您的积分增加了"..n.."点", C_GOLD, CC.DefaultFont,nil,LimeGreen)
   end
@@ -1650,7 +1651,7 @@ function makedrug(drug)
 
 			lib.SetClip(0, 0, 0, 0)
 			tb2("炼药成功！", nil, nil, C_GOLD, 50)	
-			local n = math.random(500,1500)
+			local n = math.random(50,100)
 			JY.Thing[203]["未知7"] = JY.Thing[203]["未知7"] + n
 			DrawStrBoxWaitKey("您的积分增加了"..n.."点", C_GOLD, CC.DefaultFont,nil,LimeGreen)
 

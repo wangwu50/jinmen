@@ -1038,7 +1038,7 @@ OEVENTLUA[30057] = function(aa, bb) --ϴ�书
 			wogong = wugong - 2
 		end
 		if wugong == 171 then
-			wogong = 166
+			wugong = 166
 		end
 		hasit = 0
 		for i = 1, 12 do
