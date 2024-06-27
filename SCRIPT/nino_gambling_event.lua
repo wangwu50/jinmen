@@ -330,7 +330,7 @@ newkdef[4000] = function() --游戏
 	local gf = {CONFIG.DataPath .. "game.idx", CONFIG.DataPath .. "game.grp"}
 	local nexty = CC.ScreenH/2-CC.DefaultFont*4 + CC.SingleLineHeight
 	lib.PicLoadFile(gf[1], gf[2], 8)
-	if instruct_31(500) == false then
+	if instruct_31(2000) == false then
 		Cls()
 		say("您身上的钱不够。",220,0,"兼职小二") 		
 		do return end
@@ -353,7 +353,7 @@ newkdef[4000] = function() --游戏
 		do return end
 	end
 	local win = false
-	instruct_2(174, -500)		
+	instruct_2(174, -2000)		
 	if r == 1 then
 		win = plant(-1, math.random(1, 2), 1)
 		if win then
@@ -361,7 +361,7 @@ newkdef[4000] = function() --游戏
 			instruct_2(math.random(0, 35), math.random(1, 2))
 			instruct_2(174, math.random(5) * 100)
 			
-			local n = math.random(50,100)
+			local n = math.random(20,40)
 			JY.Thing[203]["未知7"] = JY.Thing[203]["未知7"] + n
 			DrawStrBoxWaitKey("您的积分增加了"..n.."点", C_GOLD, CC.DefaultFont,nil,LimeGreen)
 			--tb(jiadian(100))
@@ -392,7 +392,7 @@ newkdef[4000] = function() --游戏
 			tb(JY.Person[0]["姓名"].."暗器技巧提升！")	
 			instruct_2(174, math.random(3) * 100)
 			--tb(jiadian(200))	
-			local n = math.random(50,100)
+			local n = math.random(20,40)
 			JY.Thing[203]["未知7"] = JY.Thing[203]["未知7"] + n
 			DrawStrBoxWaitKey("您的积分增加了"..n.."点", C_GOLD, CC.DefaultFont,nil,LimeGreen)
 			do return end
@@ -408,7 +408,7 @@ newkdef[4000] = function() --游戏
 			AddPersonAttrib(0, "特殊兵器", math.random(9, 12))
 			tb(JY.Person[0]["姓名"].."五系兵器值提升！")	
 			instruct_2(174, math.random(6, 10) * 100)
-			local n = math.random(50,100)
+			local n = math.random(20,40)
 			JY.Thing[203]["未知7"] = JY.Thing[203]["未知7"] + n
 			DrawStrBoxWaitKey("您的积分增加了"..n.."点", C_GOLD, CC.DefaultFont,nil,LimeGreen)
 			--tb(jiadian(250))				
@@ -425,7 +425,7 @@ newkdef[4000] = function() --游戏
 				
 		instruct_2(174, math.random(2) * 100)
 		
-		local n = math.random(50,100)
+		local n = math.random(20,40)
 		JY.Thing[203]["未知7"] = JY.Thing[203]["未知7"] + n
 		DrawStrBoxWaitKey("您的积分增加了"..n.."点", C_GOLD, CC.DefaultFont,nil,LimeGreen)
 		--tb(jiadian(total * 2))		
