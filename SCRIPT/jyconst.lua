@@ -3029,7 +3029,7 @@ CC.PersonExit = {
     CC.ThingFontSize = CC.Fontsmall;
 		
 	--CC.ThingPicWidth=math.modf(100*CONFIG.Zoom/100);    --物品图片宽高
-	CC.ThingPicWidth=100	--物品图片固定尺寸
+	CC.ThingPicWidth=150	--物品图片固定尺寸
 	CC.ThingPicHeight=CC.ThingPicWidth;
 
 	local n = math.modf(CC.ScreenW/CC.ThingPicWidth-2);			--一行显示几个物品
