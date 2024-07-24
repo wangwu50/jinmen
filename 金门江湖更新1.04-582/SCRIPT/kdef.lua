@@ -20221,7 +20221,7 @@ newkdef[4106]=function()
 	if DrawStrBoxYesNo(-1, -1, "是否要挑战谢无悠修炼天赋外功？", C_WHITE, CC.DefaultFont) then  --是/否
  		if WarMain(245, 1)  then  --战斗开始
 	  		dark()
-	  		stands()
+	  		stands()	
 	  		SetJX(0,1)
 	  		light()	
 			--if MPPD(0) == 21 then
@@ -28757,7 +28757,7 @@ say("石兄弟，你钻研的怎么样了？", 0, 1)  --对话
 			SetTianNei(604,102)	--
 			instruct_35(604, 1, 102, 0)	
 			Cls()  --清屏
-		 end
+		end
 		say("石兄弟，我们走吧。",0,5)
 	
 		if instruct_20() == false then  --判断队伍是否已满
@@ -49909,22 +49909,19 @@ instruct_40(1)
 do return end
 end
 newkdef[9109]=function()
-My_Enter_SubScene(196,23,5,2)  --场景跳跃
---My_Enter_SubScene(196,23,4,0)
+My_Enter_SubScene(196,23,4,0)  --场景跳跃
 instruct_40(3)
 do return end
 end
 
 --慕名镇进中华阁
 newkdef[9110]=function()
-My_Enter_SubScene(198,31,52,0)  --场景跳跃
---My_Enter_SubScene(198,31,53,0)
+My_Enter_SubScene(198,31,53,0)  --场景跳跃
 instruct_40(1)
 do return end
 end
 newkdef[9111]=function()
---My_Enter_SubScene(196,59,3,0)  --场景跳跃
-My_Enter_SubScene(196,59,4,0) 
+My_Enter_SubScene(196,59,3,0)  --场景跳跃
 instruct_40(1)
 do return end
 end
@@ -49968,25 +49965,24 @@ end
 
 --剑冢进埋剑崖
 newkdef[9118]=function()
-My_Enter_SubScene(201,34,55,0)  --场景跳跃
+My_Enter_SubScene(201,34,56,0)  --场景跳跃
 instruct_40(1)
 do return end
 end
 newkdef[9119]=function()
-My_Enter_SubScene(7,28,10,0)  --场景跳跃
+My_Enter_SubScene(7,28,9,0)  --场景跳跃
 instruct_40(1)
 do return end
 end
 
 --明霞岛进道场
 newkdef[9120]=function()
-My_Enter_SubScene(98,2,25,0)  --场景跳跃
+My_Enter_SubScene(98,1,25,0)  --场景跳跃
 instruct_40(1)
 do return end
 end
 newkdef[9121]=function()
-My_Enter_SubScene(202,29,61,0)  --场景跳跃
---My_Enter_SubScene(202,29,62,0)
+My_Enter_SubScene(202,29,62,0)  --场景跳跃
 instruct_40(1)
 do return end
 end
@@ -50041,7 +50037,7 @@ end
 
 --中华阁别院进封玉楼
 newkdef[9130]=function()
-My_Enter_SubScene(186,51,59,0)  --场景跳跃
+My_Enter_SubScene(186,51,60,0)  --场景跳跃
 instruct_40(1)
 do return end
 end
@@ -53401,7 +53397,7 @@ if DrawStrBoxYesNo(-1, -1, "是否要挑战扫地获取一苇渡江？", C_WHITE, CC.DefaultFo
 			say("……多谢。Ｌ＜慕容匹夫你他妈！！！＞", 0, 1)
 			
 			JY.Person[0]["门派技能3"] = 2
-			DrawStrBoxWaitKey("学会斗转秘传！", C_ORANGE, CC.DefaultFont)	
+			DrawStrBoxWaitKey("学会斗转秘传！", C_ORANGE, CC.DefaultFont)
 		else
 			say("恭喜慕容公子功力大进啊！", 0, 1)  --对话
 		
@@ -56893,8 +56889,7 @@ end
 
 --华山派-华山跳转
 newkdef[1146]=function()
-	--My_Enter_SubScene(152,1,23,0)
-My_Enter_SubScene(152,2,24,1)
+	My_Enter_SubScene(152,1,23,0)
 	do return end
 end
 
@@ -60001,19 +59996,19 @@ end
 --雪羽宗
 newkdef[3212]=function()
 	if MPPD(0) == 0 then
-say("是/否加入雪羽宗。入门条件 :　道德 >= 70 轻功 >= 300 ", 514, 0)  --对话
+		say("是/否加入雪羽宗。入门条件 :　道德 >= 70 轻功 >= 300 ", 514, 0)  --对话
 		if JY.Person[0]["品德"] >= 70 and JY.Person[0]["轻功"] >= 300 then
-		if DrawStrBoxYesNo(-1, -1, "是否要加入？", C_WHITE, CC.DefaultFont) then	
-			JoinMP(0, 20, 1)
-			MPAttrib(0)
-			QZXS(CC.MPINFO2[20])
-			say("恭喜你加入雪羽宗。 ",514, 0,"杨冰羽");
-			say("这是本门基础武学，要好生练习。 ",514, 0,"杨冰羽");
-			say("多谢宗主！",0, 1);
-			instruct_2(108,1)
+			if DrawStrBoxYesNo(-1, -1, "是否要加入？", C_WHITE, CC.DefaultFont) then	
+				JoinMP(0, 20, 1)
+				MPAttrib(0)
+				QZXS(CC.MPINFO2[20])
+				say("恭喜你加入雪羽宗。 ",514, 0,"杨冰羽");
+				say("这是本门基础武学，要好生练习。 ",514, 0,"杨冰羽");
+				say("多谢宗主！",0, 1);
+				instruct_2(108,1)
 				do return end
-		else
-			say("你可要好生考虑。 ",514, 0,"杨冰羽");
+			else
+				say("你可要好生考虑。 ",514, 0,"杨冰羽");
 				do return end
 			end	
 		else
@@ -60066,12 +60061,12 @@ say("是/否加入雪羽宗。入门条件 :　道德 >= 70 轻功 >= 300 ", 514, 0)  --对话
 				JoinMP(0,20,3)
 			end
 			do return end
-	else
+		else
 			say("有没有好好练功啊！",514, 0,"杨冰羽");
 		end
 	end
-Cls()  --清屏
-do return end
+	Cls()  --清屏
+	do return end
 end
 
 
