@@ -27439,7 +27439,7 @@ function tjm_menu()
 	   lib.SetClip(0,0,0,0)
 	   lib.PicLoadCache(92,29*2,CC.ScreenW/1360*40,CC.ScreenH/768*615+70,2,256,nil,CC.ScreenW/1360*60)
 	   ShowScreen()
-	   lib.Delay(20)
+	   lib.Delay(5)
 	   Cls()
 	   aa = aa + CC.ScreenW/1360*20
    end 
