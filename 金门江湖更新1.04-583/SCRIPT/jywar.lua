@@ -45201,7 +45201,7 @@ function refw(wugong, level)
 		MiaofaWX = MiaofaWX + 1
 	end	
     --萧秋水 剑气飞纵 用武功范围+1
-	if match_ID(pid, 652) and JY.Base["天书数量"] > 5 then
+	if match_ID(pid, 652) and JY.Base["天书数量"] > 5then
 		MiaofaWX = MiaofaWX + 1
 	end
     --莫大剑法范围+1
@@ -60568,7 +60568,7 @@ Ct['总伤害计算'] = function(enemyid, wugong,level,ang,hurt,swhurt,wxhurt,flag)
 		local aa = math.random(1,4)
 		local a = JY.Person[pid]["内力最大值"]/2000
 		if a < 1 then a = 1 end
-		hurtzs1[#hurtzs1+1] = math.random(1,math.floor(a))
+		hurtzs1[#hurtzs1+1] = math.random(1,a)
 		if aa == 1 then
 			str = "·风卷残云"
 			local a = JY.Person[eid]["冰封程度"] or 0
