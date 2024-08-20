@@ -15392,7 +15392,7 @@ function WGZH(id,WGid1,WGid2)
 	if WGid1 == 11 and WGid2 == 66 then
 		if PersonKF(id,11) and PersonKF(id,66) then 
 			return true
-		elseif match_ID(id, 637) or match_ID(id, 103) then 
+		elseif match_ID(id, 637) or match_ID(id, 103) or match_ID(id, 771) then 
 			return true
 		end
 	end
@@ -16064,8 +16064,8 @@ function NGQH(id,NGid)--这里只写有「主运」的组合
 				return true
 			elseif match_ID(id,117) and PersonKF(id,101) then
 				return true
-			elseif match_ID(id,775) then
-			    return true	
+			elseif match_ID(id,780) and PersonKF(id,101) then	
+			    return true 
 			else
 				return false
 			end
@@ -16081,8 +16081,8 @@ function NGQH(id,NGid)--这里只写有「主运」的组合
 				return true
 			elseif Curr_NG(id,102) and match_ID(id,9927) then
 				return true
-			elseif match_ID(id,774) and Curr_NG(id,102) then
-			    return true			
+			elseif Curr_NG(id,102) and match_ID(id,779) then
+				return true	
 			else
 				return false
 			end
@@ -16162,6 +16162,8 @@ function NGQH(id,NGid)--这里只写有「主运」的组合
 				return true
 			elseif match_ID(id,754) and PersonKF(id,107) then
 			    return true 	
+			elseif match_ID(id,774) and Curr_NG(id,107) then
+			    return true 		
 			elseif Curr_NG(id,107) then
 				if JY.Status == GAME_WMAP then
 					if WAR.PD['九阴组合判定'][id] == 1 then
@@ -16446,6 +16448,8 @@ function NGQH(id,NGid)--这里只写有「主运」的组合
 				return true 
 			elseif Curr_NG(id,94) and match_ID(id,37) then
 			    return true
+			elseif match_ID(id,775) and PersonKF(id,94) then
+			    return true	
 			else 
 			    return false		
 			end
@@ -16506,7 +16510,7 @@ function NGQHB(id,NGid)--这里只写有「非主运」的组合
 				return true
 			elseif match_ID(id,13) or match_ID(id,149) then
 				return true
-			elseif match_ID(id,758) or match_ID(id,635) then
+			elseif match_ID(id,758) or match_ID(id,635) or match_ID(id,775) then
 			    return true	
 			else 
 				return false	
@@ -16558,6 +16562,8 @@ function NGQHB(id,NGid)--这里只写有「非主运」的组合
 				return true
 			elseif match_ID(id,65) or match_ID(id,129) then
 				return true
+			elseif match_ID(id,758) then	
+			    return true
 			else 
 				return false		
 			end
@@ -16626,10 +16632,8 @@ function NGQHB(id,NGid)--这里只写有「非主运」的组合
 		if NGid == 180 then
 			if PersonKF(id,227) and PersonKF(id,180) then
 				return true
-			elseif match_ID(id,759) then
+			elseif match_ID(id,759) or match_ID(id,776) then
 			    return true 	
-			elseif match_ID(id,773) then
-			    return true	
 			else
 				return false
 			end
@@ -19012,7 +19016,7 @@ function firstmenu2()--特殊角色
 	local tsmenu1 = {'雪羽宗','夜雨楼','中华阁','背巍军','护龙山庄','云梦涧','花涧派','世间百兽','诸系群侠'}
 	local menu2 = {	{514,745,744}, --雪
 					{526,525,527,761,457}, --夜
-					{524,743,747,758,759,760,764,771,772,773,774,775,776,778}, --中
+					{524,743,747,758,759,760,764,771,772,773,774,775,776,778,779,780}, --中
 					{568},--巍
 					{749,750,751,752,748}, --护
 					{754,455,762}, --云
@@ -23502,7 +23506,7 @@ function My_ChuangSong_List()
 		or i == 174 or i == 173 or i == 172 or i == 170 or i == 169 or i == 168 or i == 167 or i == 166 or i == 165
 		or i == 164 or i == 163 or i == 162 or i == 171 or i == 185 or i == 182 or i == 197 or i == 198 or i == 199 
 		or i == 142 or i == 143 or i == 144 or i == 145 or i == 146 or i == 147 or i == 148 or i == 149 or i == 150 or i == 200 or i == 201 or i == 202
-		or i == 203 or i == 204 or i == 205 or i == 206 or i == 207 then
+		or i == 203 or i == 204 or i == 205 or i == 206 or i == 207 or i == 208 or i == 209 then
 		else
 			--无酒不欢：这里i即为场景编号
 			menu[i+1] = {JY.Scene[i]["名称"], JY.Scene[i]["进入条件"], i, JY.Scene[i]["场景类型"]};	
@@ -23543,7 +23547,7 @@ function My_ChuangSong_Ex()
 			or sid == 109 or sid == 110 or sid == 111 or sid == 113 or sid == 114   or sid == 115 or sid == 116 or sid == 117 or sid == 118 or sid == 119 
 			or sid == 122 or sid == 123   or sid == 126 or sid == 131 or sid == 132 or sid == 134  or sid == 137 or sid == 138 or sid == 140 or sid == 141 
 			or sid == 142 or sid == 143 or sid == 144 or sid == 145 or sid== 146 or sid== 147 or sid== 148 or sid== 149 or sid== 150 or sid== 161 
-			or sid == 205 or sid == 207
+			or sid == 205 or sid == 207 or sid == 208 or sid == 209
 			or JY.Scene[sid]["进入条件"] == 1 then
 				say("１Ｒ您目前不能进入此场景。", 119, 5, "车夫");
 				return 1;

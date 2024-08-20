@@ -2365,6 +2365,7 @@ newkdef[10008]=function()
 			instruct_2(302, -1)
 		    QZXS("¹¥·ÀÇáÔö¼Ó300µã")
 		    QZXS("ÎäÑ§³£Ê¶Ôö¼Ó150µã")
+			SetTF(0,9982,1)
 			instruct_3(-2,-2,0,0,0,0,0,0,0,0,0,-2,-2)  --ÐÞ¸Ä³¡¾°ÊÂ¼þ
 		    do return end  --ÎÞÌõ¼þ½áÊøÊÂ¼þ
 		end 	
@@ -5915,6 +5916,172 @@ newkdef[10137]=function()
 	end
 end
 
+newkdef[10138]=function()
+    say("»¶Ó­¿Í¹Ù¹âÁÙÖÐ»ª¸ó£¡±¾µêÏÖÔÚ³öÊÛ¸÷ÖÖÒ½µä´óÈ«£¡", 220, 0,"µêÐ¡¶þ")
+	say("¶àÉÙÇ®£¿", 0, 0)
+	say("ÊÐ¼Û66666Á½¡£", 220, 0,"µêÐ¡¶þ")
+	say("ÄÇÃ´¹ó£¿", 0, 0)
+	say("¿Í¹ÙËµÐ¦ÁË£¬ÔÛÃÇÖÐ»ª¸óÂòÂôÍ¯ÛÅÎÞÆÛ£¬¶øÇÒÎï³¬ËùÖµ£¡", 220, 0,"µêÐ¡¶þ")
+    if DrawStrBoxYesNo(-1, -1, "ÊÇ·ñ¹ºÂò»õÎï", LimeGreen, CC.DefaultFont, C_GOLD) == true then
+		if instruct_31(66666) then
+		    local r = JYMsgBox("ÇëÑ¡Ôñ", "¿Í¹Ù£¡ÄúÐèÒª¹ºÂòµÄÎïÆ·ÏÈ¿´ºÃÔÚ¸øÇ®", {"×ÓÎçÕë¾Ä¾­","»ªÙ¢ÄÚÕÑÍ¼","ºúÇàÅ£Ò½Êé","»ÆµÛÄÚ¾­","¶¾¾­","ÍË³ö"}, 6, 518)
+		    if r == 1 then
+			    instruct_2(187, 1)       --×ÓÎçÕë¾Ä¾­
+				instruct_2(174, -66666);	--»¨66666Á½
+			    Cls()  --ÇåÆÁ
+		    elseif r == 2 then
+			    instruct_2(188, 1)      --»ªÙ¢ÄÚÕÑÍ¼
+				instruct_2(174, -66666);	--»¨66666Á½
+			    Cls()  --ÇåÆÁ
+			elseif r == 3 then
+			    instruct_2(189, 1)      --ºúÇàÅ£Ò½Êé
+				instruct_2(174, -66666);	--»¨66666Á½
+			    Cls()  --ÇåÆÁ	
+			elseif r == 4 then
+			    instruct_2(191, 1)      --»ÆµÛÄÚ¾­
+				instruct_2(174, -66666);	--»¨66666Á½
+			    Cls()  --ÇåÆÁ	
+			elseif r == 5 then
+			    instruct_2(192, 1)      --¶¾¾­
+				instruct_2(174, -66666);	--»¨66666Á½
+			    Cls()  --ÇåÆÁ						
+		    end
+			--instruct_32(234,-1)  --µÃµ½»òÊ§È¥ÎïÆ·
+	    else
+            say("¿Í¹ÙÄúµÄÇ®²»¹»£¡", 220, 0,"µêÐ¡¶þ")	
+		end	
+	end	
+end 
+
+newkdef[10139]=function()
+    say("É§Äê£¬ÏÖÔÚÖÐ»ª¸óÓëÒ¹ÓêÂ¥¹²Í¬ÍÆ³öÁËµÀµÂÕ½ÒÛ£¬ÊÇ·ñÒª³¢ÊÔ£¿",1062, 0,"Àîç²ÔÂ")
+	say("µÀµÂÕ½ÒÛ£¿ÊÇÊ²Ã´£¿", 0, 0)
+    say("¾ÍÊÇ¸ù¾ÝÕ½¶·Ôö¼Ó»ò¼õÉÙÄãµÄµÀµÂÖµ¡£",1062, 0,"Àîç²ÔÂ")
+	say("»¹ÄÜÕâÑù£¿", 0, 0)
+	say("ÓÐÊ²Ã´²»ÄÜ£¿ÒªÊÔÊÔÂð£¿",1062, 0,"Àîç²ÔÂ")
+	say("ºÃ°¡£¬À´Ñ½¡£", 0, 0)
+	say("¿ÉÒÔ£¬µ«ÊÇÏÈ¸¶Ç®¡£",1062, 0,"Àîç²ÔÂ")
+	say("...................", 0, 0)
+	local nexty = CC.MainSubMenuY + CC.SingleLineHeight
+	local p = SelectTeamMenu(CC.MainSubMenuX, nexty)
+    local money = 80000
+	if p > 0 then
+		local diyid = JY.Base["¶ÓÎé" .. p]
+		if instruct_31(80000) and p > 0 then
+			local r = JYMsgBox("ÖÐ»ª¸óÓëÒ¹ÓêÂ¥Äú·þÎñ", "ÇëÑ¡ÔñÒÔÏÂÄú¾õµÃÓÐÄÜÁ¦»ñÊ¤µÄÌôÕ½£¬¼Ç×¡¸øÇ®", {"¼ÓµÀµÂ","¼õµÀµÂ","ÍË³ö"}, 3, 1062)
+			Cls()
+			if r == 1 then 
+				say(JY.Person[diyid]["ÐÕÃû"].."Ö§¸¶"..money.."Á½Òø×Ó¸øÁ½Î»´óÀÐ£¡", 1062, 0,"Àîç²ÔÂ")
+				say("¡­¡­¡­¡­¡­¡­Õæ¹ó£¡", 0, 0)
+				instruct_2(174, -80000)
+				if DrawStrBoxYesNo(-1, -1, "ÔÙ´ÎÈ·¶¨ÊÇ·ñÌôÕ½£¿", C_WHITE, 30) == false then	
+					say("Ç®²»ÒªÁË£¬ÏÂ´ÎÔÙÀ´ÌôÕ½£¡", 0, 0)	
+					do return end
+				end
+				if WarMain(484, 0) == false then  --Õ½¶·¿ªÊ¼
+					say("É§Äê£¬Äã»¹ÐèÒªÌáÉý×Ô¼ºµÄÊµÁ¦£¡", 1062, 0,"Àîç²ÔÂ")
+					say("¡­¡­¡­¡­¡­¡­",0,0)
+					do return end  --ÎÞÌõ¼þ½áÊøÊÂ¼þ
+				else
+					say("²»´í£¬ÕâÊÇ½±Àø¡£", 1062, 0,"Àîç²ÔÂ")
+					say("ºÙºÙºÙ£¡",0,0)
+					instruct_37(6)  --Ôö¼ÓÆ·µÂ
+					Cls()
+					do return end  --ÎÞÌõ¼þ½áÊøÊÂ¼þ
+				end	
+			elseif r == 2 then	
+				say(JY.Person[diyid]["ÐÕÃû"].."Ö§¸¶"..money.."Á½Òø×Ó¸øÁ½Î»´óÀÐ£¡", 1062, 0,"Àîç²ÔÂ")
+				say("¡­¡­¡­¡­¡­¡­Õæ¹ó£¡", 0, 0)
+				instruct_2(174, -80000)
+				if DrawStrBoxYesNo(-1, -1, "ÔÙ´ÎÈ·¶¨ÊÇ·ñÌôÕ½£¿", C_WHITE, 30) == false then	
+					say("Ç®²»ÒªÁË£¬ÏÂ´ÎÔÙÀ´ÌôÕ½£¡", 0, 0)		
+					do return end
+				end
+				if WarMain(485, 0) == false then  --Õ½¶·¿ªÊ¼
+					say("É§Äê£¬Äã»¹ÐèÒªÌáÉý×Ô¼ºµÄÊµÁ¦£¡", 1062, 0,"Àîç²ÔÂ")
+					say("¡­¡­¡­¡­¡­¡­",0,0)
+					do return end  --ÎÞÌõ¼þ½áÊøÊÂ¼þ
+				else
+					say("²»´í£¬ÕâÊÇ½±Àø¡£", 1062, 0,"Àîç²ÔÂ")
+					say("ºÙºÙºÙ£¡",0,0)
+					instruct_37(-6)  --¼õÉÙÆ·µÂ
+					Cls()
+					do return end  --ÎÞÌõ¼þ½áÊøÊÂ¼þ
+				end		
+			else 
+				say("ËãÁË£¬ÏÂ´ÎÔÙÀ´ÌôÕ½¡£", 0, 0)	
+			end
+		else
+			say("É§Äê£¬ÄãµÄÇ®²»¹»£¡", 1062, 0,"Àîç²ÔÂ")	
+		end
+	end
+end	
+
+newkdef[10140]=function()
+    if instruct_43(468) == false then  --¾ÅÏöÏÉÏ¢
+        say("´Ë¶Î¾çÇéÐèÒª¾ÅÏöÏÉÏ¢¡£",0,2)
+	    do return end  --ÎÞÌõ¼þ½áÊøÊÂ¼þ
+    end
+	say("¶À¹ÂÇ°±²ºÃ£¡", 0, 1)
+	say("Ð¡´åÉÙÄê£¬ÎÒÃÇÓÖ¼ûÃæÁË¡£", 592, 0)
+	say("Ç°±²£¬Íí±²Ï£ÍûÇ°±²Ö¸µãÒ»·¬¡£", 0, 1)
+    say("ÎªºÎ£¿", 592, 0)
+	say("Ç°±²ÎäÑ§½²¾¿ÁÏµÐÏÈ»ú£¬ÒÔ²»±äÓ¦Íò±ä£¬ÕâÕýÊÇÍí±²ËùÇ·È±µÄ¶«Î÷£¬ÍûÇ°±²²»Áß´Í½Ì¡£", 0, 1)
+	say("¹þ¹þ¹þ£¬Ð¡´å´«ÈË¹ûÈ»À÷º¦£¡", 592, 0)
+	say("ÄÇÃ´£¬Èê¾Í¿´ºÃÁË£¡", 592, 0)
+	if WarMain(486, 0) == false then  --Õ½¶·¿ªÊ¼
+	    say("ÊµÁ¦²»Ë×£¬ÈÔÓÐÃÀÖÐ²»×ã£¬Õâ±¾ÃØ¼®ÄãÄÃ×ÅÂýÂýÑÐÏ°¡£", 592, 0)
+	    say("¶àÐ»Ç°±²´Í½Ì£¡", 0, 0)
+	    say("ºó»áÓÐÆÚ£¡", 592, 0)
+		instruct_2(114,1)  --¶À¹Â¾Å½£
+		instruct_2(116,1)  --ÐþÌú½£·¨
+		SetTF(0,9975,1)    --½£Ä§ÔÙÁÙ 
+		SetTF(0,9974,1)    --¾Å½£Õæ´« 
+		--instruct_2(303,-1)  
+		--AddPersonAttrib(0, "Óù½£ÄÜÁ¦", 100)
+	    instruct_3(-2,-2,0,0,0,0,0,0,0,0,0,-2,-2)  --ÐÞ¸Ä³¡¾°ÊÂ¼þ
+	    do return end  --ÎÞÌõ¼þ½áÊøÊÂ¼þ
+    else	
+        say("ÊµÁ¦²»Ë×£¬ÈÔÓÐÃÀÖÐ²»×ã£¬ÈÔÐèÅ¬Á¦¡£", 592, 0)
+	    say("¶àÐ»Ç°±²´Í½Ì£¡", 0, 0)
+	    say("ºó»áÓÐÆÚ£¡", 592, 0)
+		AddPersonAttrib(0, "Óù½£ÄÜÁ¦", 200)
+	    instruct_3(-2,-2,0,0,0,0,0,0,0,0,0,-2,-2)  --ÐÞ¸Ä³¡¾°ÊÂ¼þ
+	    do return end  --ÎÞÌõ¼þ½áÊøÊÂ¼þ	
+    end	
+end 
+
+newkdef[10141]=function()
+    say("É§Äê£¬ÄãÓÐ·³ÄÕÂð£¿",1053, 0,"ÄÏ¹¬Ò»ÃÎ")
+	say("ÊÀÈËË­Ã»ÓÐ·³ÄÕ£¿¿É·³ÄÕ²»ÊÇÄÇÃ´ÇáÒ×ÍüÈ´µÄ¡£", 0, 0)
+	say("ÎÒÕâÀïÓÐÒ»Ð©ºÃÍæÒâ£¬³ÔÁËÖ®ºó¿ÉÒÔÍüÈ´·³ÄÕ£¬ÒªÊÔÊÔÂð£¿",1053, 0,"ÄÏ¹¬Ò»ÃÎ")
+	say("Å¶£¿ÕæµÄ¼ÙµÄ£¿¶àÉÙÇ®£¿", 0, 0)
+    say("²»¹ó£¬8ÍòÁ½°×Òø",1053, 0,"ÄÏ¹¬Ò»ÃÎ") 
+	say("Õâ»¹²»¹ó£¿", 0, 0)
+	say("Ò»·ÖÇ®Ò»·Ö»õÂï£¬¶øÇÒÊÇÃ÷Âë±ê¼Û£¬Ð»¾ø»¹¼Û¡£",1053, 0,"ÄÏ¹¬Ò»ÃÎ") 
+	say("ÓÐÃ»ÓÐÊ²Ã´¸±×÷ÓÃ£¿", 0, 0)
+	say("²»ÖªµÀ£¬·´ÕýÎÒÃ»·þÓÃ¹ý¡£",1053, 0,"ÄÏ¹¬Ò»ÃÎ") 
+	say("...............", 0, 0)
+	say("ËãÁË£¬¸»¹óÏÕÖÐÇó¡£", 0, 0)
+	if instruct_31(80000) then
+		instruct_2(174,-80000)
+		if WarMain(487, 0) == false then  --Õ½¶·¿ªÊ¼
+	        say("Õâ¶«Î÷Ã»Ê²Ã´Ð§¹û¡£", 0, 0)
+			say("ÄãÌ«²ËÁË¡£",1053, 0,"ÄÏ¹¬Ò»ÃÎ") 
+			say(".............", 0, 0)
+	        do return end  --ÎÞÌõ¼þ½áÊøÊÂ¼þ
+        else	
+            say("ÕæÊÇºÃ¶«Î÷£¬¹þ¹þ¹þ£¡", 0, 0)
+			say("É§Äê£¬²»´íÅ¶£¡",1053, 0,"ÄÏ¹¬Ò»ÃÎ") 
+			Cat('ÒÅÍüÌì¸³')		           
+	        do return end  --ÎÞÌõ¼þ½áÊøÊÂ¼þ	
+        end	
+	else
+		say('É§Äê£¬ÄãÇ®²»¹»£¬²»ÒªÏë°×æÎ£¡',1053, 0,"ÄÏ¹¬Ò»ÃÎ")	
+		do return end
+	end	
+end 	
+
 --[[
 newkdef[1010]=function()
 if instruct_43(220) == false then  --ÅÐ¶ÏÊÇ·ñÓÐÎïÆ·
@@ -7600,6 +7767,7 @@ end
 newkdef[1089]=function()
 instruct_3(-2, -2,1,0,0,0,0,2608,2608,2608,-2,-2,-2)  --ÐÞ¸Ä³¡¾°ÊÂ¼þ
 instruct_2(13, 1)  --µÃµ½»òÊ§È¥ÎïÆ·
+instruct_2(109, 1)  --µÃµ½»òÊ§È¥ÎïÆ·Ó¥×¦¹¦
 instruct_2(363, 1)  --µÃµ½»òÊ§È¥ÎïÆ·µØ»ð¹¦
 Cls()  --ÇåÆÁ
 do return end
@@ -27072,8 +27240,9 @@ Cls()
 if instruct_28(0,100,999) then --ÅÐ¶ÏÆ·µÂÊÇ·ñÔÚ·¶Î§Ö®ÄÚ
 say("°×¹«¹«¼ÈÈ»Ò²´ðÓ¦ÁË£¬ÄÇÎÒÃÇ×ß£¡",604,0)
 say("ÎÒ¿´ÄãÈËÆ·²»´í£¬¶îÍâ½ÌÄãÒ»ÕÐ£¡",604,0)
-instruct_2(278,1)
-instruct_2(468,1)
+instruct_2(278,1)   --Ô½Å®½£
+instruct_2(348,2)   --ÎÞ¼«µ¤
+--instruct_2(468,1)
 SetTF(0,9806,1)
 Cls()
 say("ºÃµÄ¡£",0,1)
@@ -35181,13 +35350,15 @@ instruct_3(-2, 31,0,0,0,0,0,0,0,0,-2,-2,-2)  --ÐÞ¸Ä³¡¾°ÊÂ¼þ
 stands()
 say("°¡¡­¡­ÎÒÕâÊÇÔÚÄÄÀï°¡£¿°¡¡­¡­ÏëÆðÀ´ÁË¡­¡­ÇÇ°ïÖ÷¡­¡­ÇÇ°ïÖ÷ÓÃËû×îºóµÄÄÚÁ¦°ÑÎÒËÍ³öÁË¾ÛÏÍ×¯£¬ÄÇËûÄØ£¿", 0, 1)  --¶Ô»°
 Cls()  --ÇåÆÁ
-instruct_2(111, 1)  --µÃµ½åÐÒ£ÓÎ
-instruct_2(351,1)   --ÇÜÁú¹¦
+--instruct_2(111, 1)  --µÃµ½åÐÒ£ÓÎ
+--instruct_2(351,1)   --ÇÜÁú¹¦
     if MPPD(0) == 2 and MPDJ(0) == 1 then
 		JoinMP(0, 2, 2)       --Ö÷½ÇÉý¼¶ÎªØ¤°ï2¼¶µÜ×Ó
 		AddPersonAttrib(0, "È­ÕÆ¹¦·ò", 200)     --Ö÷½ÇÈ­Ïµ+200
 		AddPersonAttrib(0, "ÌØÊâ±øÆ÷", 200)     --Ö÷½ÇÌØÏµ+200
-		instruct_2(8,10)                          --ÌìÍõ±£Ãüµ¤10¿Å
+		instruct_2(8,10)                        --ÌìÍõ±£Ãüµ¤10¿Å
+		instruct_2(111,1)                       --µÃµ½åÐÒ£ÓÎ
+        instruct_2(351,1)                       --ÇÜÁú¹¦
 	end
 do return end
 end
@@ -41219,13 +41390,13 @@ say("\"ÆóÍ¼\"Ã»ÓÐ£¬\"ÐÐÂÃÍ¼\"µ¹ÊÇÓÐÒ»·ù¡£", 0, 1)  --¶Ô»°
 Cls()  --ÇåÆÁ
 say(JY.Person[0]["ÍâºÅ2"].."£¬ÉÙÆ¶×ì£¬ÎÒ¿´ÄãÊÇÕÒËÀ£¡", 31, 0)  --¶Ô»°
 Cls()  --ÇåÆÁ
-if WarMain(43, 0) == false then  --Õ½¶·¿ªÊ¼
+--[[if WarMain(43, 0) == false then  --Õ½¶·¿ªÊ¼
 	instruct_15()  --ËÀÍö
 	Cls()  --ÇåÆÁ
 	do return end  --ÎÞÌõ¼þ½áÊøÊÂ¼þ
 	Cls()  --ÇåÆÁ
 
-end
+end]]
 Cls()  --ÇåÆÁ
 instruct_13()  --³¡¾°±äÁÁ
 say(JY.Person[0]["ÍâºÅ2"].."£¬ÄãµÈ×Å£¬´ýÎÒÈ¥ÇëÎÒÈý¸ç¡£", 31, 0)  --¶Ô»°
@@ -41279,12 +41450,12 @@ say("ÍºÍ·ÍºÍ·£¬ÏÂÓê²»³î£¬ÈË¼ÒÓÐÉ¡£¬ÎÒÓÐÍºÍ·¡£", 0, 1)  --¶Ô»°
 Cls()  --ÇåÆÁ
 say("ºÃ"..JY.Person[0]["ÍâºÅ2"].."£¬ÎÒÇÆÄãÊÇ»îµÃ²»ÄÍ·³ÁË£¬¿´¿´ÀÏ·òÔõÃ´ÊÕÊ°Äã¡£", 32, 0)  --¶Ô»°
 Cls()  --ÇåÆÁ
-if WarMain(44, 0) == false then  --Õ½¶·¿ªÊ¼
+--[[if WarMain(44, 0) == false then  --Õ½¶·¿ªÊ¼
 	instruct_15()  --ËÀÍö
 	Cls()  --ÇåÆÁ
 	do return end  --ÎÞÌõ¼þ½áÊøÊÂ¼þ
 
-end
+end]]
 Cls()  --ÇåÆÁ
 instruct_13()  --³¡¾°±äÁÁ
 instruct_2(183, 1)  --µÃµ½»òÊ§È¥ÎïÆ·
@@ -41342,13 +41513,13 @@ say("Í÷·ÑÃ·×¯ÔÚ½­ºþÉÏµÄÉùÃûÈç´ËÏìÁÁ£¬Ïë²»µ½¾¡ÊÇÒ»ÈºÒÐ¶àÆÛÉÙÖ®±²£¬¿ÉÐ¦¿ÉÐ¦¡£", 0,
 Cls()  --ÇåÆÁ
 say("ÈýµÜ£¬ËÄµÜ£¬ÔÛÃÇÃ·×¯¿É±ðÈÃÕâ¸ö¼Ò»ïÇÆ±âÁË£¬¾ÍÈÃÎÒÀ´»áÒ»»á£¬¿´Ëû¶à´óÄÜÄÍ¡£", 33, 0)  --¶Ô»°
 Cls()  --ÇåÆÁ
-if WarMain(45, 0) == false then  --Õ½¶·¿ªÊ¼
+--[[if WarMain(45, 0) == false then  --Õ½¶·¿ªÊ¼
 	instruct_15()  --ËÀÍö
 	Cls()  --ÇåÆÁ
 	do return end  --ÎÞÌõ¼þ½áÊøÊÂ¼þ
 	Cls()  --ÇåÆÁ
 
-end
+end]]
 Cls()  --ÇåÆÁ
 instruct_13()  --³¡¾°±äÁÁ
 
@@ -41408,13 +41579,13 @@ say("³£ÑÔµÀ£ºÎÞ¹¦²»ÊÜÂ»£¬ÄãÎÒËØÎÞÔ¨Ô´£¬ÑÉ¿ÉÊÜÄãÕâµÈºñÀñ£¿ÌýÎÒÄÇÈý¸öÐÖµÜËµµÀ£¬Ö»Ð
 Cls()  --ÇåÆÁ
 say("ºÃ£¬Ç°±²Çë¡£", 0, 1)  --¶Ô»°
 Cls()  --ÇåÆÁ
-if WarMain(46, 0) == false then  --Õ½¶·¿ªÊ¼
+--[[if WarMain(46, 0) == false then  --Õ½¶·¿ªÊ¼
 	Cls()  --ÇåÆÁ
 	instruct_15()  --ËÀÍö
 	Cls()  --ÇåÆÁ
 	do return end  --ÎÞÌõ¼þ½áÊøÊÂ¼þ
 
-end
+end]]
 Cls()  --ÇåÆÁ
 instruct_13()  --³¡¾°±äÁÁ
 if JY.Person[0]["ÐÔ±ð"] == 0 then
@@ -42308,7 +42479,7 @@ say("Ç°±²Çë½øÕÐ£¡£¡£¡",0,0)
 		instruct_3(-2,-2,0,0,0,0,0,0,0,0,0,-2,-2)  --ÐÞ¸Ä³¡¾°ÊÂ¼þ
 		if (TrueYJ(0) >= 500) or (Xishu_sum(0) >= 1500) then
 			--CC.TG[9982] = 1
-			SetTF(0,9982,1)
+			--SetTF(0,9982,1)
 			SetTF(0,9772,1)
 			SetTF(457,9772,1)		    
 			SetTF(592,9772,1)
@@ -50049,6 +50220,30 @@ do return end
 end
 newkdef[9131]=function()
 My_Enter_SubScene(203,61,35,0)  --³¡¾°ÌøÔ¾
+instruct_40(1)
+do return end
+end
+
+--ÖÐ»ª¸óÀÞÌ¨½øÃ÷Ì¨ÇÅ
+newkdef[9132]=function()
+My_Enter_SubScene(205,1,49,0)  --³¡¾°ÌøÔ¾
+instruct_40(1)
+do return end
+end
+newkdef[9133]=function()
+My_Enter_SubScene(208,31,60,0)  --³¡¾°ÌøÔ¾
+instruct_40(1)
+do return end
+end
+
+--Ã÷Ì¨ÇÅ½ø¹ÛÀ½Ðù
+newkdef[9134]=function()
+My_Enter_SubScene(208,31,2,0)  --³¡¾°ÌøÔ¾
+instruct_40(1)
+do return end
+end
+newkdef[9135]=function()
+My_Enter_SubScene(209,28,61,0)  --³¡¾°ÌøÔ¾
 instruct_40(1)
 do return end
 end
@@ -60062,7 +60257,7 @@ say("ÊÇ/·ñ¼ÓÈëÑ©Óð×Ú¡£ÈëÃÅÌõ¼þ :¡¡µÀµÂ >= 70 Çá¹¦ >= 300 ", 514, 0)  --¶Ô»°
 			say("Ô­À´¾¹ÓÐÕâ°ãÇúÕÛ¡­¡­¶àÐ»×ÚÖ÷£¡",0,1);
 			say("¹þ£¬Ð»ÊÇ²»ÓÃ£¬ÒÔºó¼ÌÐø´òÆ´±¾ÃÅµÄÏÀÃû¾Í¿ÉÒÔÁË£¬Óð³¤£¡",514, 0,"Ñî±ùÓð");
 			say("±¾×ÚÖ÷ÒªÔ¶ÐÐÓÎÀúÈ¥ÁË£¬Óð³¤£¬±¾ÃÅÐèÒªÄã¶à¶à´òµãÁË£¡",514, 0,"Ñî±ùÓð");
-			instruct_2(93, 1)  --ÐþÚ¤ÉñÕÆ
+			instruct_2(91, 1)  --ÐþÚ¤ÉñÕÆ
 			JY.Person[514]["Îä¹¦2"] = 43
 			JY.Person[514]["Îä¹¦µÈ¼¶2"] = 999
 			if MPDJ(0) < 3 then
