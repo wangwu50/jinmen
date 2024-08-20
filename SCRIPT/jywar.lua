@@ -16849,7 +16849,7 @@ function War_Fight_Sub(id, wugongnum, x, y)
 		ng = ng + 1000
 		WAR.WS = 1
 		WAR.HZGX = 1
-		if WAR.PD['残火太刀'][pid] ~= nil and ((wugong == 66 and match_ID(pid,103)) or (yongdao(wugong) and match_ID(pid,745) and wgnlxz(wugong) == 1)) then
+		if WAR.PD['残火太刀'][pid] ~= nil and ((wugong == 66 and match_ID(pid,103)) or (yongdao(wugong) and match_ID(pid,745) and wgnlxz(wugong) == 1) or (wugong == 66 and match_ID(pid,771))) then
 			local str = ""
 			if WAR.ATNum < 4 then
 				WAR.ATNum = 4
@@ -19831,7 +19831,7 @@ function War_Fight_Sub(id, wugongnum, x, y)
     local ztstr = {'生命点数','内力点数','体力点数','内伤点数','中毒点数',WAR.BFXS,WAR.ZSXS,WAR.LXXS,WAR.FXXS}
 	local ztstr1 = {'生命','内力','体力','受伤程度','中毒程度','冰封程度','灼烧程度','流血程度','封穴程度'}
     --套装吸血，上限400点
-	if WAR.PD['残火太刀'][pid] ~= nil and ((wugong == 66 and match_ID(pid,103) or (yongdao(wugong) and match_ID(pid,745) and wgnlxz(wugong) == 1))) then
+	if WAR.PD['残火太刀'][pid] ~= nil and ((wugong == 66 and match_ID(pid,103) or (yongdao(wugong) and match_ID(pid,745) and wgnlxz(wugong) == 1) or(wugong == 66 and match_ID(pid,771)))) then
 		WAR.PD['残火太刀'][pid] = WAR.PD['残火太刀'][pid] + 1
 		if WAR.PD['残火太刀'][pid] > 4 then
 			WAR.PD['残火太刀'][pid] = nil
@@ -26784,7 +26784,7 @@ function WarMain(warid, isexp)
 		end
 		--易水寒
 		if NGQH(id,43) then
-			WAR.PD['易水寒冰'][id] = 1
+			WAR.PD['易水寒冰'][id] = 10
 			if WAR.PD['易水寒冰'][id] ~= nil then
 				if WAR.Person[i]['护盾'] == nil or WAR.Person[i]['护盾'] <= -1 then
 					WAR.Person[i]['护盾'] = 33
@@ -30588,7 +30588,7 @@ function WarMain(warid, isexp)
 				------------------战意技专区--------------------------------
 				------------------------------------------------------------
 				--明王
-				if WAR.PD['残日狱衣'][id] ~= nil and (match_ID(id,103) or match_ID(id,745)) then
+				if WAR.PD['残日狱衣'][id] ~= nil and (match_ID(id,103) or match_ID(id,745) or match_ID(id,771)) then
 					for mw = 0 , WAR.PersonNum - 1 do
 						if dead(mw) == false and psx(WAR.Person[mw]['人物编号'],'灼烧程度') > 0 then
 							ztd(WAR.CurID,'生命',psx(WAR.Person[mw]['人物编号'],'灼烧程度'))
@@ -33705,7 +33705,15 @@ function WarMain(warid, isexp)
 						end
 					end
 				end	
-				
+				--蝴蝶谷200时序金花逃跑
+		        if WAR.ZDDH == 156 and 200 < WAR.SXTJ then
+					for i = 0, WAR.PersonNum - 1 do
+						if WAR.Person[i]["我方"] == false then
+							WAR.Person[i]["死亡"] = true
+						end
+					end
+					say("１Ｌ＜可恶，小村传人居然插手...此地不宜久留！＞", 15,0)
+		        end
 				if WAR.ZDDH == 432 and 30 < WAR.SXTJ then
 					for i = 0, WAR.PersonNum - 1 do 
 						if WAR.Person[i]["我方"] == false then 
@@ -37796,7 +37804,7 @@ function War_ExecuteMenu_Sub(x1, y1, flag, thingid)
       --木凭 顾影自怜
 			Cat('顾影自怜')
 			--葵花尊者反击暗器
-			if ((WAR.Person[emeny]["人物编号"] == 27) or (WAR.Person[emeny]["人物编号"] == 92) or (WAR.Person[emeny]["人物编号"] == 777)) 
+			if ((WAR.Person[emeny]["人物编号"] == 27) or (WAR.Person[emeny]["人物编号"] == 92) or (WAR.Person[emeny]["人物编号"] == 777) or (WAR.Person[emeny]["人物编号"] == 776)) 
 				and match_ID(WAR.Person[WAR.CurID]["人物编号"],498) == false and WAR.CLFJ[pid] == nil then
 				CleanWarMap(4, 0)
 				local orid = WAR.CurID
@@ -38825,7 +38833,7 @@ function DrawTimeBar()
                     end
 				end
 				--残日狱衣领域
-				if WAR.PD['残日狱衣'][jqid] ~= nil and (match_ID(jqid,103) or match_ID(jqid,745)) and JLSD(10,30,jqid) then
+				if WAR.PD['残日狱衣'][jqid] ~= nil and (match_ID(jqid,103) or match_ID(jqid,745) or match_ID(jqid,771)) and JLSD(10,30,jqid) then
 					for j = 0, WAR.PersonNum - 1 do 
 						if dead(j) == false and DWPD(i,j) and RealJL(i,j,15) then
 							local crid = WAR.Person[j]['人物编号']
@@ -53696,7 +53704,7 @@ function fuhuo(enemyid)
 		end
 	end
 	--独孤
-	--[[if JY.Person[eid]["生命"] <= 0 and match_ID(eid,592) and WAR.PD['无我之境'][eid] == nil then
+	if JY.Person[eid]["生命"] <= 0 and match_ID(eid,592) and WAR.PD['无我之境'][eid] == nil then
 		say("甚好！汝之境界，值得吾纵情一战！", 592, 1);
 		WAR.ACT = 10
 		WAR.DLJ = 1
@@ -53715,7 +53723,7 @@ function fuhuo(enemyid)
 			Cat('清除所有异常',enemyid)
 			WAR.LQZ[eid] = (WAR.LQZ[eid] or 0) + 100
 		end
-	end]]
+	end
 	--NPC血战
 	if JY.Person[eid]["生命"] < math.modf(JY.Person[eid]["生命最大值"]*0.3) and JY.Person[456]["论剑奖励"] > 0
 	and JY.Person[eid]['畅想分阶'] < 3 and (not inteam(eid)) and WAR.PD['血战到底'][eid] == nil then
@@ -54472,7 +54480,7 @@ function fuhuo1(enemyid)
 		end
 	end
 	--独孤
-	--[[if JY.Person[eid]["生命"] <= 0 and match_ID(eid,592) and WAR.PD['无我之境'][eid] == nil then
+	if JY.Person[eid]["生命"] <= 0 and match_ID(eid,592) and WAR.PD['无我之境'][eid] == nil then
 		say("甚好！汝之境界，值得吾纵情一战！", 592, 1);
 		WAR.ACT = 10
 		WAR.DLJ = 1
@@ -54491,7 +54499,7 @@ function fuhuo1(enemyid)
 			Cat('清除所有异常',enemyid)
 			WAR.LQZ[eid] = (WAR.LQZ[eid] or 0) + 100
 		end
-	end]]
+	end
 	--NPC血战
 	if JY.Person[eid]["生命"] < math.modf(JY.Person[eid]["生命最大值"]*0.3) and JY.Person[456]["论剑奖励"] > 0
 	and JY.Person[eid]['畅想分阶'] < 3 and (not inteam(eid)) and WAR.PD['血战到底'][eid] == nil then
@@ -68943,7 +68951,7 @@ Ct['总伤害计算'] = function(enemyid, wugong,level,ang,hurt,swhurt,wxhurt,flag)
 		end
 	end
 	--火焰刀奥义
-	if WAR.PD['残日狱衣'][eid] ~= nil and (match_ID(eid,103) or match_ID(eid,745)) then
+	if WAR.PD['残日狱衣'][eid] ~= nil and (match_ID(eid,103) or match_ID(eid,745) or match_ID(eid,771)) then
 		local dj = math.modf(psx(eid,'内力')*0.05) + limitX(math.modf((psx(pid,'畅想分阶')-psx(eid,'畅想分阶'))*50),0,350)
 		if psx(pid,'灼烧程度') > 0 then
 			ztd(enemyid,'生命点数',psx(pid,'灼烧程度')*5)
@@ -82474,7 +82482,7 @@ function zhanyi(pp, aa, flag)
 			end
 			WarDrawMap(0)
 			CurIDTXDH(WAR.CurID,6,1,'战意爆发')	
-			if (match_ID(pp,103) or match_ID(pp,745)) and WAR.PD['残火太刀'][pp] == nil then
+			if (match_ID(pp,103) or match_ID(pp,745) or match_ID(pp,771)) and WAR.PD['残火太刀'][pp] == nil then
 				WAR.PD['残火太刀'][pp] = 1
 				WAR.PD['残日狱衣'][pp] = 4
 				WAR.CHLY = 1
