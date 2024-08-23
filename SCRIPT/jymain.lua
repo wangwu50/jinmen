@@ -2530,6 +2530,10 @@ function Game_MMap()      --主地图
 			if JY.Status ~= GAME_MMAP then
 				return;
 			end
+		elseif keypress == VK_T then	--一剑打开任务屏风快捷键				
+		    CallCEvent(3220)			
+		elseif keypress == VK_Y then	--一剑打开任务奖励快捷键				
+		    CallCEvent(3221)				
 		--elseif keypress == VK_F2 then	--双儿				
 		--    CallCEvent(690)				
 		elseif keypress == VK_F2 then	--一剑打开双儿快捷键				
@@ -5023,6 +5027,10 @@ function Game_SMap()         --场景处理主函数
 		elseif keypress == VK_R then	--一剑 全部物品
 			Cls()
 			ThingMenu()	
+		elseif keypress == VK_T then	--一剑打开任务屏风快捷键				
+		    CallCEvent(3220)			
+		elseif keypress == VK_Y then	--一剑打开任务奖励快捷键				
+		    CallCEvent(3221)				
 		elseif keypress == VK_F2 then	--一剑打开双儿快捷键				
 		    CallCEvent(690)			
 		elseif keypress == VK_F3 then	--队友排位
@@ -15949,8 +15957,6 @@ function NGQH(id,NGid)--这里只写有「主运」的组合
 				return true
 			elseif match_ID(id,117) and PersonKF(id,101) then
 				return true
-			elseif match_ID(id,780) and PersonKF(id,101) then	
-			    return true 
 			else
 				return false
 			end
@@ -16158,7 +16164,9 @@ function NGQH(id,NGid)--这里只写有「主运」的组合
 			elseif match_ID(id,499) then
 			    return true	
 			elseif match_ID(id,773) or match_ID(id,774) then
-			    return true		
+			    return true	
+			elseif Curr_NG(id,183) and match_ID(id,780) then
+			    return true			
 			else
 				return false
 			end

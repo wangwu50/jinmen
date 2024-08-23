@@ -6030,22 +6030,22 @@ newkdef[10140]=function()
 	say("哈哈哈，小村传人果然厉害！", 592, 0)
 	say("那么，汝就看好了！", 592, 0)
 	if WarMain(486, 0) == false then  --战斗开始
-	    say("实力不俗，仍有美中不足，这本秘籍你拿着慢慢研习。", 592, 0)
+	    say("实力不俗，仍有美中不足，仍需努力。", 592, 0)
+	    say("多谢前辈赐教！", 0, 0)
+	    say("后会有期！", 592, 0)
+		AddPersonAttrib(0, "御剑能力", 200)
+		--instruct_2(303,-1)  
+		--AddPersonAttrib(0, "御剑能力", 100)
+	    instruct_3(-2,-2,0,0,0,0,0,0,0,0,0,-2,-2)  --修改场景事件
+	    do return end  --无条件结束事件
+    else	       
+		say("实力不俗，仍有美中不足，这本秘籍你拿着慢慢研习。", 592, 0)
 	    say("多谢前辈赐教！", 0, 0)
 	    say("后会有期！", 592, 0)
 		instruct_2(114,1)  --独孤九剑
 		instruct_2(116,1)  --玄铁剑法
 		SetTF(0,9975,1)    --剑魔再临 
 		SetTF(0,9974,1)    --九剑真传 
-		--instruct_2(303,-1)  
-		--AddPersonAttrib(0, "御剑能力", 100)
-	    instruct_3(-2,-2,0,0,0,0,0,0,0,0,0,-2,-2)  --修改场景事件
-	    do return end  --无条件结束事件
-    else	
-        say("实力不俗，仍有美中不足，仍需努力。", 592, 0)
-	    say("多谢前辈赐教！", 0, 0)
-	    say("后会有期！", 592, 0)
-		AddPersonAttrib(0, "御剑能力", 200)
 	    instruct_3(-2,-2,0,0,0,0,0,0,0,0,0,-2,-2)  --修改场景事件
 	    do return end  --无条件结束事件	
     end	
@@ -7767,6 +7767,7 @@ end
 newkdef[1089]=function()
 instruct_3(-2, -2,1,0,0,0,0,2608,2608,2608,-2,-2,-2)  --修改场景事件
 instruct_2(13, 1)  --得到或失去物品
+instruct_2(108, 1)  --得到或失去物品寒冰绵掌
 instruct_2(109, 1)  --得到或失去物品鹰爪功
 instruct_2(363, 1)  --得到或失去物品地火功
 Cls()  --清屏
@@ -14644,11 +14645,11 @@ newkdef[301]=function()
         instruct_1(2423,48,0);   --  1(1):[游坦之]说: 降龙十八掌？……这个……这个……
         instruct_0();   --  0(0)::空语句(清屏)
 
-        if instruct_6(197,4,0,0) ==false then    --  6(6):战斗[197]是则跳转到:Label5
+        --[[if instruct_6(197,4,0,0) ==false then    --  6(6):战斗[197]是则跳转到:Label5
             instruct_15(0);   --  15(F):战斗失败，死亡
             do return; end
             instruct_0();   --  0(0)::空语句(清屏)
-        end    --:Label5
+        end ]]   --:Label5
 
         instruct_0();   --  0(0)::空语句(清屏)
         instruct_13();   --  13(D):重新显示场景
@@ -14700,11 +14701,11 @@ newkdef[301]=function()
         instruct_1(2434,0,1);   --  1(1):[???]说: 住口！你与萧大哥素无恩怨，为何一再苦苦相逼！你处心积虑，收买人心，就为了你那虚无缥缈的皇帝梦！要碰我大哥，先过我这一关！
         instruct_0();   --  0(0)::空语句(清屏)
 
-        if instruct_6(198,4,0,0) ==false then    --  6(6):战斗[198]是则跳转到:Label6
+        --[[if instruct_6(198,4,0,0) ==false then    --  6(6):战斗[198]是则跳转到:Label6
             instruct_15(0);   --  15(F):战斗失败，死亡
             do return; end
             instruct_0();   --  0(0)::空语句(清屏)
-        end    --:Label6
+        end ]]   --:Label6
 
         instruct_0();   --  0(0)::空语句(清屏)
         instruct_13();   --  13(D):重新显示场景
@@ -14713,11 +14714,11 @@ newkdef[301]=function()
         instruct_1(2436,50,0);   --  1(1):[乔峰]说: 尽管来吧，萧某何惧！
         instruct_0();   --  0(0)::空语句(清屏)
 
-        if instruct_6(199,4,0,0) ==false then    --  6(6):战斗[199]是则跳转到:Label7
+        --[[if instruct_6(199,4,0,0) ==false then    --  6(6):战斗[199]是则跳转到:Label7
             instruct_15(0);   --  15(F):战斗失败，死亡
             do return; end
             instruct_0();   --  0(0)::空语句(清屏)
-        end    --:Label7
+        end]]    --:Label7
 
         instruct_0();   --  0(0)::空语句(清屏)
         instruct_13();   --  13(D):重新显示场景
@@ -25586,6 +25587,9 @@ if instruct_6(277,4,0,0) ==false then
     instruct_0();   --  0(0)::空语句(清屏)
     do return; end
 end
+
+SetTF(0,9919,1)
+
 --李莫愁血量翻倍还原
 JY.Person[161]["血量翻倍"] = 1
 
