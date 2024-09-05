@@ -15932,7 +15932,7 @@ function NGQH(id,NGid)--这里只写有「主运」的组合
 	if WAR.PJTX1 ~= 0 and match_ID(id,592) == false then
 		return false
 	else
-		if match_ID(id,634) and NGid ~= nil and NGid > 0 and NGid ~= 315 and NGid ~= 359 and NGid ~= 184 and NGid ~= 180 then
+		if match_ID(id,634) and NGid ~= nil and NGid > 0 and NGid ~= 315 and NGid ~= 359 and NGid ~= 184 and NGid ~= 180 and NGid ~= 43 then
 			return true
 		elseif match_ID(id,520) and (NGid == 315) then 
 			return true
