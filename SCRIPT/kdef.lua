@@ -2595,7 +2595,7 @@ newkdef[10012]=function()
 			    instruct_2(317, 1)    --不老长春功
 			    Cls()  --清屏
 		    elseif r == 2 then
-			    instruct_2(468, 1)    --九霄仙息
+			    instruct_2(79, 1)     --八荒六合
 			    Cls()  --清屏
 		    elseif r == 3 then
 			    instruct_2(387, 1)    --神足经
