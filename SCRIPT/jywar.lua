@@ -45464,6 +45464,10 @@ function refw(wugong, level)
 	if match_ID(pid,9743) then
 		MiaofaWX = MiaofaWX + 1
 	end  	
+	--桃花绝技
+	if NGQHC(pid,248) then
+		MiaofaWX = MiaofaWX + 2
+	end  	 
 	--苗人凤，剑法范围随御剑系数增加
 	if match_ID(pid, 3) and kfkind == 3 then
 		MiaofaWX = MiaofaWX + math.modf(TrueYJ(pid)/200)
@@ -45770,7 +45774,7 @@ function refw(wugong, level)
 	if wugong == 342 and (Curr_NG(pid,107) or match_ID(pid,637)) then
 		m1 = 0
 		m2 = 9
-	end	
+	end		
 	--进阶万花，范围+1
 	if wugong == 30 and WYJJ(pid) then
 		a2 = a2 + 1
@@ -64514,7 +64518,62 @@ Ct['总伤害计算'] = function(enemyid, wugong,level,ang,hurt,swhurt,wxhurt,flag)
 		    WAR.PD['集气倒退'][eid] = 10 
 		end 	
 	end 	
-		
+	
+	--------------------------------------------------------------------------
+	--------------------------内功+内功+轻功命中敌人--------------------------
+	--------------------------------------------------------------------------
+	--桃花绝技
+	if NGQHC(pid,248) then
+		if JLSD(20,50,pid) then
+	        ztd(enemyid,WAR.FXXS,6)
+			ztd(enemyid,"内伤点数",6)
+			Set_Eff_Text(enemyid, "特效文字3","桃花绝技·落英缤纷")
+		end	
+		if JLSD(20,50,pid) then
+			local a = JY.Person[pid]["内力"] * 0.16
+			ztd(enemyid,"生命点数",-(a*0.35))	
+			ztd(enemyid,"内力点数",-a)
+			Set_Eff_Text(enemyid, "特效文字3","桃花绝技·狂风忽起")
+		end 
+		if JLSD(20,50,pid) then
+			for i = 0, WAR.PersonNum - 1 do
+				if WAR.Person[i]["我方"] ~= WAR.Person[WAR.CurID]["我方"] and WAR.Person[i]["死亡"] == false then
+					local offset1 = math.abs(WAR.Person[WAR.CurID]["坐标X"] - WAR.Person[i]["坐标X"])
+					local offset2 = math.abs(WAR.Person[WAR.CurID]["坐标Y"] - WAR.Person[i]["坐标Y"])
+					if offset1 <= 6 and offset2 <= 6 then
+						WAR.PD['创伤'][WAR.Person[i]["人物编号"]] = (WAR.PD['创伤'][WAR.Person[i]["人物编号"]] or 0) + math.random(20,30)
+					end	
+				end	
+			end	
+			Set_Eff_Text(enemyid, "特效文字3","桃花绝技·五虚一实")
+		end 	
+		if JLSD(20,50,pid) then
+			ztd(enemyid,"体力点数",-3)
+			WAR.PD['利刃寒锋'][eid] = 15
+			Set_Eff_Text(enemyid, "特效文字3","桃花绝技·回风拂柳")
+		end 	 
+	end 		 
+	
+	--白驼奥义
+	if NGQHC(pid,95) then	
+		if JLSD(20,50,pid) then 
+			WAR.PD['基础蛊毒'][eid] = 1
+			Set_Eff_Text(enemyid, "特效文字3","白驼奥义·幻花引梦")
+		end
+		if JLSD(20,50,pid) then
+			local a = JY.Person[eid]["中毒程度"] * 2
+			ztd(enemyid,"中毒点数",100)	
+			ztd(enemyid,"内力点数",-a)
+			Set_Eff_Text(enemyid, "特效文字3","白驼奥义·金花梵夜")
+		end
+		if JLSD(20,50,pid) then 
+			local a = JY.Person[eid]["生命最大值"] * 0.15
+			ztd(enemyid,WAR.BFXS,100)
+			ztd(enemyid,"生命点数",-a)
+			Set_Eff_Text(enemyid, "特效文字3","白驼奥义·金花落烬")
+		end
+	end		
+			
 	-----------------------------------------------------------------------
     ---------------------------多武功组合命中敌人后加成------------------------
 	-----------------------------------------------------------------------
@@ -74518,6 +74577,11 @@ Ct['总伤害计算'] = function(enemyid, wugong,level,ang,hurt,swhurt,wxhurt,flag)
 			WAR.PD['长生蓄力'][eid] = 3000
 		end
 	end
+	--白驼奥义
+	if NGQHC(eid,95) and JLSD(10,30,eid) then
+		WAR.BTZT[eid] = 1
+		Set_Eff_Text(enemyid,"特效文字2","白驼奥义·御气护体")
+	end
 	------------------------------------------------------------------------------------------------------
 	-----------------------------------门派攻击、受击效果（不计算伤害）-----------------------------------
 	------------------------------------------------------------------------------------------------------
@@ -79686,6 +79750,11 @@ Ct['闪避'] = function(enemyid,wugong,hurt,ang)
             WAR.Person[enemyid]["特效文字2"] = "真.葵花移形"
             WAR.Person[enemyid]["特效动画"] = 89
         end
+    end
+	--桃花绝技
+	if NGQHC(eid,248) and JLSD(10,30,eid) then
+		WAR.Dodge = 1
+		WAR.Person[enemyid]["特效文字2"] = "桃花绝技·落英漫天"
     end
 	---------------------------------------------------------------攻击状态闪避---------------------------------------------------
 	--观止打不中人

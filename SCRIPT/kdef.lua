@@ -5725,7 +5725,7 @@ newkdef[10131]=function()
         say("此段剧情需要复活戒指。",0,2)
 	    do return end  --无条件结束事件
     end
-    if JY.Base["天书数量"] >= 8 then 
+    if JY.Base["天书数量"] >= 6 then 
 		say("独孤前辈好！", 0, 1)
 		say("哈哈哈哈！原来是小村少年。", 592, 0)
 		say("前辈神龙见首不见尾，想不到会在中华阁遇到前辈。", 0, 1)

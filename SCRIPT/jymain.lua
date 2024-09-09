@@ -370,12 +370,12 @@ function StartMenu()
 			end
 			for p = 0, JY.PersonNum -1 do
 				if CC.PersonExit[p] == nil and p ~= 0 and p ~= 591 then
-					local tt = math.modf(1800/(JY.Person[p]['畅想分阶']*2))
-					local xs = math.modf(1200/(JY.Person[p]['畅想分阶']*2))
-					local wc = math.modf(800/(JY.Person[p]['畅想分阶']*2))
-					local sz = 100+limitX(math.modf(50*(10-JY.Person[p]['畅想分阶'])),0,500)
+					local tt = math.modf(1500/(JY.Person[p]['畅想分阶']+1))
+					local xs = math.modf(1000/(JY.Person[p]['畅想分阶']+1))
+					local wc = math.modf(500/(JY.Person[p]['畅想分阶']+1))
+					local sz = 150+limitX(math.modf(40*(80-JY.Person[p]['畅想分阶'])),0,320)
 					if JY.Person[p]['畅想分阶'] >= 0 and JY.Person[p]['畅想分阶'] < 3 then
-						tt = tt + 600
+						tt = tt + 480
 					end	
 					JY.Person[p]["攻击力"] = JY.Person[p]["攻击力"] + tt 
 					JY.Person[p]["防御力"] = JY.Person[p]["防御力"] + tt 
@@ -2223,13 +2223,13 @@ function NewGame()     --选择新游戏，设置主角初始属性
 				
 				--npc随周目增加自身强度
 				if nd > 1 and  p ~= 591 then 
-					xs = math.modf(zm*3)
-					sw = math.modf(zm*3)
+					xs = math.modf(zm*2)
+					sw = math.modf(zm*2)
 					--wc = math.modf(zm*2)
 				end
 				--地狱难度npc随周目增加自身强度
 				if nd > 3 and p ~= 591 then
-					local zj = math.modf(zm*nd)
+					local zj = math.modf(zm*1.5)
 					xs = xs + zj
 					sw = sw + zj 
 				end
@@ -2276,8 +2276,8 @@ function NewGame()     --选择新游戏，设置主角初始属性
 				JY.Person[p]["御剑能力"] = JY.Person[p]["御剑能力"] + wx
 				JY.Person[p]["耍刀技巧"] = JY.Person[p]["耍刀技巧"] + wx
 				JY.Person[p]["特殊兵器"] = JY.Person[p]["特殊兵器"] + wx
-				JY.Person[p]['武学常识'] = JY.Person[p]['武学常识'] + math.modf((zm/7)*(10-JY.Person[p]["畅想分阶"]))			
-				JY.Person[p]['实战'] = JY.Person[p]['实战'] + math.modf((zm/5)*(10-JY.Person[p]["畅想分阶"]))
+				JY.Person[p]['武学常识'] = JY.Person[p]['武学常识'] + math.modf((zm/7)+(10-JY.Person[p]["畅想分阶"]))			
+				JY.Person[p]['实战'] = JY.Person[p]['实战'] + math.modf((zm/5)+(10-JY.Person[p]["畅想分阶"]))
 				AddPersonAttrib(p,'生命',math.huge)
 	        else 
 	            JY.Person[p]["畅想分阶"] = 7
@@ -16746,6 +16746,33 @@ function NGQHB(id,NGid)--这里只写有「非主运」的组合
 	--end
 	return false
 end
+
+function NGQHC(id,NGid)--「非主运」+ 「轻功」
+	--if WAR.PJTX1 ~= 0 and (not match_ID(id,592)) then
+		--return false
+	--else
+	    --碧海奇门灵鳌
+		if NGid == 248 then
+			if PersonKF(id,248) and PersonKF(id,317) and PersonKF(id,237) then
+				return true
+			elseif match_ID(id,57) then 
+			    return true 
+			else 
+			    return false		
+			end
+		end 
+		--蛤蟆逆运瞬息
+		if NGid == 95 then 
+			if PersonKF(id,95) and PersonKF(id,104) and PersonKF(id,150) then
+				return true
+			elseif match_ID(id,60) then 
+			    return true 
+			else 
+			    return false		
+			end
+		end 
+	return false
+end	
 
 --武功内力性质判断
 function wgnlxz(wugong)
