@@ -16656,6 +16656,46 @@ function NGQHC(id,NGid)--「非主运」+ 「轻功」
 			    return false		
 			end
 		end 
+		--化工小无相摘星
+		if NGid == 87 then 
+			if PersonKF(id,87) and PersonKF(id,98) and PersonKF(id,296) then
+				return true
+			elseif match_ID(id,46) then 
+			    return true 
+			else 
+			    return false		
+			end
+		end 
+        --神照纯阳君子
+		if NGid == 94 then
+			if PersonKF(id,94) and PersonKF(id,99) and PersonKF(id,262) then
+				return true
+			elseif match_ID(id,37) or match_ID(id,775) then 
+			    return true 
+			else 
+			    return false		
+			end
+		end 
+		--枯荣罗汉龙行
+		if NGid == 207 then
+			if PersonKF(id,207) and PersonKF(id,96) and PersonKF(id,280) then
+				return true
+			elseif match_ID(id,499) or match_ID(id,774) then 
+			    return true 
+			else 
+			    return false		
+			end
+		end 
+		--纯阳龟息梯云
+		if NGid == 99 then
+			if PersonKF(id,99) and PersonKF(id,227) and PersonKF(id,149) then
+				return true
+			elseif match_ID(id,5) or match_ID(id,524) then 
+			    return true 
+			else 
+			    return false		
+			end
+		end
 	return false
 end	
 
