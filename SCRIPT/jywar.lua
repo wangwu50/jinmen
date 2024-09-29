@@ -3044,6 +3044,7 @@ function WarSetGlobal()
 	WAR.MHBF = {}       --梅花步法
 	WAR.HLJG = {}       --护龙山庄金刚不坏
 	WAR.CFDH = {}       --乘风蹈海
+	WAR.NYQK = {}       --挪移乾坤
 	WAR.TMYJ = 0
 	WAR.TMYJ1 = 0
 	WAR.MXSX1 = 0       --魔心四相
@@ -4317,6 +4318,18 @@ function WarShowHead(id)
 			else
 				lib.LoadPNG(98, 365 * 2 , x1 + width + CC.RowPixel, CC.RowPixel + 3 + (size*2+CC.RowPixel*2)*zt_num, 1)
 				DrawString(x1 + width + size*2 + CC.RowPixel*3, size + 3 + (size*2+CC.RowPixel*2)*zt_num, "乘风蹈海开启中", C_WHITE, size)
+			end
+			zt_num = zt_num + 1
+		end
+		--挪移乾坤	标记修改
+		if WAR.NYQK[pid]~= nil and WAR.NYQK[pid] > 15 then	
+			--local tjzx = WAR.PD["神足护盾"][pid] or 0
+			if WAR.Person[id]["我方"] == true then
+				lib.LoadPNG(98, 434 * 2 , CC.ScreenW/1360*705+bx*424, CC.ScreenH/768*667 -(size*2+CC.RowPixel*2)*zt_num+by*67, 2 )
+				DrawString(CC.ScreenW/1360*705+bx*380-string.len("挪移乾坤开启中")/2*size, CC.ScreenH - size - CC.RowPixel*3 + 1 - (size*2+CC.RowPixel*2)*zt_num,"挪移乾坤开启中", C_GOLD, size)
+			else
+				lib.LoadPNG(98, 434 * 2 , x1 + width + CC.RowPixel, CC.RowPixel + 3 + (size*2+CC.RowPixel*2)*zt_num, 1)
+				DrawString(x1 + width + size*2 + CC.RowPixel*3, size + 3 + (size*2+CC.RowPixel*2)*zt_num, "挪移乾坤开启中", C_WHITE, size)
 			end
 			zt_num = zt_num + 1
 		end
@@ -18195,8 +18208,8 @@ function War_Fight_Sub(id, wugongnum, x, y)
 		-----------------------------------------------------------标主攻击大招-------------------------------------------------------------------
 		------------------------------------------------------------------------------------------------------------------------------------------
         --主角剑神大招，10格攻击 标记修改
-        if (actor(pid,3) or match_ID(pid, 9767)) and 120 <= TrueYJ(pid) and 0 < JY.Person[pid]["武功9"] and yongjian(wugong) and wugong ~= 43 
-        	and JLSD(25, 50 +JY.Person[pid]["御剑能力"]*0.0625, pid) and (JXPD(pid,3,1) or JXPD(pid,9767,1) or JY.Person[pid]["实战"] >=500) then
+        if (actor(pid,3) or match_ID(pid, 9767)) and 120 <= TrueYJ(pid) and 0 < JY.Person[pid]["武功9"] and yongjian(wugong) 
+		and JLSD(25, 50 +JY.Person[pid]["御剑能力"]*0.0625, pid) and (JXPD(pid,3,1) or JXPD(pid,9767,1) or JY.Person[pid]["实战"] >=500) then
 			WAR.PD['全屏攻击'][pid] = 1
             WAR.Person[id]["特效动画"] = 6
 			Set_Eff_Text(id,"特效文字3",ZJTF[3]);
@@ -30249,7 +30262,7 @@ function WarMain(warid, isexp)
 					end
 				end
 				--三大神医行动后自动医疗一次,集气增加
-				if (match_ID(id,16) or match_ID(id,28) or match_ID(id,45) or (match_ID(id,9943) and math.random(100) < 51)) and JY.Person[id]["生命"] > 0 then 
+				if ((id == 0 and JY.Base['标准'] == 8) or match_ID(id,16) or match_ID(id,28) or match_ID(id,45) or (match_ID(id,9943) and math.random(100) < 51)) and JY.Person[id]["生命"] > 0 then 
 					WarDrawMap(0); --不加这条则动画位置无法正常显示
 					War_AutoDoctor()
 					War_Show_Count(WAR.CurID, "妙手仁心");
@@ -42974,6 +42987,13 @@ function DrawTimeBar()
 						WAR.CFDH[jqid] = nil
 					end
 				end
+				--挪移乾坤
+				if WAR.NYQK[jqid] ~= nil then
+					WAR.NYQK[jqid] = WAR.NYQK[jqid] - 1	
+					if WAR.NYQK[jqid] < 1 then
+						WAR.NYQK[jqid] = nil
+					end
+				end
 				--大周天功回复50时序
 				if WAR.ZTHF[jqid] ~= nil then
 					WAR.ZTHF[jqid] = WAR.ZTHF[jqid] - 1
@@ -47038,7 +47058,7 @@ function War_RestMenu()
 			end
         end
 		--阿凡提休息带蓄力+防御
-		if match_ID(pid, 606) then
+		if match_ID(pid, 606) or NGQHC(pid,97) then
 			Cls()
 			CurIDTXDH(WAR.CurID, 85,1,"运筹帷幄·决胜千里", LimeGreen);
 			if WAR.Actup[pid] == nil then
@@ -64699,6 +64719,45 @@ Ct['总伤害计算'] = function(enemyid, wugong,level,ang,hurt,swhurt,wxhurt,flag)
 			Set_Eff_Text(enemyid, "特效文字3","秘传·气法自然")	
 		end
 	end
+	
+	--五岳剑经
+	if NGQHC(pid,89) then 
+		if JLSD(20,50,pid) then
+			if WAR.ATNum < 5 then
+			    WAR.ATNum = 5	
+			end 	
+			Set_Eff_Text(enemyid, "特效文字3","五岳剑经·运行不息")	
+		end
+		if JLSD(20,50,pid) then
+			ztd(enemyid,"内伤点数",20)
+			ztd(enemyid,WAR.FXXS,20)
+			ztd(enemyid,WAR.LXXS,20)
+			ztd(enemyid,WAR.BFXS,20)
+			ztd(enemyid,WAR.ZSXS,20)
+			Set_Eff_Text(enemyid, "特效文字3","五岳剑经·生克循环")	
+		end
+		if JLSD(20,50,pid) then
+	        WAR.PD["混乱状态"][eid] = 1
+			WAR.PD['机率下降'][eid] = 10
+			Set_Eff_Text(enemyid, "特效文字3","五岳剑经·五行生克")	
+		end
+	end 	
+	
+	--密宗功法    
+	if NGQHC(pid,103) then 
+		ztd(enemyid,WAR.LXXS,100)
+		if JLSD(20,50,pid) then
+			local a = JY.Person[eid]["受伤程度"] * 2
+			ztd(enemyid,"生命点数",-a)
+			WAR.PD['集气倒退'][eid] = 10 
+			Set_Eff_Text(enemyid, "特效文字3","密宗功法·金刚降魔")
+		end 
+		if JLSD(20,50,pid) then 
+			WAR.PD["焚炎不尽"][eid] = 20
+			WAR.PD['霸王破甲'][eid] = 20
+			Set_Eff_Text(enemyid, "特效文字3","密宗功法·万载空灵")
+		end 
+	end 		
 	-----------------------------------------------------------------------
     ---------------------------多武功组合命中敌人后加成------------------------
 	-----------------------------------------------------------------------
@@ -77841,6 +77900,17 @@ Ct['伤害结算'] = function(wugong, level, ang, x, y,ZHEN_ID)
 				if WAR.QYBY[id] > 40 then
 					WAR.Person[i]["特效文字2"] = "轻云蔽月"
 					WAR.Person[i]["特效动画"] = 102
+					mz = false
+				end	
+			end
+			--挪移乾坤
+			if NGQHC(id,97) then
+				if WAR.NYQK[id] == nil then
+					WAR.NYQK[id] = 30
+				end
+				if WAR.NYQK[id] > 20 then
+				WAR.Person[i]["特效文字2"] = "挪移乾坤"
+					WAR.Person[i]["特效动画"] = 93
 					mz = false
 				end	
 			end
