@@ -14376,7 +14376,6 @@ function Curr_NG(personid, NGid)
 			    return true
 			end
 		end	
-		
 		--九阳仁阳
 		if match_ID(personid,638) or JXPD(personid,9,1) then
 			if NGid == 106 and (PersonKF(personid, NGid) or inteam(personid) == false) then 
@@ -15965,7 +15964,9 @@ function NGQH(id,NGid)--这里只写有「主运」的组合
 		elseif (match_ID(id,27) or match_ID(id,777)) and (NGid == 105) then
 		    return true 	
 		elseif match_ID(id,514) and (NGid == 43) then
-		    return true 	
+		    return true	
+		elseif match_ID(id,636) and (NGid == 102) then  --李白：太玄判定必成功
+		    return true		
 		end	
 		local pd = false
 		if JY.Status == GAME_WMAP then
@@ -16809,6 +16810,36 @@ function NGQHC(id,NGid)--「非主运」+ 「轻功」
 			    return true 
 			else 
 			    return false		
+			end
+		end
+		--紫霞小无相神行
+		if NGid == 89 then 
+			if PersonKF(id,89) and PersonKF(id,98) and PersonKF(id,146) then 
+				return true
+			elseif match_ID(id,140) or match_ID(id,779) or match_ID(id,780) then
+			    return true 
+			else 
+				return false	
+			end
+		end
+		--乾坤混元暗香
+		if NGid == 97 then 
+			if PersonKF(id,97) and PersonKF(id,90) and PersonKF(id,316) then 
+				return true 
+			elseif match_ID(id,456) or match_ID(id,606) or match_ID(id,641) or match_ID(id,776) then 
+			    return true
+			else  
+			    return false 		
+			end
+		end
+		--龙象狮子踏雪
+		if NGid == 103 then
+			if PersonKF(id,103) and PersonKF(id,92) and PersonKF(id,227) then 
+				return true
+			elseif match_ID(id,62) or match_ID(id,103) or match_ID(id,771) then
+			    return true 
+			else 
+			    return false 		
 			end
 		end
 	return false
