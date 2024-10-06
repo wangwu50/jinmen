@@ -14250,7 +14250,7 @@ function Curr_NG(personid, NGid)
 			end
 		end	
 		--黄裳
-		if match_ID(personid,637)  then
+		if match_ID(personid,637) or match_ID(personid,781) then
 			if NGid == 107 and (PersonKF(personid, NGid) or inteam(personid) == false) then 
 			    return true
 			end
@@ -14262,7 +14262,7 @@ function Curr_NG(personid, NGid)
 			end
 		end	
 		--九阳仁阳
-		if match_ID(personid,638) or JXPD(personid,9,1) then
+		if match_ID(personid,638) or JXPD(personid,9,1) or match_ID(personid,781) then
 			if NGid == 106 and (PersonKF(personid, NGid) or inteam(personid) == false) then 
 			    return true
 			end
@@ -16035,7 +16035,7 @@ function NGQH(id,NGid)--这里只写有「主运」的组合
 			elseif Curr_NG(id,106) and match_ID(id,9999) then
 				return true
 			elseif Curr_NG(id,106) and match_ID(id,778) then
-			    return true		
+			    return true	 	
 			elseif Curr_NG(id,106) then
 				if JY.Status == GAME_WMAP then
 					if WAR.PD['九阳组合判定'][id] == 1 then
@@ -16081,7 +16081,9 @@ function NGQH(id,NGid)--这里只写有「主运」的组合
 			elseif match_ID(id,770) and Curr_NG(id,108) then
 			    return true	
 			elseif match_ID(id,772) and Curr_NG(id,108) then
-			    return true		
+			    return true	
+			elseif match_ID(id,781) and PersonKF(id,108) then
+			    return true 			
 			else	
 				return false		
 			end
@@ -16402,7 +16404,7 @@ function NGQHB(id,NGid)--这里只写有「非主运」的组合
 	    if NGid == 91 then
 			if PersonKF(id,91) and PersonKF(id,180) then
 				return true
-			elseif match_ID(id,13) or match_ID(id,149) then
+			elseif match_ID(id,13) or match_ID(id,149) or match_ID(id,781) then
 				return true
 			elseif match_ID(id,758) or match_ID(id,635) or match_ID(id,775) then
 			    return true	
@@ -16526,7 +16528,7 @@ function NGQHB(id,NGid)--这里只写有「非主运」的组合
 		if NGid == 180 then
 			if PersonKF(id,227) and PersonKF(id,180) then
 				return true
-			elseif match_ID(id,759) or match_ID(id,776) then
+			elseif match_ID(id,759) or match_ID(id,776) or match_ID(id,781) then
 			    return true 	
 			else
 				return false
@@ -16561,6 +16563,8 @@ function NGQHB(id,NGid)--这里只写有「非主运」的组合
 			elseif (JXPD(id,578,1) or JXPD(id,505,1)) and PersonKF(id,203) then
 				return true
 			elseif match_ID(id,771) and PersonKF(id,94) then 
+				return true
+			elseif match_ID(id,781) then 
 				return true
 			else
 				return false
@@ -16726,6 +16730,56 @@ function NGQHC(id,NGid)--「非主运」+ 「轻功」
 			else 
 			    return false 		
 			end
+		end
+		--太极先天凌波
+		if NGid == 171 then
+			if PersonKF(id,171) and PersonKF(id,100) and PersonKF(id,147) then
+				return true
+			elseif match_ID(id,5) or match_ID(id,129) or match_ID(id,116) or match_ID(id,117) or match_ID(id,118) or match_ID(id,522) or match_ID(id,634) then
+			    return true 
+			else 
+			    return false 		
+			end
+		end
+		--先天圣火天罗
+		if NGid == 100 then
+			if PersonKF(id,100) and PersonKF(id,93) and PersonKF(id,148) then
+				return true 
+			elseif match_ID(id,605) or match_ID(id,685) or match_ID(id,686) then
+			    return true
+			else 
+			    return false		
+			end
+		end
+		--金刚怒涛一苇
+		if NGid == 144 then
+			if PersonKF(id,144) and PersonKF(id,252) and PersonKF(id,186) then
+				return true 
+			elseif match_ID(id,743) or match_ID(id,772) then
+			    return true	
+			else 
+			    return false
+			end 		
+		end
+		--玉女龟息金雁
+		if NGid == 154 then
+			if PersonKF(id,154) and PersonKF(id,227) and PersonKF(id,223) then
+				return true 
+			elseif match_ID(id,605) or match_ID(id,685) or match_ID(id,686) then
+			    return true
+			else 
+			    return false
+			end 			
+		end
+		--忘情武穆逍遥
+		if NGid == 177 then
+			if PersonKF(id,177) and PersonKF(id,199) and PersonKF(id,2) then
+				return true 
+			elseif match_ID(id,50) or match_ID(id,69) or match_ID(id,525) or match_ID(id,527) then
+			    return true	
+			else 
+			    return false
+			end 		
 		end
 	return false
 end	
