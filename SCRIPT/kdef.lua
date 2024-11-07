@@ -2484,10 +2484,6 @@ newkdef[10010]=function()
 			if r == 1 then 
 				say(JY.Person[diyid]["姓名"].."支付"..money.."两银子给竹老板！", 617, 0,"如花")
 				say("………………真贵！", 0, 0)
-				if DrawStrBoxYesNo(-1, -1, "再次确定是否挑战？", C_WHITE, 30) == false then	
-					say("钱不要了，下次再来挑战！", 0, 0)	
-					do return end
-				end
 				if WarMain(386, 0) == false then  --战斗开始
 					say("骚年，你还需要提升自己的实力！", 617, 0,"如花")
 					say("………………",0,0)
@@ -2496,6 +2492,7 @@ newkdef[10010]=function()
 					say("不错，这是奖励。", 617, 0,"如花")
 					say("嘿嘿嘿！",0,0)
 					AddPersonAttrib(diyid, "实战", 50)
+					instruct_2(348,5)    --无极丹
 					QZXS(JY.Person[diyid]["姓名"].."实战增加50点！")
 					Cls()
 					do return end  --无条件结束事件
@@ -2504,10 +2501,6 @@ newkdef[10010]=function()
 				say(JY.Person[diyid]["姓名"].."支付"..money.."两银子给竹老板！", 617, 0,"如花")
 				say("………………真贵！", 0, 0)
 				instruct_2(174, -8888)
-				if DrawStrBoxYesNo(-1, -1, "再次确定是否挑战？", C_WHITE, 30) == false then	
-					say("钱不要了，下次再来挑战！", 0, 0)		
-					do return end
-				end
 				if WarMain(387, 0) == false then  --战斗开始
 					say("骚年，你还需要提升自己的实力！", 617, 0,"如花")
 					say("………………",0,0)
@@ -2516,6 +2509,7 @@ newkdef[10010]=function()
 					say("不错，这是奖励。", 617, 0,"如花")
 					say("嘿嘿嘿！",0,0)
 					AddPersonAttrib(diyid, "实战", 100)
+					instruct_2(348,8)    --无极丹
 					QZXS(JY.Person[diyid]["姓名"].."实战增加100点！")
 					Cls()
 					do return end  --无条件结束事件
@@ -2524,10 +2518,6 @@ newkdef[10010]=function()
 				say(JY.Person[diyid]["姓名"].."支付"..money.."两银子给竹老板！", 617, 0,"如花")
 				say("………………真贵！", 0, 0)
 				instruct_2(174, -8888)
-				if DrawStrBoxYesNo(-1, -1, "再次确定是否挑战？", C_WHITE, 30) == false then	
-					say("钱不要了，下次再来挑战！", 0, 0)		
-					do return end
-				end
 				if WarMain(401, 0) == false then  --战斗开始
 					say("骚年，你还需要提升自己的实力！", 617, 0,"如花")
 					say("………………",0,0)
@@ -2536,6 +2526,7 @@ newkdef[10010]=function()
 					say("不错，这是奖励。", 617, 0,"如花")
 					say("嘿嘿嘿！",0,0)
 					AddPersonAttrib(diyid, "实战", 150)
+					instruct_2(348,12)    --无极丹
 					QZXS(JY.Person[diyid]["姓名"].."实战增加150点！")
 					Cls()
 					do return end  --无条件结束事件
@@ -3710,10 +3701,22 @@ end
 	
 --埋剑崖
 newkdef[10046]=function()
-    if (instruct_16(58) == false or instruct_16(35) == false) then
+    --[[if (instruct_16(58) == false or instruct_16(35) == false) then
 		say("此段剧情需要杨过和令狐冲在队才可触发。",0,2)
 	    do return end  --无条件结束事件;
-    end	
+    end]]	
+	local txrw =0
+	if inteam(35) then
+		txrw = txrw + 1
+	end
+	if inteam(58) then
+		txrw = txrw + 1
+	end
+	if txrw ~= 2 then
+		say("需要杨过和令狐冲同时在队才可触发。",0,2)
+		Cls()  --清屏
+		do return end  --无条件结束事件
+	end 	
 	say("雕兄！这位令狐兄弟也有幸学过独孤前辈的武学",58,0);
 	say("晚辈见过雕兄，杨兄经常提到你。",35,0);
 	say("嘎~~嘎~~嘎！！！",628,0);
@@ -5104,10 +5107,22 @@ end
 
 --埋剑崖石碑武学见解战
 newkdef[10103]=function()
-    if instruct_16(58) == false and instruct_16(35) == false then
+    --[[if instruct_16(58) == false and instruct_16(35) == false then
 		say("此段剧情需要杨过和令狐冲在队才可触发。",0,2)
 	    do return end  --无条件结束事件;
-    end
+    end]]
+	local txrw =0
+	if inteam(35) then
+		txrw = txrw + 1
+	end
+	if inteam(58) then
+		txrw = txrw + 1
+	end
+	if txrw ~= 2 then
+		say("需要杨过和令狐冲同时在队才可触发。",0,2)
+		Cls()  --清屏
+		do return end  --无条件结束事件
+	end 	
 	say("杨兄，这就是独孤前辈生前练剑的地方么？",35,0);
 	say("独孤前辈剑法深不可测，你我当在此潜心研习。",58,0);
 	say("独孤前辈剑法高深莫测当真让人神往。",35,0);
@@ -6144,7 +6159,7 @@ end
 newkdef[10144]=function()
     say("看招！！", 781, 0)	
 	instruct_14()  --场景变黑
-	instruct_3(197,16,0,0,0,0,0,2606,2606,2606,0,-2,-2)  --修改场景事件
+	instruct_3(197,17,0,0,0,0,0,8870,8870,8870,0,-2,-2)  --修改场景事件
 	instruct_35(781,3,144,999)         --花帝第四格金刚10级
 	instruct_35(781,4,252,999)         --花帝第五格怒涛10级
 	instruct_35(781,5,186,999)         --花帝第六格一苇10级
@@ -6185,6 +6200,272 @@ newkdef[10144]=function()
     end	
 end 	
 
+newkdef[10145]=function()
+    say("不要看我一身反骨，当今世上我只服竹老板！",1084, 0,"百事通")
+	say("………………阁下是？", 0, 0)
+	say("我当然是来送福利，但是要收一点点手续费。",1084, 0,"百事通")
+	say("………………还要钱？", 0, 0)
+	say("不是说了，要一点点手续费。",1084, 0,"百事通")
+	say("………………好吧", 0, 0)
+	say("你根据自己的实力选择。",1084, 0,"百事通")
+	say("好的，我看看。", 0, 0)
+	local nexty = CC.MainSubMenuY + CC.SingleLineHeight
+	local p = SelectTeamMenu(CC.MainSubMenuX, nexty)
+    local money = 500
+	if p > 0 then
+		local diyid = JY.Base["队伍" .. p]
+		if instruct_31(500) and p > 0 then
+			local zhandounum = 4
+			local zhandou = JYMsgBox("战斗", "你要选择哪场战斗？", {"一", "二", "三", "四", "退出"}, 5, 617)
+			if zhandou <= 0 then
+				return 0
+			end	
+			if zhandou == 1 then
+				local hh1 = JYMsgBox("战斗一", "要选择哪一个指令？", {"老张", "东方", "大王", "扫地", "退出"}, 5, 617)	
+			    if hh1 <= 0 then
+					return 0
+				end	
+				if hh1 == 1 then 
+					say(JY.Person[diyid]["姓名"].."支付"..money.."两银子给竹老板！",1084, 0,"百事通")
+				    say("………………有点肉疼！", 0, 0)
+				    if WarMain(491, 0) == false then  --战斗开始
+					    say("………………",0,0)
+					    do return end  --无条件结束事件
+				    else
+					    say("嘿嘿嘿！",0,0)
+					    AddPersonAttrib(diyid, "实战", 50)
+					    QZXS(JY.Person[diyid]["姓名"].."实战增加50点！")
+					    Cls()
+					    do return end  --无条件结束事件
+				    end	
+				elseif hh1 == 2 then
+				    say(JY.Person[diyid]["姓名"].."支付"..money.."两银子给竹老板！",1084, 0,"百事通")
+				    say("………………有点肉疼！", 0, 0)
+				    if WarMain(492, 0) == false then  --战斗开始
+					    say("………………",0,0)
+					    do return end  --无条件结束事件
+				    else
+					    say("嘿嘿嘿！",0,0)
+					    AddPersonAttrib(diyid, "实战", 50)
+					    QZXS(JY.Person[diyid]["姓名"].."实战增加50点！")
+					    Cls()
+					    do return end  --无条件结束事件
+				    end	
+				elseif hh1 == 3 then
+				    say(JY.Person[diyid]["姓名"].."支付"..money.."两银子给竹老板！",1084, 0,"百事通")
+				    say("………………有点肉疼！", 0, 0)
+				    if WarMain(493, 0) == false then  --战斗开始
+					    say("………………",0,0)
+					    do return end  --无条件结束事件
+				    else
+					    say("嘿嘿嘿！",0,0)
+					    AddPersonAttrib(diyid, "实战", 50)
+					    QZXS(JY.Person[diyid]["姓名"].."实战增加50点！")
+					    Cls()
+					    do return end  --无条件结束事件
+				    end	
+				elseif hh1 == 4 then
+				    say(JY.Person[diyid]["姓名"].."支付"..money.."两银子给竹老板！",1084, 0,"百事通")
+				    say("………………有点肉疼！", 0, 0)
+				    if WarMain(494, 0) == false then  --战斗开始
+					    say("………………",0,0)
+					    do return end  --无条件结束事件
+				    else
+					    say("嘿嘿嘿！",0,0)
+					    AddPersonAttrib(diyid, "实战", 50)
+					    QZXS(JY.Person[diyid]["姓名"].."实战增加50点！")
+					    Cls()
+					    do return end  --无条件结束事件
+				    end			
+				else 
+				    say("算了，下次再来挑战。", 0, 0)			
+				end 
+			elseif zhandou == 2 then	
+			    local hh2 = JYMsgBox("战斗二", "要选择哪一个指令？", {"东西", "南北", "二中", "三王", "退出"}, 5, 617)	
+			    if hh2 <= 0 then
+					return 0
+				end	
+				if hh2 == 1 then 
+					say(JY.Person[diyid]["姓名"].."支付"..money.."两银子给竹老板！",1084, 0,"百事通")
+				    say("………………有点肉疼！", 0, 0)
+				    if WarMain(495, 0) == false then  --战斗开始
+					    say("………………",0,0)
+					    do return end  --无条件结束事件
+				    else
+					    say("嘿嘿嘿！",0,0)
+					    AddPersonAttrib(diyid, "实战", 50)
+					    QZXS(JY.Person[diyid]["姓名"].."实战增加50点！")
+					    Cls()
+					    do return end  --无条件结束事件
+				    end	
+				elseif hh2 == 2 then
+				    say(JY.Person[diyid]["姓名"].."支付"..money.."两银子给竹老板！",1084, 0,"百事通")
+				    say("………………有点肉疼！", 0, 0)
+				    if WarMain(496, 0) == false then  --战斗开始
+					    say("………………",0,0)
+					    do return end  --无条件结束事件
+				    else
+					    say("嘿嘿嘿！",0,0)
+					    AddPersonAttrib(diyid, "实战", 50)
+					    QZXS(JY.Person[diyid]["姓名"].."实战增加50点！")
+					    Cls()
+					    do return end  --无条件结束事件
+				    end		
+				elseif hh2 == 3 then
+				    say(JY.Person[diyid]["姓名"].."支付"..money.."两银子给竹老板！",1084, 0,"百事通")
+				    say("………………有点肉疼！", 0, 0)
+				    if WarMain(497, 0) == false then  --战斗开始
+					    say("………………",0,0)
+					    do return end  --无条件结束事件
+				    else
+					    say("嘿嘿嘿！",0,0)
+					    AddPersonAttrib(diyid, "实战", 50)
+					    QZXS(JY.Person[diyid]["姓名"].."实战增加50点！")
+					    Cls()
+					    do return end  --无条件结束事件
+				    end	
+				elseif hh2 == 4 then
+				    say(JY.Person[diyid]["姓名"].."支付"..money.."两银子给竹老板！",1084, 0,"百事通")
+				    say("………………有点肉疼！", 0, 0)
+				    if WarMain(498, 0) == false then  --战斗开始
+					    say("………………",0,0)
+					    do return end  --无条件结束事件
+				    else
+					    say("嘿嘿嘿！",0,0)
+					    AddPersonAttrib(diyid, "实战", 50)
+					    QZXS(JY.Person[diyid]["姓名"].."实战增加50点！")
+					    Cls()
+					    do return end  --无条件结束事件
+				    end					
+				else 
+				    say("算了，下次再来挑战。", 0, 0)			
+				end
+			elseif zhandou == 3 then	
+			    local hh3 = JYMsgBox("战斗三", "要选择哪一个指令？", {"山博", "三老", "风行", "青猿", "退出"}, 5, 617)	
+			    if hh3 <= 0 then
+					return 0
+				end		 
+				if hh3 == 1 then 
+					say(JY.Person[diyid]["姓名"].."支付"..money.."两银子给竹老板！",1084, 0,"百事通")
+				    say("………………有点肉疼！", 0, 0)
+				    if WarMain(499, 0) == false then  --战斗开始
+					    say("………………",0,0)
+					    do return end  --无条件结束事件
+				    else
+					    say("嘿嘿嘿！",0,0)
+					    AddPersonAttrib(diyid, "实战", 50)
+					    QZXS(JY.Person[diyid]["姓名"].."实战增加50点！")
+					    Cls()
+					    do return end  --无条件结束事件
+				    end	
+				elseif hh3 == 2 then
+				    say(JY.Person[diyid]["姓名"].."支付"..money.."两银子给竹老板！",1084, 0,"百事通")
+				    say("………………有点肉疼！", 0, 0)
+				    if WarMain(500, 0) == false then  --战斗开始
+					    say("………………",0,0)
+					    do return end  --无条件结束事件
+				    else
+					    say("嘿嘿嘿！",0,0)
+					    AddPersonAttrib(diyid, "实战", 50)
+					    QZXS(JY.Person[diyid]["姓名"].."实战增加50点！")
+					    Cls()
+					    do return end  --无条件结束事件
+				    end	
+				elseif hh3 == 3 then
+				    say(JY.Person[diyid]["姓名"].."支付"..money.."两银子给竹老板！",1084, 0,"百事通")
+				    say("………………有点肉疼！", 0, 0)
+				    if WarMain(501, 0) == false then  --战斗开始
+					    say("………………",0,0)
+					    do return end  --无条件结束事件
+				    else
+					    say("嘿嘿嘿！",0,0)
+					    AddPersonAttrib(diyid, "实战", 50)
+					    QZXS(JY.Person[diyid]["姓名"].."实战增加50点！")
+					    Cls()
+					    do return end  --无条件结束事件
+				    end		
+				elseif hh3 == 4 then
+				    say(JY.Person[diyid]["姓名"].."支付"..money.."两银子给竹老板！",1084, 0,"百事通")
+				    say("………………有点肉疼！", 0, 0)
+				    if WarMain(502, 0) == false then  --战斗开始
+					    say("………………",0,0)
+					    do return end  --无条件结束事件
+				    else
+					    say("嘿嘿嘿！",0,0)
+					    AddPersonAttrib(diyid, "实战", 50)
+					    QZXS(JY.Person[diyid]["姓名"].."实战增加50点！")
+					    Cls()
+					    do return end  --无条件结束事件
+				    end								
+				else 
+				    say("算了，下次再来挑战。", 0, 0)			
+				end	
+			elseif zhandou == 4 then	
+			    local hh4 = JYMsgBox("战斗四", "要选择哪一个指令？", {"酒锅", "双九", "龙木", "英悠", "退出"}, 5, 617)	
+			    if hh4 <= 0 then
+					return 0
+				end	
+				if hh4 == 1 then 
+					say(JY.Person[diyid]["姓名"].."支付"..money.."两银子给竹老板！",1084, 0,"百事通")
+				    say("………………有点肉疼！", 0, 0)
+				    if WarMain(503, 0) == false then  --战斗开始
+					    say("………………",0,0)
+					    do return end  --无条件结束事件
+				    else
+					    say("嘿嘿嘿！",0,0)
+					    AddPersonAttrib(diyid, "实战", 50)
+					    QZXS(JY.Person[diyid]["姓名"].."实战增加50点！")
+					    Cls()
+					    do return end  --无条件结束事件
+				    end	
+				elseif hh4 == 2 then
+				    say(JY.Person[diyid]["姓名"].."支付"..money.."两银子给竹老板！",1084, 0,"百事通")
+				    say("………………有点肉疼！", 0, 0)
+				    if WarMain(504, 0) == false then  --战斗开始
+					    say("………………",0,0)
+					    do return end  --无条件结束事件
+				    else
+					    say("嘿嘿嘿！",0,0)
+					    AddPersonAttrib(diyid, "实战", 50)
+					    QZXS(JY.Person[diyid]["姓名"].."实战增加50点！")
+					    Cls()
+					    do return end  --无条件结束事件
+				    end	
+				elseif hh4 == 3 then
+				    say(JY.Person[diyid]["姓名"].."支付"..money.."两银子给竹老板！",1084, 0,"百事通")
+				    say("………………有点肉疼！", 0, 0)
+				    if WarMain(505, 0) == false then  --战斗开始
+					    say("………………",0,0)
+					    do return end  --无条件结束事件
+				    else
+					    say("嘿嘿嘿！",0,0)
+					    AddPersonAttrib(diyid, "实战", 50)
+					    QZXS(JY.Person[diyid]["姓名"].."实战增加50点！")
+					    Cls()
+					    do return end  --无条件结束事件
+				    end			
+				elseif hh4 == 4 then
+				    say(JY.Person[diyid]["姓名"].."支付"..money.."两银子给竹老板！",1084, 0,"百事通")
+				    say("………………有点肉疼！", 0, 0)
+				    if WarMain(506, 0) == false then  --战斗开始
+					    say("………………",0,0)
+					    do return end  --无条件结束事件
+				    else
+					    say("嘿嘿嘿！",0,0)
+					    AddPersonAttrib(diyid, "实战", 50)
+					    QZXS(JY.Person[diyid]["姓名"].."实战增加50点！")
+					    Cls()
+					    do return end  --无条件结束事件
+				    end								
+				else 
+				    say("算了，下次再来挑战。", 0, 0)			
+				end			 		
+			end				
+		else
+			say("五百两都没有，你真的那么穷吗？",1084, 0,"百事通")	
+		end
+	end
+end	
 
 --[[
 newkdef[1010]=function()
@@ -8172,9 +8453,9 @@ end
 
 
 newkdef[11005]=function()
---萧玲离队事件
+--李清露离队事件
 
-say("萧姑娘，你先回小村，有需要时，我再去找你帮忙。",0,1);
+say("李姑娘，你先回小村，有需要时，我再去找你帮忙。",0,1);
 
 instruct_0();   --  0(0)::空语句(清屏)
 instruct_21(574);   --  21(15):离队
@@ -14317,12 +14598,12 @@ instruct_37(-9)  --增加品德
 instruct_30(46,28,39,28)  --人物移动
 say("明教余孽，受死吧！", 8, 0)  --对话
 Cls()  --清屏
-if WarMain(152, 0) == false then  --战斗开始
+--[[if WarMain(152, 0) == false then  --战斗开始
 	instruct_15()  --死亡
 	Cls()  --清屏
 	do return end  --无条件结束事件
 
-end
+end]]
 Cls()  --清屏
 instruct_13()  --场景变亮
 Cls()  --清屏
@@ -14350,12 +14631,12 @@ say("崆峒派莫要惊惶，华山派得到信息，前来增援！", 109, 0)  --对话
 Cls()  --清屏
 say("来得好，省得我们到处跑了！", 13, 0)  --对话
 Cls()  --清屏
-if WarMain(153, 0) == false then  --战斗开始
+--[[if WarMain(153, 0) == false then  --战斗开始
 	instruct_15()  --死亡
 	Cls()  --清屏
 	do return end  --无条件结束事件
 
-end
+end]]
 Cls()  --清屏
 instruct_13()  --场景变亮
 instruct_2(142, 1)  --得到或失去物品
@@ -37656,9 +37937,9 @@ end
 if instruct_16(574) then
    instruct_35(574,2,98,0)
    Cls()
-   DrawStrBoxWaitKey("萧玲学会武功【Ｇ小无相功Ｏ】", C_ORANGE, CC.DefaultFont, 2)
+   DrawStrBoxWaitKey("李清露学会武功【Ｇ小无相功Ｏ】", C_ORANGE, CC.DefaultFont, 2)
    SetTianNei(574, 98)
-    DrawStrBoxWaitKey("萧玲学会武功【Ｇ八荒六合功Ｏ】", C_ORANGE, CC.DefaultFont, 2)
+    DrawStrBoxWaitKey("李清露学会武功【Ｇ八荒六合功Ｏ】", C_ORANGE, CC.DefaultFont, 2)
    instruct_35(574,3,101,0)
    Cls()
 	local r = JYMsgBox("请选择", "是否要将我的天赋内功洗为八荒六合功？", {"是","否"}, 2, 574)
@@ -51436,48 +51717,48 @@ say("比剑夺帅，原也是一法，但只可点到为止，以免伤了和气。", 19, 0)  --对话
 Cls()  --清屏
 say("原来华山派是赞成并派的，我天门就先来领教你华山派的高招。", 23, 0)  --对话
 Cls()  --清屏
-if WarMain(30, 0) == false then  --战斗开始
+--[[if WarMain(30, 0) == false then  --战斗开始
 	instruct_15()  --死亡
 	Cls()  --清屏
 	do return end  --无条件结束事件
 	Cls()  --清屏
 
-end
+end]]
 Cls()  --清屏
 instruct_13()  --场景变亮
 say("让我定闲来领教领教华山派的高招。", 21, 0)  --对话
 Cls()  --清屏
-if WarMain(31, 0) == false then  --战斗开始
+--[[if WarMain(31, 0) == false then  --战斗开始
 	instruct_15()  --死亡
 	Cls()  --清屏
 	do return end  --无条件结束事件
 	Cls()  --清屏
 
-end
+end]]
 Cls()  --清屏
 instruct_13()  --场景变亮
 say("你连战两场，先下去休息吧。", 20, 0)  --对话
 Cls()  --清屏
 say("没关系，少年人体力充沛，莫掌门请出手吧。", 0, 1)  --对话
 Cls()  --清屏
-if WarMain(32, 0) == false then  --战斗开始
+--[[if WarMain(32, 0) == false then  --战斗开始
 	instruct_15()  --死亡
 	Cls()  --清屏
 	do return end  --无条件结束事件
 	Cls()  --清屏
 
-end
+end]]
 Cls()  --清屏
 instruct_13()  --场景变亮
 say("真所谓”长江后浪推前浪”华山派岳先生为了今天，想必已筹划很久了吧。若左某也败了，我嵩山派自当奉岳先生为掌门。", 22, 0)  --对话
 Cls()  --清屏
-if WarMain(33, 0) == false then  --战斗开始
+--[[if WarMain(33, 0) == false then  --战斗开始
 	instruct_15()  --死亡
 	Cls()  --清屏
 	do return end  --无条件结束事件
 	Cls()  --清屏
 
-end
+end]]
 Cls()  --清屏
 instruct_13()  --场景变亮
 say("终于都解决了，好累。左冷禅，看来你的阴谋是无法达成了。", 0, 1)  --对话
@@ -54339,7 +54620,7 @@ newkdef[9515]=function()
 
 	if WarMain(333,0) == false then
 		instruct_15()
-	do return end
+	    do return end
 		Cls()
 	end
 say("Ｄ＜丁着虚竹手指上的指环大喝＞Ｂ小和尚，指环从何而来？ ",118,0,"?")
@@ -54359,7 +54640,7 @@ say("你怎么了？你还好吧。 ",0,1)
 say("少年人，我就要死了，谁不会死呢，哼！那老妖婆也要活不成了。 ",118,0,"李秋水")
 say("只是可怜了我的孙女儿再也没有祖母疼了。",118,0,"李秋水")
 say("Ｄ＜这女人也是个可怜人＞Ｂ前辈你可有什么未了心愿？晚辈能办到的一定帮你办到。 ",0,1)
-say("你把这块玉佩给我孙女，她叫萧玲，就住在这Ｒ西夏皇宫Ｂ里，然后你护送她回一趟灵鹫宫，可好？",118,0,"李秋水")
+say("你把这块玉佩给我孙女，她叫李清露，就住在这Ｒ西夏皇宫Ｂ里，然后你护送她回一趟灵鹫宫，可好？",118,0,"李秋水")
 say("好，我答应 ",0,1)
 
 dark()
@@ -54375,23 +54656,23 @@ end
 
 newkdef[9516]=function()
 if instruct_20() == true then
-say("你是谁？想带我走？队伍都没我的位置了！ ",574, 0)
-Cls()
-do return end
+    say("你是谁？想带我走？队伍都没我的位置了！ ",574, 0)
+    Cls()
+    do return end
 end
-say("你是萧玲萧姑娘吗？。 ",0,1)
-say("你是谁？你怎么知道我？ ",574, 0)
-say("我受你祖母所托，给你带样东西还有几句话。Ｄ＜如是把李秋水的事跟萧玲说了＞Ｂ ",0,1)
-Cls()
-if instruct_18(238) then
-instruct_2(238,-1)
-say("谢谢你，那我们现在去Ｒ灵鹫宫Ｂ吧，",574, 0)
-JY.Person[574]["品德"] = 120
-null(12,0)
-null(12,1)
-addevent(12,0,0,9517,3,nil)
-addevent(12,1,0,9517,3,nil)
-Cls()
+    say("你是李清露李姑娘吗？。 ",0,1)
+    say("你是谁？你怎么知道我？ ",574, 0)
+    say("我受你祖母所托，给你带样东西还有几句话。Ｄ＜如是把李秋水的事跟李清露说了＞Ｂ ",0,1)
+    Cls()
+if instruct_18(75) then
+    --instruct_2(238,-1)
+    say("谢谢你，那我们现在去Ｒ灵鹫宫Ｂ吧，",574, 0)
+    JY.Person[574]["品德"] = 120
+    null(12,0)
+    null(12,1)
+    addevent(12,0,0,9517,3,nil)
+    addevent(12,1,0,9517,3,nil)
+    Cls()
 	if instruct_20() == false then  --判断队伍是否已满
 		instruct_10(574)  --加入队伍
 		instruct_14()  --场景变黑
@@ -54410,15 +54691,15 @@ Cls()
 	instruct_3(-2, -2,0,0,0,0,0,0,0,0,-2,-2,-2)  --修改场景事件
 	do return end  --无条件结束事件
 else
-say("谢谢你，那我们现在去Ｒ灵鹫宫Ｂ吧，",574, 0)
-JY.Person[574]["品德"] = 120
-null(12,0)
-null(12,1)
-addevent(12,0,0,9517,3,nil)
-addevent(12,1,0,9517,3,nil)
-instruct_14()  --场景变黑
-instruct_3(-2, -2,0,0,0,0,0,0,0,0,-2,-2,-2)  --修改场景事件
-instruct_13()  --场景变亮
+    say("谢谢你，那我们现在去Ｒ灵鹫宫Ｂ吧，",574, 0)
+    JY.Person[574]["品德"] = 120
+    null(12,0)
+    null(12,1)
+    addevent(12,0,0,9517,3,nil)
+    addevent(12,1,0,9517,3,nil)
+    instruct_14()  --场景变黑
+    instruct_3(-2, -2,0,0,0,0,0,0,0,0,-2,-2,-2)  --修改场景事件
+    instruct_13()  --场景变亮
 end
 end
 

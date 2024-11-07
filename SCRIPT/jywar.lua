@@ -28618,7 +28618,7 @@ function WarMain(warid, isexp)
 				local b = nil
 				local c = nil
 				local d = nil
-				a = 800
+				a = 600
 				b = 1000
 				c = 10 + math.modf(JY.Person[pid]["受伤程度"]/10)
 				d = 10 + math.modf(JY.Person[pid]["中毒程度"]/10)
@@ -28634,12 +28634,14 @@ function WarMain(warid, isexp)
 				WarDrawMap(0); --不加这条则动画位置无法正常显示
 				CurIDTXDH(WAR.CurID, 428,1,"独孤剑意调息",C_ORANGE);
 				War_RestMenu()
-				ztd(WAR.CurID,"生命点数", 399)
-				ztd(WAR.CurID,"内力点数", 599)
+				ztd(WAR.CurID,"生命点数", 50)
+				ztd(WAR.CurID,"内力点数", 500)
 				ztd(WAR.CurID,"体力点数", 9)
 				ztd(WAR.CurID,"内伤点数", -9)
 				ztd(WAR.CurID,"中毒点数", -9)	
-				Cat('清除所有异常',WAR.CurID)
+				if JLSD(10,50,pid) then
+				    Cat('清除所有异常',WAR.CurID)
+				end 	
 			end
 			--阿青，行动前清除异常
 		    if match_ID(pid, 604) then
@@ -29863,7 +29865,7 @@ function WarMain(warid, isexp)
 			    --罗汉伏魔功 每回合回复生命
 				if PersonKF(id,96) and JY.Person[id]["生命"] > 0 and JY.Person[id]["生命"] < JY.Person[id]["生命最大值"] then
 					local heal_amount;
-					heal_amount = limitX(JY.Person[id]["生命最大值"] - JY.Person[id]["生命"],1000,8000)
+					heal_amount = limitX(JY.Person[id]["生命最大值"] - JY.Person[id]["生命"],1000,9000)
 					if Curr_NG(id,96) then
 						heal_amount = math.modf(heal_amount*0.2)
 					else
@@ -29876,7 +29878,7 @@ function WarMain(warid, isexp)
 				--神照密传
 				if NGQHC(id,94) then
 					local heal_amount;
-					heal_amount = limitX(JY.Person[id]["生命最大值"] - JY.Person[id]["生命"],2000,6000)
+					heal_amount = limitX(JY.Person[id]["生命最大值"] - JY.Person[id]["生命"],2000,7000)
 					ztd(WAR.CurID,"生命点数", heal_amount)
 					Cls();
 					War_Show_Count(WAR.CurID, "神照密传·万物复苏");
@@ -30249,7 +30251,7 @@ function WarMain(warid, isexp)
 						end
 					end	
 				end	
-				
+				----------------------------------------------行动后恢复------------------------------------------------------
 				--点点战·战意
 				if WAR.RWSZ > 0 and match_ID(id,457) and WAR.ZDDH == 402 then
 					if WAR.RWSZ > 0 then
@@ -30545,7 +30547,7 @@ function WarMain(warid, isexp)
 				if PersonKF(id,89) and JY.Person[id]["生命"] > 0 then
 					local HN;
 					if Curr_NG(id, 89) then
-						HN = math.modf((JY.Person[id]["内力最大值"] - JY.Person[id]["内力"])*0.2)
+						HN = math.modf((JY.Person[id]["内力最大值"] - JY.Person[id]["内力"])*0.15)
 					--五岳紫霞·
 					elseif (PersonKF(id,89) and MPTX(id,14,2)) or JXPD(id,19,1) then
 					    HN = math.modf((JY.Person[id]["内力最大值"] - JY.Person[id]["内力"])*0.4)
@@ -33918,7 +33920,37 @@ function WarMain(warid, isexp)
 						end 
 					end 
 					TalkEx("果然是后生可畏。", 524, 0)  --对话
-				end 						
+				end 				
+				
+				--埋剑崖
+				if WAR.ZDDH == 420 and (JY.Person[592]["生命"] < JY.Person[592]["生命最大值"] / 2 or 40 < WAR.SXTJ) then	
+					for i = 0, WAR.PersonNum - 1 do
+		                if WAR.Person[i]["我方"] == false and WAR.Person[i]["人物编号"] == 592 then
+							WAR.Person[i]["死亡"] = true
+						end
+	                end
+					TalkEx("想不到你们三人如此厉害，我心愿已了！", 592, 0)  --对话
+				end		
+				
+				--恒山独孤
+				if WAR.ZDDH == 383 and (JY.Person[592]["生命"] < JY.Person[592]["生命最大值"] / 2 or 50 < WAR.SXTJ) then	
+					for i = 0, WAR.PersonNum - 1 do
+		                if WAR.Person[i]["我方"] == false and WAR.Person[i]["人物编号"] == 592 then
+							WAR.Person[i]["死亡"] = true
+						end
+	                end
+					TalkEx("不错不错！", 592, 0)  --对话
+				end		
+				
+				--中华阁独孤
+				if WAR.ZDDH == 467 and (JY.Person[592]["生命"] < JY.Person[592]["生命最大值"] / 2 or 100 < WAR.SXTJ) then
+					for i = 0, WAR.PersonNum - 1 do
+						if WAR.Person[i]["我方"] == false and WAR.Person[i]["人物编号"] == 592 then 
+							WAR.Person[i]["死亡"] = true
+						end 
+					end 
+					TalkEx("小村传人果然名不虚传！", 592, 0)  --对话
+				end 			
 				
 				--天邪聚贤庄
 				if WAR.ZDDH == 248 and 100 < WAR.SXTJ then
@@ -33987,16 +34019,6 @@ function WarMain(warid, isexp)
 					TalkEx("再练练吧。", 521, 0,"???")
 				end 	
 				
-				--埋剑崖
-				if WAR.ZDDH == 420 and 40 < WAR.SXTJ then	
-					for i = 0, WAR.PersonNum - 1 do
-		                if WAR.Person[i]["我方"] == false and WAR.Person[i]["人物编号"] == 592 then
-							WAR.Person[i]["死亡"] = true
-						end
-	                end
-					TalkEx("想不到你们三人如此厉害，我心愿已了！", 592, 0)  --对话
-				end	
-				
 				--不老长春谷
 				if WAR.ZDDH == 303 and match_ID(pid,634) then 
 					TalkEx("好好好。", 634, 0)  --对话
@@ -34011,17 +34033,7 @@ function WarMain(warid, isexp)
 						end
 	                end
 					TalkEx("好，到此为止吧。", 592, 0)  --对话
-				end	
-				
-				--中华阁独孤
-				if WAR.ZDDH == 467 and 100 < WAR.SXTJ then
-					for i = 0, WAR.PersonNum - 1 do
-						if WAR.Person[i]["我方"] == false and WAR.Person[i]["人物编号"] == 592 then 
-							WAR.Person[i]["死亡"] = true
-						end 
-					end 
-					TalkEx("小村传人果然名不虚传！", 592, 0)  --对话
-				end 			
+				end		
 				
 				--升厨子
 				if WAR.ZDDH == 457 and 65 < WAR.SXTJ then 
@@ -35262,9 +35274,6 @@ function War_AnqiHurt(i, emeny, thingid)
         kd = kd + WAR.PD['六阳正气'][enemyid]
     end
 	if WAR.PD['易水寒冰'][enemyid] ~= nil then
-		return 0
-	end
-	if WAR.PD['独孤护盾'][enemyid] ~= nil then
 		return 0
 	end
 
@@ -46929,8 +46938,8 @@ function War_RestMenu()
 			local e = JY.Person[pid]["生命增长"]
 			WAR.Person[WAR.CurID]["生命点数"] = (WAR.Person[WAR.CurID]["生命点数"] or 0) + AddPersonAttrib(pid,"生命",c)
 			WAR.Person[WAR.CurID]["内力点数"] = (WAR.Person[WAR.CurID]["内力点数"] or 0) + AddPersonAttrib(pid,"内力",d)
-			WAR.Person[WAR.CurID]["中毒点数"] = (WAR.Person[WAR.CurID]["中毒点数"] or 0) + AddPersonAttrib(pid,"中毒程度",-e)
-			WAR.Person[WAR.CurID]["内伤点数"] = (WAR.Person[WAR.CurID]["内伤点数"] or 0) + AddPersonAttrib(pid,"受伤程度",-e)
+			--WAR.Person[WAR.CurID]["中毒点数"] = (WAR.Person[WAR.CurID]["中毒点数"] or 0) + AddPersonAttrib(pid,"中毒程度",-e)
+			WAR.Person[WAR.CurID]["内伤点数"] = (WAR.Person[WAR.CurID]["内伤点数"] or 0) + AddPersonAttrib(pid,"受伤程度",-(e * 2))
 			--ztd(WAR.CurID,"生命点数", c)
 			--ztd(WAR.CurID,"内力点数", d)
 			--ztd(WAR.CurID,"内伤点数", -e)
@@ -46944,10 +46953,10 @@ function War_RestMenu()
 			local c = math.modf((a - b) * 0.2 + 100)
 			local d = math.modf(b * 0.2 + 100)
 			local e = (10  - JY.Person[pid]['畅想分阶'])*2
-			WAR.Person[WAR.CurID]["生命点数"] = (WAR.Person[WAR.CurID]["生命点数"] or 0) + AddPersonAttrib(pid,"生命",c)
-			WAR.Person[WAR.CurID]["内力点数"] = (WAR.Person[WAR.CurID]["内力点数"] or 0) + AddPersonAttrib(pid,"内力",d)
+			WAR.Person[WAR.CurID]["生命点数"] = (WAR.Person[WAR.CurID]["生命点数"] or 0) + AddPersonAttrib(pid,"生命",(c * 1.5))
+			WAR.Person[WAR.CurID]["内力点数"] = (WAR.Person[WAR.CurID]["内力点数"] or 0) + AddPersonAttrib(pid,"内力",(d * 0.6))
 			WAR.Person[WAR.CurID]["中毒点数"] = (WAR.Person[WAR.CurID]["中毒点数"] or 0) + AddPersonAttrib(pid,"中毒程度",-e)
-			WAR.Person[WAR.CurID]["内伤点数"] = (WAR.Person[WAR.CurID]["内伤点数"] or 0) + AddPersonAttrib(pid,"受伤程度",-e)
+			WAR.Person[WAR.CurID]["内伤点数"] = (WAR.Person[WAR.CurID]["内伤点数"] or 0) + AddPersonAttrib(pid,"受伤程度",-(e * 2))
 			--ztd(WAR.CurID,"生命点数", c)
 			--ztd(WAR.CurID,"内力点数", d)
 			--ztd(WAR.CurID,"内伤点数", -e)
@@ -46965,9 +46974,9 @@ function War_RestMenu()
 			a = 999
 			b = 999
 			c = 9 + math.modf(JY.Person[pid]["受伤程度"]/9)
-			WAR.Person[WAR.CurID]["生命点数"] = (WAR.Person[WAR.CurID]["生命点数"] or 0) + AddPersonAttrib(pid,"生命",a)
-			WAR.Person[WAR.CurID]["内力点数"] = (WAR.Person[WAR.CurID]["内力点数"] or 0) + AddPersonAttrib(pid,"内力",b)
-			WAR.Person[WAR.CurID]["中毒点数"] = (WAR.Person[WAR.CurID]["中毒点数"] or 0) + AddPersonAttrib(pid,"中毒程度",-c)
+			WAR.Person[WAR.CurID]["生命点数"] = (WAR.Person[WAR.CurID]["生命点数"] or 0) + AddPersonAttrib(pid,"生命",(a * 0.7))
+			WAR.Person[WAR.CurID]["内力点数"] = (WAR.Person[WAR.CurID]["内力点数"] or 0) + AddPersonAttrib(pid,"内力",(b * 2.5))
+			WAR.Person[WAR.CurID]["中毒点数"] = (WAR.Person[WAR.CurID]["中毒点数"] or 0) + AddPersonAttrib(pid,"中毒程度",-(c * 2))
 			WAR.Person[WAR.CurID]["内伤点数"] = (WAR.Person[WAR.CurID]["内伤点数"] or 0) + AddPersonAttrib(pid,"受伤程度",-c)
 			--ztd(WAR.CurID,"生命点数", a)
 			--ztd(WAR.CurID,"内力点数", b)
@@ -46983,8 +46992,8 @@ function War_RestMenu()
 			a = 999
 			b = 999
 			c = 9 + math.modf(JY.Person[pid]["受伤程度"]/9)
-			WAR.Person[WAR.CurID]["生命点数"] = (WAR.Person[WAR.CurID]["生命点数"] or 0) + AddPersonAttrib(pid,"生命",a)
-			WAR.Person[WAR.CurID]["内力点数"] = (WAR.Person[WAR.CurID]["内力点数"] or 0) + AddPersonAttrib(pid,"内力",b)
+			WAR.Person[WAR.CurID]["生命点数"] = (WAR.Person[WAR.CurID]["生命点数"] or 0) + AddPersonAttrib(pid,"生命",(a * 0.65))
+			WAR.Person[WAR.CurID]["内力点数"] = (WAR.Person[WAR.CurID]["内力点数"] or 0) + AddPersonAttrib(pid,"内力",(b * 0.75))
 			WAR.Person[WAR.CurID]["中毒点数"] = (WAR.Person[WAR.CurID]["中毒点数"] or 0) + AddPersonAttrib(pid,"中毒程度",-c)
 			WAR.Person[WAR.CurID]["内伤点数"] = (WAR.Person[WAR.CurID]["内伤点数"] or 0) + AddPersonAttrib(pid,"受伤程度",-c)
 			--ztd(WAR.CurID,"生命点数", a)
@@ -47001,10 +47010,10 @@ function War_RestMenu()
 			a = 200
 			b = 600
 			c = 5 + math.modf(JY.Person[pid]["灼烧程度"] / 10)
-			WAR.Person[WAR.CurID]["生命点数"] = (WAR.Person[WAR.CurID]["生命点数"] or 0) + AddPersonAttrib(pid,"生命",a)
-			WAR.Person[WAR.CurID]["内力点数"] = (WAR.Person[WAR.CurID]["内力点数"] or 0) + AddPersonAttrib(pid,"内力",b)
+			WAR.Person[WAR.CurID]["生命点数"] = (WAR.Person[WAR.CurID]["生命点数"] or 0) + AddPersonAttrib(pid,"生命",(a * 1.5))
+			WAR.Person[WAR.CurID]["内力点数"] = (WAR.Person[WAR.CurID]["内力点数"] or 0) + AddPersonAttrib(pid,"内力",(b * 0.7))
 			WAR.Person[WAR.CurID]["中毒点数"] = (WAR.Person[WAR.CurID]["中毒点数"] or 0) + AddPersonAttrib(pid,"中毒程度",-c)
-			WAR.Person[WAR.CurID]["内伤点数"] = (WAR.Person[WAR.CurID]["内伤点数"] or 0) + AddPersonAttrib(pid,"受伤程度",-c)
+			WAR.Person[WAR.CurID]["内伤点数"] = (WAR.Person[WAR.CurID]["内伤点数"] or 0) + AddPersonAttrib(pid,"受伤程度",-(c * 0.5))
 			--ztd(WAR.CurID,"生命点数", a)
 			--ztd(WAR.CurID,"内力点数", b)
 			--ztd(WAR.CurID,"内伤点数", -c)
@@ -47019,10 +47028,10 @@ function War_RestMenu()
 			a = 999
 			b = 999
 			c = 9 + math.modf(JY.Person[pid]["受伤程度"]/8)
-			WAR.Person[WAR.CurID]["生命点数"] = (WAR.Person[WAR.CurID]["生命点数"] or 0) + AddPersonAttrib(pid,"生命",a)
-			WAR.Person[WAR.CurID]["内力点数"] = (WAR.Person[WAR.CurID]["内力点数"] or 0) + AddPersonAttrib(pid,"内力",b)
-			WAR.Person[WAR.CurID]["中毒点数"] = (WAR.Person[WAR.CurID]["中毒点数"] or 0) + AddPersonAttrib(pid,"中毒程度",-c)
-			WAR.Person[WAR.CurID]["内伤点数"] = (WAR.Person[WAR.CurID]["内伤点数"] or 0) + AddPersonAttrib(pid,"受伤程度",-c)
+			WAR.Person[WAR.CurID]["生命点数"] = (WAR.Person[WAR.CurID]["生命点数"] or 0) + AddPersonAttrib(pid,"生命",(a * 0.5))
+			WAR.Person[WAR.CurID]["内力点数"] = (WAR.Person[WAR.CurID]["内力点数"] or 0) + AddPersonAttrib(pid,"内力",(b * 2))
+			WAR.Person[WAR.CurID]["中毒点数"] = (WAR.Person[WAR.CurID]["中毒点数"] or 0) + AddPersonAttrib(pid,"中毒程度",-(c * 0.5))
+			WAR.Person[WAR.CurID]["内伤点数"] = (WAR.Person[WAR.CurID]["内伤点数"] or 0) + AddPersonAttrib(pid,"受伤程度",-(c * 0.5))
 			--ztd(WAR.CurID,"生命点数", a)
 			--ztd(WAR.CurID,"内力点数", b)
 			--ztd(WAR.CurID,"内伤点数", -c)
@@ -47037,10 +47046,10 @@ function War_RestMenu()
 			a = 200
 			b = 600
 			c = 50
-			WAR.Person[WAR.CurID]["生命点数"] = (WAR.Person[WAR.CurID]["生命点数"] or 0) + AddPersonAttrib(pid,"生命",a)
-			WAR.Person[WAR.CurID]["内力点数"] = (WAR.Person[WAR.CurID]["内力点数"] or 0) + AddPersonAttrib(pid,"内力",b)
-			WAR.Person[WAR.CurID]["中毒点数"] = (WAR.Person[WAR.CurID]["中毒点数"] or 0) + AddPersonAttrib(pid,"冰封程度",-c)
-			WAR.Person[WAR.CurID]["内伤点数"] = (WAR.Person[WAR.CurID]["内伤点数"] or 0) + AddPersonAttrib(pid,"灼烧程度",-c)
+			WAR.Person[WAR.CurID]["生命点数"] = (WAR.Person[WAR.CurID]["生命点数"] or 0) + AddPersonAttrib(pid,"生命",(a * 3))
+			WAR.Person[WAR.CurID]["内力点数"] = (WAR.Person[WAR.CurID]["内力点数"] or 0) + AddPersonAttrib(pid,"内力",(b * 2))
+			WAR.Person[WAR.CurID]["中毒点数"] = (WAR.Person[WAR.CurID]["中毒点数"] or 0) + AddPersonAttrib(pid,"中毒程度",-(c * 2))
+			WAR.Person[WAR.CurID]["内伤点数"] = (WAR.Person[WAR.CurID]["内伤点数"] or 0) + AddPersonAttrib(pid,"受伤程度",-(c * 2))
 			--ztd(WAR.CurID,"生命点数", a)
 			--ztd(WAR.CurID,"内力点数", b)
 			--ztd(WAR.CurID,"内伤点数", -c)
@@ -68202,7 +68211,11 @@ Ct['总伤害计算'] = function(enemyid, wugong,level,ang,hurt,swhurt,wxhurt,flag)
 		end
 		if WAR.PD['无常索命诀'][pid] ~= nil then
 			zshurt = zshurt + math.modf(TrueTS(pid)*mpdj)
-		end	
+		end
+		if match_ID(pid,525) and WAR.PD['南子燎原枪'][pid] ~= nil then
+			addbuff(eid,WAR.PD['南子脏焰'],25)
+			Set_Eff_Text(enemyid,2,'脏焰缠身')
+		end		
 		if Cat('背刺侧攻') == 2 or (Cat('背刺侧攻') == 1 and JLSD(0,50,pid)) then
 			if WAR.ACT == 1 then
 				for i = 0, WAR.PersonNum-1 do 
@@ -68215,10 +68228,6 @@ Ct['总伤害计算'] = function(enemyid, wugong,level,ang,hurt,swhurt,wxhurt,flag)
 				end
 			end
 			ztd(enemyid,'生命点数',-math.modf(psx(eid,'流血程度')*3))
-			if match_ID(pid,525) and WAR.PD['南子燎原枪'][pid] ~= nil then
-				addbuff(eid,WAR.PD['南子脏焰'],25)
-				Set_Eff_Text(enemyid,2,'脏焰缠身')
-			end	
 		end
 		if WAR.PD['血衣剑法'][pid][2] == 1 then
 			WAR.PD['血袍艳花'][pid] = limitX((WAR.PD['血袍艳花'][pid] or 0) + psx(eid,'流血程度'),0,300)
@@ -72181,18 +72190,6 @@ Ct['总伤害计算'] = function(enemyid, wugong,level,ang,hurt,swhurt,wxhurt,flag)
 		WAR.Person[enemyid]["特效文字3"] = nil
 		WAR.Person[enemyid]["特效文字4"] = nil
 		WAR.Person[enemyid]["特效动画"] = nil
-	end
-	--九霄护盾
-	if WAR.PD['独孤护盾'][eid] ~= nil then		
-		local aa = hurt
-		if aa < 10 then aa = 10 end	
-		hurtjs2[#hurtjs2+1] = 0
-	    WAR.Person[enemyid]["特效文字0"] = nil
-		WAR.Person[enemyid]["特效文字1"] = nil
-		WAR.Person[enemyid]["特效文字2"] = nil
-		WAR.Person[enemyid]["特效文字3"] = nil
-		WAR.Person[enemyid]["特效文字4"] = nil
-		WAR.Person[enemyid]["特效动画"] = nil
 	end	
 	--护龙军师大阵
 	if WAR.PD['灌木阵'][pid] == 1 then
@@ -73563,6 +73560,16 @@ Ct['总伤害计算'] = function(enemyid, wugong,level,ang,hurt,swhurt,wxhurt,flag)
 		WAR.DLJ = 1
 		if WAR.PD['神足乾坤'][eid] <= 0 then 
 			WAR.PD['神足乾坤'][eid] = nil 
+			Cat('护盾停止',enemyid)
+		end
+	end
+	--独孤护盾
+	if WAR.PD['独孤护盾'][eid] ~= nil and WAR.PD['独孤护盾'][eid] > 0 then
+		WAR.PD['独孤护盾'][eid] = WAR.PD['独孤护盾'][eid] - 1	
+		WAR.DZY = 1
+		hurtjs1[#hurtjs1+1] = 0.65
+		if WAR.PD['独孤护盾'][eid] <= 0 then 
+			WAR.PD['独孤护盾'][eid] = nil 
 			Cat('护盾停止',enemyid)
 		end
 	end
@@ -78681,6 +78688,13 @@ Ct['伤害结算'] = function(wugong, level, ang, x, y,ZHEN_ID)
 				elseif MPTX(id,26,4) and JLSD(20,55,id) then
 					ftnum = 1
 					Set_Eff_Text(i, "特效文字1", "丹唇列素齿·翠彩发蛾眉")
+				elseif WAR.PD['独孤护盾'][id] ~= nil and WAR.PD['独孤护盾'][id] > 0 then
+					Set_Eff_Text(i,"特效文字1", "剑气护体")
+					ftnum = 1
+					WAR.PD['独孤护盾'][id] = WAR.PD['独孤护盾'][id] - 1
+					if WAR.PD['独孤护盾'][id] < 1 then
+						WAR.PD['独孤护盾'][id] = nil
+					end	
 				elseif Curr_NG(id,317) and WAR.QMWZ < 1 and JLSD(85,90,id) then
 					ftnum = 1
 					WAR.Person[i]["特效动画"] = 95
@@ -78773,15 +78787,6 @@ Ct['伤害结算'] = function(wugong, level, ang, x, y,ZHEN_ID)
 						WAR.Person[i]['生命点数'] = 0
 						if WAR.PD['易水寒冰'][id] > 10 then 
 							WAR.PD['易水寒冰'][id] = nil 
-							Cat('护盾停止',i)
-						end	
-					--九霄护盾	
-					elseif 	
-					    WAR.PD['独孤护盾'][id] ~= nil and WAR.PD['独孤护盾'][id] > 0 then
-						WAR.PD['独孤护盾'][id] = WAR.PD['独孤护盾'][id] + 1
-						WAR.Person[i]['生命点数'] = 0
-						if WAR.PD['独孤护盾'][id] > 10 then 
-							WAR.PD['独孤护盾'][id] = nil 
 							Cat('护盾停止',i)
 						end		
 					else					
@@ -80693,7 +80698,7 @@ Ct['区域免疫'] = function(wugong,x,y,hurt,ang)
             end
         end
 		--破尽天下
-		if (match_ID(mid,92) or match_ID(mid,457) or match_ID(mid,592)) and WAR.Person[i]['死亡'] == false 
+		if (match_ID(mid,92) or match_ID(mid,457) or match_ID(mid,780) or match_ID(mid,592)) and WAR.Person[i]['死亡'] == false 
 			and GetWarMap(WAR.Person[i]['坐标X'],WAR.Person[i]['坐标Y'],4) > 0 and WAR.Person[WAR.CurID]['我方'] ~= WAR.Person[i]['我方'] then 
 			local jl = 35
 			if match_ID(mid,92) then

@@ -1047,8 +1047,8 @@ function NewGame()     --选择新游戏，设置主角初始属性
 		--以表格形式保存新文件
 		SaveTable(Achievements)
 	end
-    if CC.Week > 125 then 
-        CC.Week = 125
+    if CC.Week < 200 then 
+        CC.Week = 200
     end
 	JY.Base["周目"] = CC.Week
 	JY.Base["碎片"] = CC.Sp
@@ -15947,6 +15947,8 @@ function NGQH(id,NGid)--这里只写有「主运」的组合
 				return true	
 			elseif match_ID(id,776) and PersonKF(id,100) then
 			    return true 	
+			elseif match_ID(id,782) and PersonKF(id,100) then
+			    return true 		
 			else
 				return false
 			end 
@@ -16083,7 +16085,9 @@ function NGQH(id,NGid)--这里只写有「主运」的组合
 			elseif match_ID(id,772) and Curr_NG(id,108) then
 			    return true	
 			elseif match_ID(id,781) and PersonKF(id,108) then
-			    return true 			
+			    return true 
+			elseif match_ID(id,782) and PersonKF(id,108) then
+			    return true 							
 			else	
 				return false		
 			end
@@ -16140,8 +16144,6 @@ function NGQH(id,NGid)--这里只写有「主运」的组合
 				return true
 			elseif match_ID(id,747) and Curr_NG(id,171) then
 			   return true	
-			elseif match_ID(id,768) and Curr_NG(id,171) then
-			   return true
 			else
 				return false
 			end
@@ -16458,7 +16460,7 @@ function NGQHB(id,NGid)--这里只写有「非主运」的组合
 				return true
 			elseif match_ID(id,65) or match_ID(id,129) then
 				return true
-			elseif match_ID(id,758) then	
+			elseif match_ID(id,758) or match_ID(id,782) then	
 			    return true
 			else 
 				return false		
@@ -16528,7 +16530,7 @@ function NGQHB(id,NGid)--这里只写有「非主运」的组合
 		if NGid == 180 then
 			if PersonKF(id,227) and PersonKF(id,180) then
 				return true
-			elseif match_ID(id,759) or match_ID(id,776) or match_ID(id,781) then
+			elseif match_ID(id,759) or match_ID(id,776) or match_ID(id,781) or match_ID(id,782) then
 			    return true 	
 			else
 				return false
@@ -16596,7 +16598,7 @@ function NGQHB(id,NGid)--这里只写有「非主运」的组合
 		if NGid == 219 then
 			if PersonKF(id,219) and PersonKF(id,225) then
 				return true
-			elseif match_ID(id,26) then
+			elseif match_ID(id,26) or match_ID(id,782) then
 			    return true
 			else 
 				return false		
@@ -16617,6 +16619,8 @@ function NGQHB(id,NGid)--这里只写有「非主运」的组合
 			if PersonKF(id,252) and PersonKF(id,199) then
 				return true
 			elseif match_ID(id,568) and PersonKF(id,199) then
+			    return true
+			elseif match_ID(id,782) then 	
 			    return true
 			else 
 			    return false		
@@ -16755,7 +16759,7 @@ function NGQHC(id,NGid)--「非主运」+ 「轻功」
 		if NGid == 144 then
 			if PersonKF(id,144) and PersonKF(id,252) and PersonKF(id,186) then
 				return true 
-			elseif match_ID(id,743) or match_ID(id,772) then
+			elseif match_ID(id,743) or match_ID(id,772) or match_ID(id,782) then
 			    return true	
 			else 
 			    return false
@@ -19061,7 +19065,7 @@ function firstmenu2()--特殊角色
 	local tsmenu1 = {'雪羽宗','夜雨楼','中华阁','背巍军','护龙山庄','云梦涧','花涧派','世间百兽','诸系群侠'}
 	local menu2 = {	{514,745,744}, --雪
 					{526,525,527,761,457}, --夜
-					{524,743,747,758,759,760,764,771,772,773,774,775,776,778,779,780}, --中
+					{524,743,747,758,759,760,764,771,772,773,774,775,776,778,779,780,782}, --中
 					{568},--巍
 					{749,750,751,752,748}, --护
 					{754,455,762}, --云
