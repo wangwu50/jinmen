@@ -6188,6 +6188,7 @@ newkdef[10144]=function()
 		say("还有什么事？", 781, 0)
 		say("强哥最近被竹老板派去小村了，你去小村找他吧。", 0, 1)
 		say("好，希望你小子不要骗我。", 0, 1)
+		instruct_3(197,17,0,0,0,0,0,0,0,0,0,-2,-2)  --修改场景事件
 		instruct_3(-2,-2,0,0,0,0,0,0,0,0,0,-2,-2)  --修改场景事件
 		say("走那么急，随身秘籍掉了都不知道。", 0, 1)
 		say("嘿嘿，归我了。", 0, 1)
@@ -6467,6 +6468,190 @@ newkdef[10145]=function()
 	end
 end	
 
+newkdef[10146]=function()
+    say("骚年，这是奔着挑战厨神来的吧？",780, 0)
+	say("………………这你都知道？", 0, 1)
+	say("呵呵，多年来挑战的人不计其数，无非就是想验证一下自身实力罢了。",780, 0)
+	say("要怎么才能去挑战厨神呢？", 0, 1)
+	say("纹银一万两即可挑战。",780, 0)
+	say("好！<真贵....>", 0, 1)
+	say("自己选择吧！",780, 0)
+	local nexty = CC.MainSubMenuY + CC.SingleLineHeight
+	local p = SelectTeamMenu(CC.MainSubMenuX, nexty)
+    local money = 10000
+	if p > 0 then
+		local diyid = JY.Base["队伍" .. p]
+		if instruct_31(10000) and p > 0 then
+		    local r = JYMsgBox("封玉楼为您服务", "请选择以下您觉得有能力获胜的挑战！记得给钱。", {"梵","柏","录","霍","剑","退出"}, 6, 617)
+		    Cls()
+		    if r == 1 then 
+			    say(JY.Person[diyid]["姓名"].."支付"..money.."两银子给竹老板！", 780, 0)
+			    say("………………真贵！", 0, 0)
+			    if WarMain(507, 0) == false then  --战斗开始
+				    say("骚年，你还需要提升自己的实力！", 780, 0)
+				    say("………………",0,0)
+				    do return end  --无条件结束事件
+			    else
+				    say("不错，这是奖励。", 780, 0)
+				    say("嘿嘿嘿！",0,0)
+                    JY.Person[523]["声望"] = JY.Person[523]["声望"] + 60     
+				    instruct_2(281,1)    --商会令牌
+				    QZXS(JY.Person[diyid]["姓名"].."技能点增加60点！")
+				    Cls()
+				    do return end  --无条件结束事件
+			    end	
+		    elseif r == 2 then	
+			    say(JY.Person[diyid]["姓名"].."支付"..money.."两银子给竹老板！", 780, 0)
+			    say("………………真贵！", 0, 0)
+			    instruct_2(174, -10000)
+			    if WarMain(508, 0) == false then  --战斗开始
+				    say("骚年，你还需要提升自己的实力！", 780, 0)
+				    say("………………",0,0)
+				    do return end  --无条件结束事件
+			    else
+				    say("不错，这是奖励。", 780, 0)
+				    say("嘿嘿嘿！",0,0)
+                    JY.Person[523]["声望"] = JY.Person[523]["声望"] + 60     
+				    instruct_2(281,1)    --商会令牌
+				    QZXS(JY.Person[diyid]["姓名"].."技能点增加60点！")
+				    Cls()
+				    do return end  --无条件结束事件
+			    end	
+		   elseif r == 3 then	
+			    say(JY.Person[diyid]["姓名"].."支付"..money.."两银子给竹老板！", 780, 0)
+			    say("………………真贵！", 0, 0)
+			    instruct_2(174, -10000)
+			    if WarMain(509, 0) == false then  --战斗开始
+				    say("骚年，你还需要提升自己的实力！", 780, 0)
+				    say("………………",0,0)
+				    do return end  --无条件结束事件
+			    else
+				    say("不错，这是奖励。", 780, 0)
+				    say("嘿嘿嘿！",0,0)
+                    JY.Person[523]["声望"] = JY.Person[523]["声望"] + 60     
+				    instruct_2(281,1)    --商会令牌
+				    QZXS(JY.Person[diyid]["姓名"].."技能点增加60点！")
+				    Cls()
+				    do return end  --无条件结束事件
+			    end
+			elseif r == 4 then	
+			    say(JY.Person[diyid]["姓名"].."支付"..money.."两银子给竹老板！", 780, 0)
+			    say("………………真贵！", 0, 0)
+			    instruct_2(174, -10000)
+			    if WarMain(510, 0) == false then  --战斗开始
+				    say("骚年，你还需要提升自己的实力！", 780, 0)
+				    say("………………",0,0)
+				    do return end  --无条件结束事件
+			    else
+				    say("不错，这是奖励。", 780, 0)
+				    say("嘿嘿嘿！",0,0)
+                    JY.Person[523]["声望"] = JY.Person[523]["声望"] + 60     
+				    instruct_2(281,1)    --商会令牌
+				    QZXS(JY.Person[diyid]["姓名"].."技能点增加60点！")
+				    Cls()
+				    do return end  --无条件结束事件
+			    end	
+			elseif r == 5 then	
+			    say(JY.Person[diyid]["姓名"].."支付"..money.."两银子给竹老板！", 780, 0)
+			    say("………………真贵！", 0, 0)
+			    instruct_2(174, -10000)
+			    if WarMain(511, 0) == false then  --战斗开始
+				    say("骚年，你还需要提升自己的实力！", 780, 0)
+				    say("………………",0,0)
+				    do return end  --无条件结束事件
+			    else
+				    say("不错，这是奖励。", 780, 0)
+				    say("嘿嘿嘿！",0,0)
+                    JY.Person[523]["声望"] = JY.Person[523]["声望"] + 60     
+				    instruct_2(281,1)    --商会令牌
+				    QZXS(JY.Person[diyid]["姓名"].."技能点增加60点！")
+				    Cls()
+				    do return end  --无条件结束事件
+			    end				
+		    else 
+			    say("算了，下次再来挑战。", 0, 0)	
+		    end
+	    else
+		    say("骚年，你的钱不够！", 617, 0,"如花")	
+		end
+	end
+end	
+
+newkdef[10010]=function()
+    say("骚年，竹老板派本小姐来帮助你！",617, 0,"如花")
+	say("………………好吧！", 0, 0)
+	say("下面这些挑战你可以选择，但是每一项都需要付钱。", 617, 0,"如花")
+	say("………………还要钱？", 0, 0)
+	say("竹老板是生意人，怎么会做赔钱的买卖。", 617, 0,"如花")
+	say("黑店！！！！！！！！！！！", 0, 0)
+	say("骚年，竹老板可是诚信商家，付钱吧。", 617, 0,"如花")
+	say("………………", 0, 0)
+	local nexty = CC.MainSubMenuY + CC.SingleLineHeight
+	local p = SelectTeamMenu(CC.MainSubMenuX, nexty)
+    local money = 8888
+	if p > 0 then
+		local diyid = JY.Base["队伍" .. p]
+		if instruct_31(8888) and p > 0 then
+			local r = JYMsgBox("小村驿站为您服务", "请选择以下您觉得有能力获胜的挑战，记住给钱", {"射雕五绝","苍炎四神","金系双子","退出"}, 4, 617)
+			Cls()
+			if r == 1 then 
+				say(JY.Person[diyid]["姓名"].."支付"..money.."两银子给竹老板！", 617, 0,"如花")
+				say("………………真贵！", 0, 0)
+				if WarMain(386, 0) == false then  --战斗开始
+					say("骚年，你还需要提升自己的实力！", 617, 0,"如花")
+					say("………………",0,0)
+					do return end  --无条件结束事件
+				else
+					say("不错，这是奖励。", 617, 0,"如花")
+					say("嘿嘿嘿！",0,0)
+					AddPersonAttrib(diyid, "实战", 50)
+					instruct_2(348,5)    --无极丹
+					QZXS(JY.Person[diyid]["姓名"].."实战增加50点！")
+					Cls()
+					do return end  --无条件结束事件
+				end	
+			elseif r == 2 then	
+				say(JY.Person[diyid]["姓名"].."支付"..money.."两银子给竹老板！", 617, 0,"如花")
+				say("………………真贵！", 0, 0)
+				instruct_2(174, -8888)
+				if WarMain(387, 0) == false then  --战斗开始
+					say("骚年，你还需要提升自己的实力！", 617, 0,"如花")
+					say("………………",0,0)
+					do return end  --无条件结束事件
+				else
+					say("不错，这是奖励。", 617, 0,"如花")
+					say("嘿嘿嘿！",0,0)
+					AddPersonAttrib(diyid, "实战", 100)
+					instruct_2(348,8)    --无极丹
+					QZXS(JY.Person[diyid]["姓名"].."实战增加100点！")
+					Cls()
+					do return end  --无条件结束事件
+				end	
+			elseif r == 3 then	
+				say(JY.Person[diyid]["姓名"].."支付"..money.."两银子给竹老板！", 617, 0,"如花")
+				say("………………真贵！", 0, 0)
+				instruct_2(174, -8888)
+				if WarMain(401, 0) == false then  --战斗开始
+					say("骚年，你还需要提升自己的实力！", 617, 0,"如花")
+					say("………………",0,0)
+					do return end  --无条件结束事件
+				else
+					say("不错，这是奖励。", 617, 0,"如花")
+					say("嘿嘿嘿！",0,0)
+					AddPersonAttrib(diyid, "实战", 150)
+					instruct_2(348,12)    --无极丹
+					QZXS(JY.Person[diyid]["姓名"].."实战增加150点！")
+					Cls()
+					do return end  --无条件结束事件
+				end	
+			else 
+				say("算了，下次再来挑战。", 0, 0)	
+			end
+		else
+			say("骚年，你的钱不够！", 617, 0,"如花")	
+		end
+	end
+end
 --[[
 newkdef[1010]=function()
 if instruct_43(220) == false then  --判断是否有物品
@@ -8025,6 +8210,7 @@ newkdef[1082]=function()
 	if player_type == 1 then
 	DrawStrBoxWaitKey(""..JY.Person[0]["姓名"].."找回了无上秘宝", C_ORANGE, CC.DefaultFont)	
 	instruct_2(238,1) 
+	instruct_2(344,1) 
 	JY.Person[574]["品德"] = 120
 	end
 	if player_type == 2 then
@@ -17164,6 +17350,7 @@ else
 	say("女侠，多谢你的相助。以后有需要袁某的地方，尽管到华山后山来找我。", 54, 0)  --对话
 end
 instruct_2(68,1)  --混元功
+instruct_2(490,1)  --金蛇锥
 Cls()  --清屏
 say("好，那咱们后会有期。", 0, 1)  --对话
 Cls()  --清屏
@@ -17920,7 +18107,10 @@ Cls()  --清屏
 if instruct_9() then  --是否要求加入
 	JY.Person[83]["主运轻功"] = 0
 	say("师父在上，受徒儿一拜。那袁承志确实来过这里，不过现在已经回华山了。", 83, 0)  --对话
-	instruct_2(490,1)
+	instruct_2(490,1)   --金蛇锥
+	instruct_2(575,1)   --金蛇剑
+	instruct_2(576,1)   --金丝背心
+	instruct_2(577,1)   --黄金黑骑
 	Cls()  --清屏
 	instruct_3(104, 78,1,0,984,0,0,7042,7042,7042,-2,-2,-2)  --修改场景事件
 	if instruct_20() == false then  --判断队伍是否已满
@@ -25973,7 +26163,7 @@ if instruct_6(277,4,0,0) ==false then
     do return; end
 end
 
-SetTF(0,9919,1)
+--SetTF(0,9919,1)
 
 --李莫愁血量翻倍还原
 JY.Person[161]["血量翻倍"] = 1
@@ -31979,7 +32169,7 @@ newkdef[484]=function()
     instruct_1(1939,30,0);   --  1(1):[郭靖]说: 好，我正有此意。兄弟不必*担心，我二人这就去小村，*助你一臂之力。
     instruct_0();   --  0(0)::空语句(清屏)
     if JY.Person[0]['性别'] == 0 then
-    	say('对了兄弟，这是《九阴真经》的全本，你就拿去习练吧，对你应该很有帮助！',55,0)
+    	say('对了兄弟，这是《真经》的全本，你就拿去习练吧，对你应该很有帮助！',55,0)
     	say('多谢郭兄了！',0,1)
     else
     	say('对了女侠，这是《九阴真经》的全本，你就拿去习练吧，对你应该很有帮助！',55,0)
@@ -36691,6 +36881,7 @@ JY.Person[48]["血量翻倍"] = 1
 instruct_2(338,1)
 
 instruct_2(387,1)
+SetTF(0,9721,1)  --获得瑜伽秘术天赋
 
 instruct_3(-2, 14,0,0,0,0,0,0,0,0,-2,-2,-2)  --修改场景事件
 instruct_3(-2, 38,1,0,597,0,0,6380,6380,6380,-2,-2,-2)  --修改场景事件
@@ -54437,8 +54628,9 @@ if DrawStrBoxYesNo(-1, -1, "是否抢夺冰蚕？", C_WHITE, CC.DefaultFont) then  --是
 		say("小子，还想骗你家佛爷，看来是真的嫌命长了！！", 0, 1)  --对话
 		say("呜哇哇！佛，佛爷，我真不知道什么神足经，我，我的武功都是在这册子上学来的。Ｄ<拿出册子>Ｂ", 48, 0)  --对话
 		say("Ｄ<一把抢过>Ｂ算你识相，给我滚！", 0, 1)  --对话
-		 instruct_2(387,1)
-		 say("是，是！", 48, 0)  --对话
+		instruct_2(387,1)
+		SetTF(0,9721,1)  --获得瑜伽秘术天赋
+		say("是，是！", 48, 0)  --对话
 	end	
 	dark()
 	null(-2,11)
@@ -61004,7 +61196,10 @@ newkdef[3219]=function()
 				local target = {}
 				for taid = 0, JY.PersonNum -1 do
 					if taid > 0 and JY.Person[taid]['畅想分阶'] < 2 and inteam(taid) == false then
-						if taid == 1 or taid == 2 or taid == 662 or taid == 663 or taid == 517 or taid == 525 or taid == 526 then
+						if taid == 1 or taid == 2 or taid == 662 or taid == 663 or taid == 517 or taid == 525 or taid == 526 or taid == 761
+						or taid == 520 or taid == 524 or taid == 743 or taid == 747 or taid == 758 or taid == 759 or taid == 760 or taid == 764
+						or taid == 771 or taid == 772 or taid == 773 or taid == 774 or taid == 775 or taid == 776 or taid == 778 or taid == 779
+						or taid == 780 or taid == 781 or taid == 782 or taid == 783 then
 						else
 							target[#target+1] = taid
 						end
@@ -61044,7 +61239,10 @@ newkdef[3219]=function()
 							local target = {}
 							for taid = 0, JY.PersonNum -1 do
 								if taid > 0 and JY.Person[taid]['畅想分阶'] < 2 and inteam(taid) == false then
-									if taid == 1 or taid == 2 or taid == 662 or taid == 663 or taid == 517 or taid == 525 or taid == 526 then
+									if taid == 1 or taid == 2 or taid == 662 or taid == 663 or taid == 517 or taid == 525 or taid == 526 or taid == 761
+									or taid == 520 or taid == 524 or taid == 743 or taid == 747 or taid == 758 or taid == 759 or taid == 760 or taid == 764
+						            or taid == 771 or taid == 772 or taid == 773 or taid == 774 or taid == 775 or taid == 776 or taid == 778 or taid == 779
+						            or taid == 780 or taid == 781 or taid == 782 or taid == 783 then
 									else
 										target[#target+1] = taid
 									end

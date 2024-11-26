@@ -2273,6 +2273,10 @@ function JLSD(s1, s2, dw)
     if match_ID(dw,9735) then
         chance_up =	chance_up + 10
     end
+	--瑜伽秘术
+	if match_ID(dw,9721) then
+        chance_up =	chance_up + 18
+    end
 	--百里青霜
 	if match_ID(dw,762) then
 		chance_up = chance_up + 25
@@ -6076,7 +6080,8 @@ function AddPersonAttrib(id, str, value)
 				if match_ID(id,501) and (WAR.JBMY[id] or 0) > 15 and WAR.JBMY[id] ~= nil then
 					value = 0
 				end
-				if (match_ID(id,760) or match_ID(id,771) or match_ID(id,772) or match_ID(id,773) or match_ID(id,774)) and WAR.SXTJ <= 40 then
+				--肉如磐石
+				if (match_ID(id,760) or match_ID(id,771) or match_ID(id,772) or match_ID(id,773) or match_ID(id,774) or match_ID(id,780)) and WAR.SXTJ <= 40 then
 					value = 0
 				end	
 				--斗气
@@ -16326,6 +16331,8 @@ function NGQH(id,NGid)--这里只写有「主运」的组合
 		if NGid == 233 and pd == true then
 			if Curr_NG(id,233) and PersonKF(id,97) then
 				return true
+			elseif Curr_NG(id,233) and match_ID(id,9721) then
+			    return true 	
 			elseif match_ID(id,48) and PersonKF(id,233) then
 			    return true 	
 			else 
@@ -16394,7 +16401,7 @@ function NGQHB(id,NGid)--这里只写有「非主运」的组合
 				return true
 			elseif PersonKF(id,375) and PersonKF(id,89) then
 				return true
-			elseif match_ID(id,524) or JXPD(id,189,1) then
+			elseif match_ID(id,524) or JXPD(id,189,1) or match_ID(id,783) then
 				return true		
 			elseif JXPD(id,58,1) then
 				return true	
@@ -16472,6 +16479,8 @@ function NGQHB(id,NGid)--这里只写有「非主运」的组合
 				return true
 			elseif JXPD(id,60,1) then
 				return true
+			elseif match_ID(id,783) then
+			    return true 	
 			else 
 				return false		
 			end
@@ -19063,9 +19072,9 @@ function firstmenu2()--特殊角色
 	local size = CC.DefaultFont
 	local tsmenu = {'雪','夜','中','巍','护','云','花','兽','群'}
 	local tsmenu1 = {'雪羽宗','夜雨楼','中华阁','背巍军','护龙山庄','云梦涧','花涧派','世间百兽','诸系群侠'}
-	local menu2 = {	{514,745,744}, --雪
+	local menu2 = {	{514,745,744,781}, --雪
 					{526,525,527,761,457}, --夜
-					{524,743,747,758,759,760,764,771,772,773,774,775,776,778,779,780,782}, --中
+					{524,743,747,758,759,760,764,771,772,773,774,775,776,778,779,780,782,783}, --中
 					{568},--巍
 					{749,750,751,752,748}, --护
 					{754,455,762}, --云
@@ -24709,7 +24718,7 @@ function AnqiWG(id,aq)
 	if aq == 450 and (JXPD(id,626,1) or match_ID(id,456)) then--霹雳雷火弹
 		return true
 	end
-	if aq == 458 and JXPD(id,161,1)  then--冰魄银针	
+	if aq == 458 and (JXPD(id,161,1) or match_ID(id,760) or match_ID(id,773)) then--冰魄银针	
 		return true
 	end	
 	if aq == 459 and (JXPD(id,117,1) or JXPD(id,634,1)) then--生死符
