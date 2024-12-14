@@ -5925,8 +5925,8 @@ function AddPersonAttrib(id, str, value)
 		end
 		if match_ID(id, 9893) then --天赋类
 			attribmax = attribmax + 1500
-		end
-		if match_ID(id, 9999) or match_ID(id, 9740) then --天赋类
+		end	
+		if match_ID(id,9999) or match_ID(id,9740) or match_ID(id,9929) then --天赋类
 			attribmax = attribmax + 1000
 		end
 		if match_ID(id, 9725) then
@@ -6166,7 +6166,7 @@ function AddPersonAttrib(id, str, value)
 					value = 0
 				end
 				--肉如磐石
-				if (match_ID(id,760) or match_ID(id,771) or match_ID(id,772) or match_ID(id,773) or match_ID(id,774) or match_ID(id,780)) and WAR.SXTJ <= 40 then
+				if (match_ID(id,760) or match_ID(id,771) or match_ID(id,772) or match_ID(id,773) or match_ID(id,774) or match_ID(id,780)) and (JLSD(20,55,id) or WAR.SXTJ <= 3) then
 					value = 0
 				end
 				--斗气
@@ -16233,9 +16233,11 @@ function NGQH(id, NGid) --这里只写有「主运」的组合
 				return true
 			elseif Curr_NG(id, 106) and match_ID(id, 9999) then
 				return true
-			elseif Curr_NG(id, 106) and match_ID(id, 778) then
-				return true
-			elseif Curr_NG(id, 106) then
+			elseif Curr_NG(id,106) and match_ID(id,778) then
+			    return true	 	
+			elseif match_ID(id,774) and PersonKF(id,106) then
+			    return true 		
+			elseif Curr_NG(id,106) then
 				if JY.Status == GAME_WMAP then
 					if WAR.PD['九阳组合判定'][id] == 1 then
 						return true
@@ -16363,12 +16365,12 @@ function NGQH(id, NGid) --这里只写有「主运」的组合
 				return true
 			elseif match_ID(id, 117) and PersonKF(id, 183) then
 				return true
-			elseif match_ID(id, 499) then
-				return true
-			elseif match_ID(id, 773) or match_ID(id, 774) then
-				return true
-			elseif Curr_NG(id, 183) and match_ID(id, 780) then
-				return true
+			elseif match_ID(id,499) then
+			    return true	
+			elseif match_ID(id,773) then
+			    return true	
+			elseif Curr_NG(id,183) and match_ID(id,780) then
+			    return true			
 			else
 				return false
 			end
@@ -16449,8 +16451,10 @@ function NGQH(id, NGid) --这里只写有「主运」的组合
 		if NGid == 252 and pd == true then
 			if Curr_NG(id, 252) and (PersonKF(id, 203) or PersonKF(id, 94)) then
 				return true
-			elseif Curr_NG(id, 252) and match_ID(id, 9726) then
-				return true
+			elseif Curr_NG(id,252) and match_ID(id,9726) then
+				return true			
+			elseif match_ID(id,783) and PersonKF(id,252) then
+			    return true 	
 			else
 				return false
 			end
