@@ -68216,7 +68216,7 @@ Ct['总伤害计算'] = function(enemyid, wugong,level,ang,hurt,swhurt,wxhurt,flag)
 			Set_Eff_Text(WAR.CurID, "特效文字3", "一击贯通")
 		end
 		if MPTX(pid,23,2) and PersonKF(pid,200) and yongte(wugong) and JLSD(10,40,pid) then
-			local zs = (Qg(enemyid)+Atk(WAR.CurID))/400
+			local zs = math.floor((Qg(enemyid)+Atk(WAR.CurID))/400)
 			if zs < 2 then
 				zs = 2
 			end
