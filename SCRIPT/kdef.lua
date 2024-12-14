@@ -50815,12 +50815,12 @@ end
 
 --盛京进护龙山庄
 newkdef[9128]=function()
-My_Enter_SubScene(206,31,59,0)  --场景跳跃
+My_Enter_SubScene(206,31,58,0)  --场景跳跃
 instruct_40(1)
 do return end
 end
 newkdef[9129]=function()
-My_Enter_SubScene(130,30,4,0)  --场景跳跃
+My_Enter_SubScene(130,30,5,0)  --场景跳跃
 instruct_40(1)
 do return end
 end
@@ -50839,12 +50839,12 @@ end
 
 --中华阁擂台进明台桥
 newkdef[9132]=function()
-My_Enter_SubScene(205,1,49,0)  --场景跳跃
+My_Enter_SubScene(205,2,49,0)  --场景跳跃
 instruct_40(1)
 do return end
 end
 newkdef[9133]=function()
-My_Enter_SubScene(208,31,60,0)  --场景跳跃
+My_Enter_SubScene(208,31,59,0)  --场景跳跃
 instruct_40(1)
 do return end
 end
