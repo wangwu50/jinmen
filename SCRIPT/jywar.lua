@@ -13091,10 +13091,14 @@ function War_Fight_Sub(id, wugongnum, x, y)
 				Set_Eff_Text(WAR.CurID,"特效文字1","九阴拳劲·赤劲")
 			end
 			if JLSD(20,jl,pid) then
+				local a = JY.Person[pid]["拳掌功夫"]
+				local b = JY.Person[pid]["内力"] * 0.15
+				local c = a + b 
 				for j = 0, WAR.PersonNum-1 do
 					local df = WAR.Person[j]["人物编号"] 
 					if DWPD(WAR.CurID,j) and dead(j) == false and RealJL(j,WAR.CurID,9) then
 						ztd(j,WAR.ZSXS,9)
+						ztd(j,"生命点数",-c)
 					end
 				end
 				Set_Eff_Text(WAR.CurID,"特效文字1","九阴拳劲·凤凰哀歌")
@@ -44130,10 +44134,10 @@ function DrawTimeBar()
 				end
 				--九阴太极
 				if NGQH(jqid,107) then
-					if WAR.JYHT2 < 30 then 
+					if WAR.JYHT2 < 25 then 
 						WAR.JYHT2 = WAR.JYHT2 + 1
 					end
-					if WAR.JYHT2 == 30 then 
+					if WAR.JYHT2 == 25 then 
 						if WAR.JYZQ[jqid] == nil then 
 							WAR.JYZQ[jqid] = 1
 						else 
@@ -44147,10 +44151,10 @@ function DrawTimeBar()
 				end
 				--先天真气
 				if NGQH(jqid,100) then
-					if WAR.XTZQ1 < 30 then
+					if WAR.XTZQ1 < 25 then
 						WAR.XTZQ1 = WAR.XTZQ1 + 1
 					end 
-					if WAR.XTZQ1 == 30 then
+					if WAR.XTZQ1 == 25 then
 						if WAR.XTZQ[jqid] == nil then
 					        WAR.XTZQ[jqid] = 1 
 						else
@@ -44164,10 +44168,10 @@ function DrawTimeBar()
 				end 		
 				--全真剑气
 				if (PersonKF(jqid,100) or MPTX(jqid,16,2)) and PersonKF(jqid,39) then
-				    if WAR.QZJQ1 < 30 then 
+				    if WAR.QZJQ1 < 25 then 
 						WAR.QZJQ1 = WAR.QZJQ1 + 1
 					end
-					if WAR.QZJQ1 == 30 then 
+					if WAR.QZJQ1 == 25 then 
 						if WAR.QZJQ[jqid] == nil then 
 							WAR.QZJQ[jqid] = 1 
 						else
@@ -44215,10 +44219,10 @@ function DrawTimeBar()
 		        end		
 				--怒涛气劲
 				if NGQH(jqid,252) then	
-				    if WAR.NTJQ1 < 30 then 
+				    if WAR.NTJQ1 < 25 then 
 		                WAR.NTJQ1 = WAR.NTJQ1 + 1
 		            end
-                    if WAR.NTJQ1 == 30 then 
+                    if WAR.NTJQ1 == 25 then 
 		                if WAR.PD['怒涛剑气'][jqid] == nil then 
 			                WAR.PD['怒涛剑气'][jqid] = 1
 							if WAR.Person[i]["护盾"] == nil or WAR.Person[i]["护盾"] <= -1 then
@@ -44235,10 +44239,10 @@ function DrawTimeBar()
 		        end
 				--九阳怒涛
                 if NGQH(jqid,106) then    
-					if WAR.JYHT1 < 30 then 
+					if WAR.JYHT1 < 25 then 
 		                WAR.JYHT1 = WAR.JYHT1 + 1
 		            end
-                    if WAR.JYHT1 == 30 then 
+                    if WAR.JYHT1 == 25 then 
 		                if WAR.PD['九阳护盾'][jqid] == nil then 
 			                WAR.PD['九阳护盾'][jqid] = 1
 							if WAR.Person[i]["护盾"] == nil or WAR.Person[i]["护盾"] <= -1 then
@@ -44379,10 +44383,10 @@ function DrawTimeBar()
 		        end
 				--葵花紫霞
 				if NGQH(jqid,105) or JXPD(jqid,19,1) then	
-					if WAR.KHHD1 < 30 then 
+					if WAR.KHHD1 < 25 then 
 		                WAR.KHHD1 = WAR.KHHD1 + 1
 		            end
-                    if WAR.KHHD1 == 30 then 
+                    if WAR.KHHD1 == 25 then 
 		                if WAR.PD['葵花护盾'][jqid] == nil then 
 			                WAR.PD['葵花护盾'][jqid] = 1
 							if WAR.Person[i]["护盾"] == nil or WAR.Person[i]["护盾"] <= -1 then
@@ -44646,7 +44650,7 @@ function DrawTimeBar()
 					else
 						WAR.JTJQ[jqid] = WAR.JTJQ[jqid] + 1
 					end
-					if WAR.JTJQ[jqid] == 19 then
+					if WAR.JTJQ[jqid] == 20 then
 						WAR.JTJQ[jqid] = nil
 						local s = WAR.CurID
 						WAR.CurID = i
@@ -44721,7 +44725,7 @@ function DrawTimeBar()
 					else
 						WAR.ZSHY[jqid] = WAR.ZSHY[jqid] + 1
 					end
-					if WAR.ZSHY[jqid] == 99 then
+					if WAR.ZSHY[jqid] == 80 then
 						WAR.ZSHY[jqid] = nil
 						local s = WAR.CurID
 						WAR.CurID = i
@@ -44848,7 +44852,7 @@ function DrawTimeBar()
 					else
 						WAR.CYDT[jqid] = WAR.CYDT[jqid] + 1
 					end
-					if WAR.CYDT[jqid] == 18 then
+					if WAR.CYDT[jqid] == 20 then
 						WAR.CYDT[jqid] = nil
 						local s = WAR.CurID
 						WAR.CurID = i
@@ -44962,7 +44966,7 @@ function DrawTimeBar()
 					else
 						WAR.QWHW[jqid] = WAR.QWHW[jqid] + 1
 					end
-					if WAR.QWHW[jqid] == 50 then
+					if WAR.QWHW[jqid] == 30 then
 						WAR.QWHW[jqid] = nil
 						local s = WAR.CurID
 						WAR.CurID = i
@@ -45101,7 +45105,7 @@ function DrawTimeBar()
 				end
 				--临兵冲
                 if jqid == 0 and JY.Base["标准"] > 0 and JY.Base["天书数量"] >= 2 
-				    and (math.random(1000) < JY.Base["天书数量"] + 5 + math.modf(JY.Person[0]["资质"] / 20)) then 
+				    and (math.random(1000) < JY.Base["天书数量"] + 16 + math.modf(JY.Person[0]["资质"] / 20)) then 
 		            local tmppid = WAR.CurID
 					
 		            WAR.CurID = i
@@ -45143,7 +45147,7 @@ function DrawTimeBar()
 		        end
 
                 --隼龙令
-                if PersonKF(jqid,282) and math.random(100) < 16 then 
+                if PersonKF(jqid,282) and math.random(100) < 36 then 
 		            local tmppid = WAR.CurID
 					
 		            WAR.CurID = i
@@ -45179,7 +45183,7 @@ function DrawTimeBar()
 		        end	
 
                 --虾米临兵冲
-                if match_ID(jqid,759) and JLSD(10,30,jqid) then 
+                if match_ID(jqid,759) and JLSD(10,35,jqid) then 
 		            local tmppid = WAR.CurID
 		            WAR.CurID = i
 			        WarDrawMap(0); --不加这条则动画位置无法正常显示
@@ -56552,7 +56556,7 @@ Ct['三围五系伤害计算'] = function(enemyid,wugong, level, ang, x, y)
 	end
 	if Curr_NG(pid, 107) then
 		if WAR.PD['九阴破体'][pid] ~= nil and WAR.PD['九阴破体'][pid] == 1 then
-			defjs1[#defjs1+1] = 0.3
+			defjs1[#defjs1+1] = 0.65
 		end	
 	end
 	--鲸息九阴
@@ -60293,7 +60297,7 @@ Ct['总伤害计算'] = function(enemyid, wugong,level,ang,hurt,swhurt,wxhurt,flag)
 	end
 	--苍龙令攻击--一剑标记云梦苍龙
 	--if PersonKF(pid,281) then
-	if PersonKF(pid,282) then
+	if PersonKF(pid,281) then
 		local a = math.random(1,3)
 		local str = ""
 		if a == 1 then
@@ -64899,7 +64903,7 @@ Ct['总伤害计算'] = function(enemyid, wugong,level,ang,hurt,swhurt,wxhurt,flag)
 		end
 	end
 	--连城剑法+（神照/长生）
-	if wugong == 114 and (PersonKF(pid,94) or PersonKF(pid,203)) then
+	if (wugong == 114 and (PersonKF(pid,94) or PersonKF(pid,203))) or (wugong == 25 and match_ID(pid,775)) then
 		local a = JY.Person[eid]["流血程度"]
 		ztd(enemyid,WAR.LXXS,20)
 		ztd(WAR.CurID,"生命点数",(a*6))
@@ -70135,9 +70139,10 @@ Ct['总伤害计算'] = function(enemyid, wugong,level,ang,hurt,swhurt,wxhurt,flag)
 	end
 	--梵
 	--if (match_ID(eid,760) or match_ID(eid,771) or match_ID(eid,772) or match_ID(eid,773) or match_ID(eid,774)) and WAR.SXTJ <= 40 then
-	if (match_ID(eid,760) or match_ID(eid,771) or match_ID(eid,772) or match_ID(eid,773) or match_ID(eid,774) or match_ID(eid,780)) and JLSD(20,55,eid) then	
-		Set_Eff_Text(enemyid, "特效文字3", "肉如磐石",36)
-	end
+	--if (match_ID(eid,760) or match_ID(eid,771) or match_ID(eid,772) or match_ID(eid,773) or match_ID(eid,774) or match_ID(eid,780)) and JLSD(20,55,eid) then	
+		--WAR.PD['柳如絮'][eid] = 1
+		--Set_Eff_Text(enemyid, "特效文字3", "肉如磐石",36)
+	--end
     --斗气
 	if (match_ID(eid,767) or match_ID(eid,768) or match_ID(eid,769) or match_ID(eid,770)) and WAR.SXTJ <= 20 then
 		Set_Eff_Text(enemyid, "特效文字3", "秘·铜墙铁壁",36)
@@ -70692,9 +70697,9 @@ Ct['总伤害计算'] = function(enemyid, wugong,level,ang,hurt,swhurt,wxhurt,flag)
 	--阳内主运或者阳罡学会九阳后，主运减伤30%，被动减伤10%
     if PersonKF(eid,106) and rwnlxz(eid,1) then
         if Curr_NG(eid,106) then
-            hurtjs1[#hurtjs1+1] = 0.3
+            hurtjs1[#hurtjs1+1] = 0.45
         else
-            hurtjs1[#hurtjs1+1] = 0.15
+            hurtjs1[#hurtjs1+1] = 0.2
         end
     end
 	--九阳神功105
@@ -71565,7 +71570,7 @@ Ct['总伤害计算'] = function(enemyid, wugong,level,ang,hurt,swhurt,wxhurt,flag)
 		end
 		if JLSD(50,80,eid) and JY.Person[eid]["内力"] >= 999 then
 			ztd(enemyid,"内力点数",-999)
-			ztd(enemyid,"生命点数",500)
+			ztd(enemyid,"生命点数",600)
 			hurtjs2[#hurtjs2+1] = 99
 			Set_Eff_Text(enemyid,"特效文字3","他自狠来他自恶·我自一口真气足")
 		end

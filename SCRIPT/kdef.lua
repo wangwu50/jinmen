@@ -6577,6 +6577,35 @@ newkdef[10146]=function()
 	end
 end	
 
+newkdef[10147]=function()
+	say("你就是萧大侠的千金吧？<色眯眯的眼神>",781, 0);	
+	say( "阁下是谁？找我又有何事？",77, 0);
+	say("Ｌ＜此人不就是名镇苏杭的采花大盗----花帝尹稻，糟了！这家伙盯上萧姑娘了。＞",0, 1);	
+	say("萧姑娘小心，这大汉是冲着你来的。",0, 1);
+	say("原来是小村的小家伙，想不到你会在这里出现，不碍事一起打包带走。哈哈哈哈！！！！",781, 0);	
+	say("Ｌ＜这家伙准备男女通吃？？？？＞",0, 1);	
+	say("来呀！",0, 1);
+	say("好！有种！！！",781, 0);	
+    instruct_0();   --  0(0)::空语句(清屏)
+	if WarMain(511) == false then			
+		instruct_15();			--战斗失败，死亡
+		return;
+	end
+	instruct_3(-2,38,0,0,0,0,0,0,0,0,0,0,0);		--清除花帝贴图
+	light()
+	instruct_37(1)  --增加品德
+	say("就这水平？还采花？丢人喽！！！！",0, 1);
+	say("少校，这是刚才打斗时那名大汉掉落的一些东西。",77, 0);
+	instruct_2(174,5000);	  --银两5000
+	instruct_2(69,1)          --狮吼功
+	instruct_0();   --  0(0)::空语句(清屏)
+	say("这是少林的《狮吼功》秘籍，难道这大汉是少林弟子？",77,5);	
+	say("管他的，反正现在这是我们的了，嘿嘿！！",0, 1);	
+	instruct_35(77,2,92,50)
+	QZXS('萧中慧第三格武功洗为狮子吼！')
+	instruct_0();   --  0(0)::空语句(清屏)
+end
+
 newkdef[10010]=function()
     say("骚年，竹老板派本小姐来帮助你！",617, 0,"如花")
 	say("………………好吧！", 0, 0)
@@ -20687,15 +20716,18 @@ end
 
 
 newkdef[4103]=function()
+local picid = 260
+say("对了，闲暇时间我喜欢看小说。有了新的小说别忘了和我分享哦。",picid,0,"迷之少女");
 --无酒不欢：蜜汁少女的挑战
-	local R = nil
-	if JY.Person[0]['性别'] == 0 then
-		 R = JYMsgBox("请选择", "江湖风云出我辈，*少侠现在需要做什么呢？", {"关闭心魔","周目商店","门派说明"},3, 260) 
-	else
-		R = JYMsgBox("请选择", "江湖风云出我辈，*女侠现在需要做什么呢？", {"关闭心魔","周目商店","门派说明"}, 3, 260)
-	end
-	if R == 1 then
-		CC.TX["心魔"] = 1
+
+	--local R = nil
+	-- JY.Person[0]['性别'] == 0 then
+		 --R = JYMsgBox("请选择", "江湖风云出我辈，*少侠现在需要做什么呢？", {"关闭心魔","周目商店","门派说明"},3, 260) 
+	--else
+		--R = JYMsgBox("请选择", "江湖风云出我辈，*女侠现在需要做什么呢？", {"关闭心魔","周目商店","门派说明"}, 3, 260)
+	--end
+	--if R == 1 then
+		--CC.TX["心魔"] = 1
 		--[[
 		if JY.Base["天书数量"] == 0 then
 			say("收集到新的天书了吗？", 260,0,"迷之少女");
@@ -20818,32 +20850,32 @@ newkdef[4103]=function()
 		end
 		do return end
 		]]
-	elseif R == 2 then
+	--elseif R == 2 then
 		--yxshop()
-		do return end
-	elseif R == 3 then
-		local nexty = CC.ScreenH/2-CC.DefaultFont*4 + CC.SingleLineHeight
+		--do return end
+	--elseif R == 3 then
+		--local nexty = CC.ScreenH/2-CC.DefaultFont*4 + CC.SingleLineHeight
 		--yxshop()
-		local menu = {}
+		--local menu = {}
 		-- for i = 1, #CC.MP do 
 			-- menu[#menu+1]={CC.MP[i], nil, 1}--竹风雨滴＆tony：开放昆仑派
 		-- end
 		--CC.MP
-		local clone_choice = ShowMenu2(CC.MP, #CC.MP, 5, 7, CC.ScreenW/2-CC.DefaultFont*10-20, nexty, 0, 0, 1, 1, CC.DefaultFont, C_ORANGE, C_WHITE,"请选择你要的功能")
+		--local clone_choice = ShowMenu2(CC.MP, #CC.MP, 5, 7, CC.ScreenW/2-CC.DefaultFont*10-20, nexty, 0, 0, 1, 1, CC.DefaultFont, C_ORANGE, C_WHITE,"请选择你要的功能")
 		--local clone_choice1 = ShowMenu2(CC.MP, #CC.MP, 18, CC.MainSubMenuX-80, CC.MainSubMenuY, 0, 0, 1, 1, CC.DefaultFont, M_YellowGreen, C_WHITE)
 		-- if clone_choice1 > 0 then
 			-- JY.Person[0]["门派位阶"] = clone_choice1
 		-- end
 		--local clone_choice1 = ShowMenu(menu, #menu, 18, CC.MainSubMenuX-80, CC.MainSubMenuY, 0, 0, 1, 1, CC.DefaultFont, M_YellowGreen, C_WHITE)
-		if clone_choice > 0 then
-			mp_info(clone_choice)
-		end
+		--if clone_choice > 0 then
+			--mp_info(clone_choice)
+		--end
 
-		do return end
+		--do return end
 		
 	--
-	end
-	do return end
+	--end
+	--do return end
 end	
 
 
@@ -31787,6 +31819,7 @@ end
 Cls()  --清屏
 instruct_13()  --场景变亮
 say("怎么样，我像不像武林盟主啊？", 0, 1)  --对话
+SetTF(0,9852,1)   --铁腿水上飘天赋
 Cls()  --清屏
 say("…………", 67, 0)  --对话
 Cls()  --清屏
@@ -51338,35 +51371,36 @@ end
 
 
 newkdef[9083]=function()
-say("你来了，我爹爹一行人已经避往海外的鸳鸯岛了，少侠若要有事要问寻他我们与你一起去。",77,0)
-Cls()
+    say("你来了，我爹爹一行人已经避往海外的鸳鸯岛了，少侠若要有事要问寻他我们与你一起去。",77,0)
+    Cls()
 	addevent(79,7,1,9084,1,nil)
 	instruct_39(79)  --打开场景
-if instruct_9() then  --是否要求加入
-	say("好啊，我们一起走吧。", 0, 1)  --对话
-	Cls()  --清屏
-	if More_than_2_vacant_slot()  then
-		instruct_14()  --场景变黑
-		null(-2,0)
-		null(-2,1)
-		Cls()  --清屏
-		instruct_13()  --场景变亮
-		instruct_10(566)  --加入队伍
-		instruct_10(77)  --加入队伍
-		do return end  --无条件结束事件
-
-	end
-	say("你的队伍人太多，我们就直接去*小村吧。", 566, 0)  --对话
-	Cls()  --清屏
-	instruct_14()  --场景变黑
-	instruct_3(70, 117,1,0,10006,0,0,4774*2,4774*2,4774*2,-2,-2,-2)  --修改场景事件
-    instruct_3(70, 118,1,0,169,0,0,7010,7010,7010,-2,-2,-2)  --修改场景事件	
-	instruct_3(-2, -2,0,0,0,0,0,0,0,0,0,0,0)  --修改场景事件
-	Cls()  --清屏
-	instruct_13()  --场景变亮
-	do return end  --无条件结束事件
-end
-do return end  --无条件结束事件
+    if instruct_9() then  --是否要求加入
+	    say("好啊，我们一起走吧。", 0, 1)  --对话
+	    Cls()  --清屏
+	    if More_than_2_vacant_slot()  then
+		    instruct_14()  --场景变黑
+		    null(-2,0)
+		    null(-2,1)
+			instruct_3(-2,-2,1,0,10147,0,0,-2,-2,-2,-2,-2,-2);		--花帝乱入事件
+	        instruct_3(-2,38,1,0,10147,0,0,8872,8872,8872,0,0,0);		--花帝乱入事件
+		    Cls()  --清屏
+		    instruct_13()  --场景变亮
+		    instruct_10(566)  --加入队伍
+		    instruct_10(77)  --加入队伍
+		    do return end  --无条件结束事件
+	    end
+	    say("你的队伍人太多，我们就直接去*小村吧。", 566, 0)  --对话
+	    Cls()  --清屏
+	    instruct_14()  --场景变黑
+	    instruct_3(70, 117,1,0,10006,0,0,4774*2,4774*2,4774*2,-2,-2,-2)  --修改场景事件
+        instruct_3(70, 118,1,0,169,0,0,7010,7010,7010,-2,-2,-2)  --修改场景事件	
+	    instruct_3(-2, -2,0,0,0,0,0,0,0,0,0,0,0)  --修改场景事件
+	    Cls()  --清屏
+	    instruct_13()  --场景变亮
+	    do return end  --无条件结束事件
+    end
+    do return end  --无条件结束事件
 end
 
 
@@ -61379,7 +61413,10 @@ newkdef[3220]=function()
 				local target = {}
 				for taid = 0, JY.PersonNum -1 do
 					if taid > 0 and JY.Person[taid]['畅想分阶'] < 2 and inteam(taid) == false then
-						if taid == 1 or taid == 2 or taid == 662 or taid == 663 or taid == 517 or taid == 525 or taid == 526 then
+						if taid == 1 or taid == 2 or taid == 662 or taid == 663 or taid == 517 or taid == 525 or taid == 526 or taid == 761
+						or taid == 520 or taid == 524 or taid == 743 or taid == 747 or taid == 758 or taid == 759 or taid == 760 or taid == 764
+						or taid == 771 or taid == 772 or taid == 773 or taid == 774 or taid == 775 or taid == 776 or taid == 778 or taid == 779
+						or taid == 780 or taid == 781 or taid == 782 or taid == 783 then
 						else
 							target[#target+1] = taid
 						end
@@ -61421,7 +61458,10 @@ newkdef[3220]=function()
 						local target = {}
 						for taid = 0, JY.PersonNum -1 do
 							if taid > 0 and JY.Person[taid]['畅想分阶'] < 2 and inteam(taid) == false then
-								if taid == 1 or taid == 2 or taid == 662 or taid == 663 or taid == 517 or taid == 525 or taid == 526 then
+								if taid == 1 or taid == 2 or taid == 662 or taid == 663 or taid == 517 or taid == 525 or taid == 526 or taid == 761
+								or taid == 520 or taid == 524 or taid == 743 or taid == 747 or taid == 758 or taid == 759 or taid == 760 or taid == 764
+						        or taid == 771 or taid == 772 or taid == 773 or taid == 774 or taid == 775 or taid == 776 or taid == 778 or taid == 779
+						        or taid == 780 or taid == 781 or taid == 782 or taid == 783 then
 								else
 									target[#target+1] = taid
 								end
