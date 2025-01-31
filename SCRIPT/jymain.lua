@@ -2344,30 +2344,10 @@ function JLSD(s1, s2, dw)
 	if MPTX(dw,21,2) then
 		chance_up =	chance_up + 5
 	end
-	if JY.Base["标准"] == 11 and dw == 0 then
-		chance_up = chance_up + 5 + math.modf((120 - psx(dw, '品德')) * 0.067)
-	end
-	--冯衡增加特效
-	if match_ID(dw, 588) then
-		chance_up = chance_up + 10
-	end
-	--悟道乾坤
-	if match_ID(dw, 9735) then
-		chance_up = chance_up + 10
-	end
-	--百里青霜
-	if match_ID(dw, 762) then
-		chance_up = chance_up + 25
-	end
-	--萧半和
-	if match_ID(dw, 189) then
-		chance_up = chance_up + 15
-	end
-	--花涧派
-	if MPTX(dw, 21, 2) then
-		chance_up = chance_up + 5
-	end
-
+	--天魔教
+	if MPTX(dw,31) then
+		chance_up = chance_up + 8 + math.modf((psx(dw,'品德'))/8)
+	end 	
 	if JY.Status == GAME_WMAP then
 		if WAR.PD['神经蛇毒'][dw] ~= nil or WAR.PD['凝结时空'][dw] ~= nil then
 			return false
@@ -6166,7 +6146,7 @@ function AddPersonAttrib(id, str, value)
 					value = 0
 				end
 				--肉如磐石
-				if (match_ID(id,760) or match_ID(id,771) or match_ID(id,772) or match_ID(id,773) or match_ID(id,774) or match_ID(id,780)) and (JLSD(20,55,id) or WAR.SXTJ <= 3) then
+				if (match_ID(id,760) or match_ID(id,771) or match_ID(id,772) or match_ID(id,773) or match_ID(id,774) or match_ID(id,780) or match_ID(id,784)) and (JLSD(20,55,id) or WAR.SXTJ <= 3) then
 					value = 0
 				end
 				--斗气
@@ -7856,6 +7836,9 @@ function CanUseThing(id, personid)
 		--方证学金刚不坏体
 	elseif match_ID(personid, 149) and id == 265 then
 		return true
+	--天魔教学天魔策
+	elseif MPTX(personid, 31) and id == 327 then
+		return true	
 	else
 		if JY.Thing[id]["仅修炼人物"] >= 0 and JY.Thing[id]["仅修炼人物"] ~= personid and (personid == 0 and JY.Thing[id]["仅修炼人物"] == JY.Base["畅想"]) == false then
 			return false
@@ -16235,7 +16218,7 @@ function NGQH(id, NGid) --这里只写有「主运」的组合
 				return true
 			elseif Curr_NG(id,106) and match_ID(id,778) then
 			    return true	 	
-			elseif match_ID(id,774) and PersonKF(id,106) then
+			elseif match_ID(id,525) and PersonKF(id,106) then
 			    return true 		
 			elseif Curr_NG(id,106) then
 				if JY.Status == GAME_WMAP then
@@ -16315,8 +16298,10 @@ function NGQH(id, NGid) --这里只写有「主运」的组合
 		if NGid == 160 and pd == true then
 			if Curr_NG(id, 160) and PersonKF(id, 108) and PersonKF(id, 177) then
 				return true
-			elseif match_ID(id, 9991) and Curr_NG(id, 160) then
+			elseif match_ID(id,9991) and Curr_NG(id,160) then
 				return true
+			elseif MPTX(id,31,4) and Curr_NG(id,160) then
+				return true	
 			else
 				return false
 			end
@@ -16367,7 +16352,7 @@ function NGQH(id, NGid) --这里只写有「主运」的组合
 				return true
 			elseif match_ID(id,499) then
 			    return true	
-			elseif match_ID(id,773) then
+			elseif match_ID(id,784) then
 			    return true	
 			elseif Curr_NG(id,183) and match_ID(id,780) then
 			    return true			
@@ -16537,10 +16522,12 @@ function NGQH(id, NGid) --这里只写有「主运」的组合
 		end
 		--鲸息九阴
 		if NGid == 180 and pd == true then
-			if Curr_NG(id, 180) and PersonKF(id, 107) then
-				return true
-			else
-				return false
+			if Curr_NG(id,180) and PersonKF(id,107) then
+				return true 
+			elseif match_ID(id,774) and PersonKF(id,180) then
+			    return true		
+			else 
+			    return false	
 			end
 		end
 		--神照龟息
@@ -16669,6 +16656,7 @@ function NGQHB(id, NGid) --这里只写有「非主运」的组合
 		else
 			return false
 		end
+	end
 		--逆运九阴
 		if NGid == 104 then
 			if PersonKF(id, 104) and PersonKF(id,107) then
@@ -16681,167 +16669,169 @@ function NGQHB(id, NGid) --这里只写有「非主运」的组合
 				return false		
 			end
 		end
-	end
-	--九阳乾坤
-	if NGid == 106 then
-		if PersonKF(id, 106) and PersonKF(id, 97) then
-			return true
-		elseif match_ID(id, 9) then
-			return true
-		else
-			return false
+		--九阳乾坤
+		if NGid == 106 then
+			if PersonKF(id, 106) and PersonKF(id,97) then
+				return true
+			elseif match_ID(id,9) then
+				return true
+			else 
+				return false		
+			end
 		end
-	end
-	--罗汉金刚
-	if NGid == 144 then
-		if PersonKF(id, 96) and PersonKF(id, 144) then
-			return true
-		elseif match_ID(id, 577) or match_ID(id, 758) or match_ID(id, 743) then
-			return true
-		else
-			return false
+		--罗汉金刚
+		if NGid == 144 then
+			if PersonKF(id,96) and PersonKF(id,144) then
+				return true
+			elseif match_ID(id,577) or match_ID(id,758) or match_ID(id,743) then
+				return true
+			else 
+				return false		
+			end
 		end
-	end
-	--庄子天魔
-	if NGid == 160 then
-		if PersonKF(id, 160) and PersonKF(id, 190) then
-			return true
-		elseif match_ID(id, 112) or match_ID(id, 627) then
-			return true
-		else
-			return false
+		--庄子天魔
+		if NGid == 160 then
+			if PersonKF(id, 160) and PersonKF(id,190) then
+				return true
+			elseif match_ID(id,112) or match_ID(id,627) then
+				return true
+			else 
+				return false		
+			end
 		end
-	end
-	--五岳剑诀强化（非组合、绑门派）
-	if NGid == 175 then
-		if MPTX(id, 14, 6) and PersonKF(id, 175) then
-			return true
-		else
-			return false
+		--五岳剑诀强化（非组合、绑门派）
+		if NGid == 175 then
+			if MPTX(id,14,6) and PersonKF(id,175) then
+				return true
+			else
+				return false
+			end
+		end	
+		--忘情怒涛
+		if NGid == 177 then
+			if PersonKF(id,177) and PersonKF(id,252) then
+				return true
+			elseif match_ID(id,652) and PersonKF(id,177) then
+				return true
+			elseif match_ID(id,772) and Curr_NG(id,108) then
+			    return true			
+			else
+				return false
+			end
+		end 			
+		--鲸鱼龟息
+		if NGid == 180 then
+			if PersonKF(id,227) and PersonKF(id,180) then
+				return true
+			elseif match_ID(id,759) or match_ID(id,776) or match_ID(id,781) or match_ID(id,782) then
+			    return true 	
+			elseif match_ID(id,773) then
+			    return true	
+			else
+				return false
+			end
 		end
-	end
-	--忘情怒涛
-	if NGid == 177 then
-		if PersonKF(id, 177) and PersonKF(id, 252) then
-			return true
-		elseif match_ID(id, 652) and PersonKF(id, 177) then
-			return true
-		elseif match_ID(id, 772) and Curr_NG(id, 108) then
-			return true
-		else
-			return false
+		--龟息周天
+	    if NGid ==	190 then
+			if PersonKF(id,190) and PersonKF(id,227) then
+				return true
+			elseif match_ID(id,5) then
+			    return true
+			else 
+			    return false		
+			end
 		end
-	end
-	--鲸鱼龟息
-	if NGid == 180 then
-		if PersonKF(id, 227) and PersonKF(id, 180) then
-			return true
-		elseif match_ID(id, 759) or match_ID(id, 776) or match_ID(id, 781) or match_ID(id, 782) then
-			return true
-		else
-			return false
+		--十三太保横练（铁布衫+金刚不坏+龙象）
+		if NGid == 196 then
+			if PersonKF(id,196) and PersonKF(id,144) and PersonKF(id,103) then
+				return true
+			elseif match_ID(id,603) or match_ID(id,9807) then
+				return true
+			elseif match_ID(id,771) or match_ID(id,743) then 
+			    return true	
+			else 
+				return false	
+			end
 		end
-	end
-	--龟息周天
-	if NGid == 190 then
-		if PersonKF(id, 190) and PersonKF(id, 227) then
-			return true
-		elseif match_ID(id, 5) then
-			return true
-		else
-			return false
+		--逮虾虎（武穆长生or神照）
+		if NGid == 199 then
+			if PersonKF(id,199) and (PersonKF(id,203) or PersonKF(id,94)) then
+				return true
+			elseif (JXPD(id,578,1) or JXPD(id,505,1)) and PersonKF(id,203) then
+				return true
+			elseif match_ID(id,771) and PersonKF(id,94) then 
+				return true
+			elseif match_ID(id,781) then 
+				return true
+			else
+				return false
+			end
 		end
-	end
-	--十三太保横练（铁布衫+金刚不坏+龙象）
-	if NGid == 196 then
-		if PersonKF(id, 196) and PersonKF(id, 144) and PersonKF(id, 103) then
-			return true
-		elseif match_ID(id, 603) or match_ID(id, 9807) then
-			return true
-		elseif match_ID(id, 771) or match_ID(id, 743) then
-			return true
-		else
-			return false
+		--枯禅冰火
+		if NGid == 207 then
+			if PersonKF(id,207) and (PersonKF(id,250) or PersonKF(id,314)) then
+				return true
+			elseif match_ID(id,499) or match_ID(id,65) then
+				return true
+			elseif match_ID(id,102) and PersonKF(id,207) then
+				return true
+			else 
+				return false		
+			end
 		end
-	end
-	--逮虾虎（武穆长生or神照）
-	if NGid == 199 then
-		if PersonKF(id, 199) and (PersonKF(id, 203) or PersonKF(id, 94)) then
-			return true
-		elseif (JXPD(id, 578, 1) or JXPD(id, 505, 1)) and PersonKF(id, 203) then
-			return true
-		elseif match_ID(id, 771) and PersonKF(id, 94) then
-			return true
-		elseif match_ID(id, 781) then
-			return true
-		else
-			return false
+		--寒冰or易水寒，紫霞
+	    if NGid ==	216 then
+			if (PersonKF(id,216) or PersonKF(id,43)) and PersonKF(id,89) then
+				return true
+			elseif match_ID(id,22) then
+			    return true
+			else 
+			    return false		
+			end
 		end
-	end
-	--枯禅冰火
-	if NGid == 207 then
-		if PersonKF(id, 207) and (PersonKF(id, 250) or PersonKF(id, 314)) then
-			return true
-		elseif match_ID(id, 499) or match_ID(id, 65) then
-			return true
-		elseif match_ID(id, 102) and PersonKF(id, 207) then
-			return true
-		else
-			return false
+		--小星辰周天
+		if NGid == 219 then
+			if PersonKF(id,219) and PersonKF(id,225) then
+				return true
+			elseif match_ID(id,26) or match_ID(id,782) then
+			    return true
+			else 
+				return false		
+			end
 		end
-	end
-	--寒冰or易水寒，紫霞
-	if NGid == 216 then
-		if (PersonKF(id, 216) or PersonKF(id, 43)) and PersonKF(id, 89) then
-			return true
-		elseif match_ID(id, 22) then
-			return true
-		else
-			return false
+		--碧海五转
+	    if NGid == 248 then
+			if PersonKF(id,248) and PersonKF(id,317) then
+				return true
+			elseif match_ID(id,56) or match_ID(id,57) or match_ID(id,588) then
+			    return true
+			else 
+			    return false		
+			end
 		end
-	end
-	--小星辰周天
-	if NGid == 219 then
-		if PersonKF(id, 219) and PersonKF(id, 225) then
-			return true
-		elseif match_ID(id, 26) or match_ID(id, 782) then
-			return true
-		else
-			return false
+		--怒涛武穆
+		if NGid == 252 then
+			if PersonKF(id,252) and PersonKF(id,199) then
+				return true
+			elseif match_ID(id,568) and PersonKF(id,199) then
+			    return true
+			elseif match_ID(id,782) then 	
+			    return true
+			else 
+			    return false		
+			end
+			
 		end
-	end
-	--碧海五转
-	if NGid == 248 then
-		if PersonKF(id, 248) and PersonKF(id, 317) then
-			return true
-		elseif match_ID(id, 56) or match_ID(id, 57) or match_ID(id, 588) then
-			return true
-		else
-			return false
+		--龙啸混元
+		if NGid == 369 then
+			if PersonKF(id,369) and PersonKF(id,90) then
+				return true
+			elseif match_ID(id,524) or match_ID(id,758) then
+			    return true
+			else
+			    return false		
+			end
 		end
-	end
-	--怒涛武穆
-	if NGid == 252 then
-		if PersonKF(id, 252) and PersonKF(id, 199) then
-			return true
-		elseif match_ID(id, 568) and PersonKF(id, 199) then
-			return true
-		elseif match_ID(id, 782) then
-			return true
-		else
-			return false
-		end
-	end
-	--龙啸混元
-	if NGid == 369 then
-		if PersonKF(id, 369) and PersonKF(id, 90) then
-			return true
-		elseif match_ID(id, 524) or match_ID(id, 758) then
-			return true
-		else
-			return false
-		end
-	end
 	--end
 	return false
 end
@@ -16850,146 +16840,158 @@ function NGQHC(id, NGid) --「非主运」+ 「轻功」
 	--if WAR.PJTX1 ~= 0 and (not match_ID(id,592)) then
 	--return false
 	--else
-	--碧海奇门灵鳌
-	if NGid == 248 then
-		if PersonKF(id, 248) and PersonKF(id, 317) and PersonKF(id, 237) then
+	    --天魔教
+		if MPTX(id,31,3) and NGid == 160 then
 			return true
-		elseif match_ID(id, 57) then
-			return true
-		else
-			return false
+		end 	
+	    --碧海奇门灵鳌
+		if NGid == 248 then
+			if PersonKF(id,248) and PersonKF(id,317) and PersonKF(id,237) then
+				return true
+			elseif match_ID(id,57) then 
+			    return true 
+			else 
+			    return false		
+			end
+		end 
+		--蛤蟆逆运瞬息
+		if NGid == 95 then 
+			if PersonKF(id,95) and PersonKF(id,104) and PersonKF(id,150) then
+				return true
+			elseif match_ID(id,60) then 
+			    return true 
+			else 
+			    return false		
+			end
+		end 
+		--化工小无相摘星
+		if NGid == 87 then 
+			if PersonKF(id,87) and PersonKF(id,98) and PersonKF(id,296) then
+				return true
+			elseif match_ID(id,46) then 
+			    return true 
+			else 
+			    return false		
+			end
+		end 
+        --神照纯阳君子
+		if NGid == 94 then
+			if PersonKF(id,94) and PersonKF(id,99) and PersonKF(id,262) then
+				return true
+			elseif match_ID(id,37) or match_ID(id,775) then 
+			    return true 
+			else 
+			    return false		
+			end
+		end 
+		--枯荣罗汉龙行
+		if NGid == 207 then
+			if PersonKF(id,207) and PersonKF(id,96) and PersonKF(id,280) then
+				return true
+			elseif match_ID(id,499) or match_ID(id,774) then 
+			    return true 
+			else 
+			    return false		
+			end
+		end 
+		--纯阳龟息梯云
+		if NGid == 99 then
+			if PersonKF(id,99) and PersonKF(id,227) and PersonKF(id,149) then
+				return true
+			elseif match_ID(id,5) or match_ID(id,524) then 
+			    return true 
+			else 
+			    return false		
+			end
 		end
-	end
-	--蛤蟆逆运瞬息
-	if NGid == 95 then
-		if PersonKF(id, 95) and PersonKF(id, 104) and PersonKF(id, 150) then
-			return true
-		elseif match_ID(id, 60) then
-			return true
-		else
-			return false
+		--紫霞小无相神行
+		if NGid == 89 then 
+			if PersonKF(id,89) and PersonKF(id,98) and PersonKF(id,146) then 
+				return true
+			elseif match_ID(id,140) or match_ID(id,779) or match_ID(id,780) then
+			    return true 
+			else 
+				return false	
+			end
 		end
-	end
-	--化工小无相摘星
-	if NGid == 87 then
-		if PersonKF(id, 87) and PersonKF(id, 98) and PersonKF(id, 296) then
-			return true
-		elseif match_ID(id, 46) then
-			return true
-		else
-			return false
+		--乾坤混元暗香
+		if NGid == 97 then 
+			if PersonKF(id,97) and PersonKF(id,90) and PersonKF(id,316) then 
+				return true 
+			elseif match_ID(id,456) or match_ID(id,606) or match_ID(id,641) or match_ID(id,776) then 
+			    return true
+			else  
+			    return false 		
+			end
 		end
-	end
-	--神照纯阳君子
-	if NGid == 94 then
-		if PersonKF(id, 94) and PersonKF(id, 99) and PersonKF(id, 262) then
-			return true
-		elseif match_ID(id, 37) or match_ID(id, 775) then
-			return true
-		else
-			return false
+		--龙象狮子踏雪
+		if NGid == 103 then
+			if PersonKF(id,103) and PersonKF(id,92) and PersonKF(id,227) then 
+				return true
+			elseif match_ID(id,62) or match_ID(id,103) or match_ID(id,771) then
+			    return true 
+			else 
+			    return false 		
+			end
 		end
-	end
-	--枯荣罗汉龙行
-	if NGid == 207 then
-		if PersonKF(id, 207) and PersonKF(id, 96) and PersonKF(id, 280) then
-			return true
-		elseif match_ID(id, 499) or match_ID(id, 774) then
-			return true
-		else
-			return false
+		--太极先天凌波
+		if NGid == 171 then
+			if PersonKF(id,171) and PersonKF(id,100) and PersonKF(id,147) then
+				return true
+			elseif match_ID(id,5) or match_ID(id,129) or match_ID(id,116) or match_ID(id,117) or match_ID(id,118) or match_ID(id,522) or match_ID(id,634) then
+			    return true 
+			else 
+			    return false 		
+			end
 		end
-	end
-	--纯阳龟息梯云
-	if NGid == 99 then
-		if PersonKF(id, 99) and PersonKF(id, 227) and PersonKF(id, 149) then
-			return true
-		elseif match_ID(id, 5) or match_ID(id, 524) then
-			return true
-		else
-			return false
+		--先天圣火天罗
+		if NGid == 100 then
+			if PersonKF(id,100) and PersonKF(id,93) and PersonKF(id,148) then
+				return true 
+			elseif match_ID(id,605) or match_ID(id,685) or match_ID(id,686) then
+			    return true
+			else 
+			    return false		
+			end
 		end
-	end
-	--紫霞小无相神行
-	if NGid == 89 then
-		if PersonKF(id, 89) and PersonKF(id, 98) and PersonKF(id, 146) then
-			return true
-		elseif match_ID(id, 140) or match_ID(id, 779) or match_ID(id, 780) then
-			return true
-		else
-			return false
+		--金刚怒涛一苇
+		if NGid == 144 then
+			if PersonKF(id,144) and PersonKF(id,252) and PersonKF(id,186) then
+				return true 
+			elseif match_ID(id,743) or match_ID(id,772) or match_ID(id,782) then
+			    return true	
+			else 
+			    return false
+			end 		
 		end
-	end
-	--乾坤混元暗香
-	if NGid == 97 then
-		if PersonKF(id, 97) and PersonKF(id, 90) and PersonKF(id, 316) then
-			return true
-		elseif match_ID(id, 456) or match_ID(id, 606) or match_ID(id, 641) or match_ID(id, 776) then
-			return true
-		else
-			return false
+		--玉女龟息金雁
+		if NGid == 154 then
+			if PersonKF(id,154) and PersonKF(id,227) and PersonKF(id,223) then
+				return true 
+			elseif match_ID(id,605) or match_ID(id,685) or match_ID(id,686) then
+			    return true
+			else 
+			    return false
+			end 			
 		end
-	end
-	--龙象狮子踏雪
-	if NGid == 103 then
-		if PersonKF(id, 103) and PersonKF(id, 92) and PersonKF(id, 227) then
-			return true
-		elseif match_ID(id, 62) or match_ID(id, 103) or match_ID(id, 771) then
-			return true
-		else
-			return false
+		--忘情武穆逍遥
+		if NGid == 177 then
+			if PersonKF(id,177) and PersonKF(id,199) and PersonKF(id,2) then
+				return true 
+			elseif match_ID(id,50) or match_ID(id,69) or match_ID(id,525) or match_ID(id,527) then
+			    return true	
+			else 
+			    return false
+			end 		
 		end
-	end
-	--太极先天凌波
-	if NGid == 171 then
-		if PersonKF(id, 171) and PersonKF(id, 100) and PersonKF(id, 147) then
-			return true
-		elseif match_ID(id, 5) or match_ID(id, 129) or match_ID(id, 116) or match_ID(id, 117) or match_ID(id, 118) or match_ID(id, 522) or match_ID(id, 634) then
-			return true
-		else
-			return false
+		--怒涛长春花间
+		if NGid == 252 then
+			if PersonKF(id,252) and PersonKF(id,183) and PersonKF(id,286) then 
+				return true	
+			else 
+			    return false		
+			end
 		end
-	end
-	--先天圣火天罗
-	if NGid == 100 then
-		if PersonKF(id, 100) and PersonKF(id, 93) and PersonKF(id, 148) then
-			return true
-		elseif match_ID(id, 605) or match_ID(id, 685) or match_ID(id, 686) then
-			return true
-		else
-			return false
-		end
-	end
-	--金刚怒涛一苇
-	if NGid == 144 then
-		if PersonKF(id, 144) and PersonKF(id, 252) and PersonKF(id, 186) then
-			return true
-		elseif match_ID(id, 743) or match_ID(id, 772) or match_ID(id, 782) then
-			return true
-		else
-			return false
-		end
-	end
-	--玉女龟息金雁
-	if NGid == 154 then
-		if PersonKF(id, 154) and PersonKF(id, 227) and PersonKF(id, 223) then
-			return true
-		elseif match_ID(id, 605) or match_ID(id, 685) or match_ID(id, 686) then
-			return true
-		else
-			return false
-		end
-	end
-	--忘情武穆逍遥
-	if NGid == 177 then
-		if PersonKF(id, 177) and PersonKF(id, 199) and PersonKF(id, 2) then
-			return true
-		elseif match_ID(id, 50) or match_ID(id, 69) or match_ID(id, 525) or match_ID(id, 527) then
-			return true
-		else
-			return false
-		end
-	end
 	return false
 end
 
@@ -18608,10 +18610,10 @@ end
 
 --斗转
 function MuRongDZ(id)
-	if JY.Person[id]["门派技能3"] > 0 then
-		return true
-	end
-	if match_ID(id, 51) or match_ID(id, 529) or match_ID(id, 113) or match_ID(id, 679) then
+    if JY.Person[id]["门派技能3"] > 0 then
+        return true
+    end
+	if match_ID(id,51) or match_ID(id,113) or match_ID(id,529) or match_ID(id,679) or match_ID(id,783) then
 		return true
 	end
 	return false
@@ -19285,7 +19287,7 @@ function firstmenu2() --特殊角色
 	local tsmenu1 = {'雪羽宗','夜雨楼','中华阁','背巍军','护龙山庄','云梦涧','花涧派','世间百兽','诸系群侠'}
 	local menu2 = {	{514,745,744,781}, --雪
 					{526,525,527,761,457}, --夜
-					{524,743,747,758,759,760,764,771,772,773,774,775,776,778,779,780,782,783}, --中
+					{524,743,747,758,759,760,764,771,772,773,774,775,776,778,779,780,782,783,784}, --中
 					{568},--巍
 					{749,750,751,752,748}, --护
 					{754,455,762}, --云
