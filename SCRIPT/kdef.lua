@@ -6631,13 +6631,8 @@ say("是/否加入天魔教。入门条件 : 拳掌 >= 200，耍刀 >= 200，特系 >= 300，道德<10 
 			say("恭喜你加入天魔教。 ",1050, 0,"天魔教弟子");
 		else
 			say("你可要好生考虑。 ",1050, 0,"天魔教弟子");
-		end	
-	else
-		say("可惜，你不符资格",1050, 0,"天魔教弟子");	
-	end	
-	Cls()  --清屏
-    do return end
-	if MPPD(0) == 31 then
+		end		
+	elseif MPPD(0) == 31 then
 		if MPDJ(0) == 1 and instruct_18(336) then 
 			say("恭喜你拿到武穆遗书，这些秘籍你拿着。 ",1050, 0,"天魔教弟子");
 			dark()
@@ -6647,27 +6642,25 @@ say("是/否加入天魔教。入门条件 : 拳掌 >= 200，耍刀 >= 200，特系 >= 300，道德<10 
 			if MPDJ(0) < 2 then
 				JoinMP(0,31,2)
 			end
-			do return end
-		elseif MPDJ(0) == 2 and instruct_18(342) then 
+		end 	
+		if MPDJ(0) == 2 and instruct_18(342) then 
 			say("长生诀你都拿到了，这些东西你拿着。 ",1050, 0,"天魔教弟子");
-			instruct_2(413,1)
+			--instruct_2(413,1)
 			--SetTF(0,9740,1)
-			
 			if MPDJ(0) < 3 then
 				JoinMP(0,31,3)
 			end
-			do return end
-		elseif MPDJ(0) == 3 and instruct_18(468) then 
+		end
+		if MPDJ(0) == 3 and instruct_18(468) then 
 			say("长生诀你都拿到了，这些东西你拿着。 ",1050, 0,"天魔教弟子");
-			instruct_2(413,1)
+			--instruct_2(413,1)
 			--SetTF(0,9740,1)
-			if MPDJ(0) < 3 then
+			if MPDJ(0) < 4 then
 				JoinMP(0,31,4)
 			end
-			do return end	
-		else
-			say("有没有好好练功啊！",514, 0,"杨冰羽");
-		end
+		end	
+	else
+		say("快快去要需要的东西。",1050, 0,"天魔教弟子");
 	end
 	Cls()  --清屏
 	do return end
