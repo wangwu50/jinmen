@@ -1895,6 +1895,10 @@ newkdef[25]=function() --京城决战
 		Cls()
 		do return end
 	end
+	instruct_2(8,5)               --天王保命丹
+	instruct_2(14,3)              --千年灵芝
+	instruct_2(174,30000)         --银两
+	JY.Person[524]["声望"] = JY.Person[524]["声望"] + 120
 	say('倒是挺爽快的！我就不动手了。',0,1)
 	if inteam(2) then
 		say('多谢多谢……呜，你不是说……',1054,0,'福康安')
@@ -4638,12 +4642,16 @@ newkdef[10073]=function()
 	say("受圣堂历代掌门教导为国为民的理念，加入中华阁保一方百姓平安。", 451, 0 ,"门派百晓生")
 	say("四长老柳如絮，十八岁时破林远图七十二路辟邪剑法。", 451, 0 ,"门派百晓生")
 	say("十九岁时太湖畔挑战竹清弦惜败，败后信守承诺追随竹清弦加入中华阁，与蔷薇合称中华阁双姝。", 451, 0 ,"门派百晓生")
-	say("蔷薇，天波府杨家后人，其身份只有竹清弦与霍果所知，枪法尽得杨家先辈真传。", 451, 0 ,"门派百晓生")
-	say("曾一人一枪将大漠十二孤狼赶出漠北，十二人怀恨在心，蔷薇被暗算中剧毒七雾麻香，得霍果出手相救后加入中华阁，与柳如絮合称中华阁双姝。", 451, 0 ,"门派百晓生")
 	say("五长老喀丝丽，霍青桐之妹，罗小鱼之妻，与小龙女、施施被世人称为三大绝世美人。", 451, 0 ,"门派百晓生")
 	say("计谋不在其姐霍青桐之下，加入中华阁保护一方百姓平安。", 451, 0 ,"门派百晓生")
 	say("六长老洛梵音，人送绰号人伦枪帝，枪法堪称一绝，其自身厨艺更是一绝，比罗小鱼有过之，受霍果邀请加入中华阁。", 451, 0 ,"门派百晓生")
 	say("七长老周博头，丐帮退位帮主，受竹清弦邀请加入中华阁，负责收集情报。", 451, 0 ,"门派百晓生")
+	say("蔷薇，天波府杨家后人，其身份只有竹清弦与霍果所知，枪法尽得杨家先辈真传。", 451, 0 ,"门派百晓生")
+	say("曾一人一枪将大漠十二孤狼赶出漠北，十二人怀恨在心，蔷薇被暗算中剧毒七雾麻香，得霍果出手相救后加入中华阁，与柳如絮合称中华阁双姝。", 451, 0 ,"门派百晓生")
+	say("慕容等待，赴友人邀约后被仇家埋伏重伤侥幸逃脱，记忆丧失流落江湖，期间偶遇独孤求败得以传授绝学。", 451, 0 ,"门派百晓生")
+	say("偶得坊间传闻中华阁有名医可医治失忆之症，随即加入中华阁求医并研习厨艺，从此不问江湖世事。", 451, 0 ,"门派百晓生")
+	say("陈长风，曾一人一剑抵挡侵占台湾倭寇三天三夜，击杀八百侵略者后力竭昏迷，幸得江澜与齐木思二人所救，秉承独孤求败保家卫国的理念加入中华阁。", 451, 0 ,"门派百晓生")
+	say("莫生，秉承逍遥谷理念游山玩水，逍遥自在，后在中华阁为厨观悟红尘。", 451, 0 ,"门派百晓生")	
 end
 
 newkdef[10074]=function()
@@ -6606,81 +6614,65 @@ newkdef[10147]=function()
 	instruct_0();   --  0(0)::空语句(清屏)
 end
 
-newkdef[10010]=function()
-    say("骚年，竹老板派本小姐来帮助你！",617, 0,"如花")
-	say("………………好吧！", 0, 0)
-	say("下面这些挑战你可以选择，但是每一项都需要付钱。", 617, 0,"如花")
-	say("………………还要钱？", 0, 0)
-	say("竹老板是生意人，怎么会做赔钱的买卖。", 617, 0,"如花")
-	say("黑店！！！！！！！！！！！", 0, 0)
-	say("骚年，竹老板可是诚信商家，付钱吧。", 617, 0,"如花")
-	say("………………", 0, 0)
-	local nexty = CC.MainSubMenuY + CC.SingleLineHeight
-	local p = SelectTeamMenu(CC.MainSubMenuX, nexty)
-    local money = 8888
-	if p > 0 then
-		local diyid = JY.Base["队伍" .. p]
-		if instruct_31(8888) and p > 0 then
-			local r = JYMsgBox("小村驿站为您服务", "请选择以下您觉得有能力获胜的挑战，记住给钱", {"射雕五绝","苍炎四神","金系双子","退出"}, 4, 617)
-			Cls()
-			if r == 1 then 
-				say(JY.Person[diyid]["姓名"].."支付"..money.."两银子给竹老板！", 617, 0,"如花")
-				say("………………真贵！", 0, 0)
-				if WarMain(386, 0) == false then  --战斗开始
-					say("骚年，你还需要提升自己的实力！", 617, 0,"如花")
-					say("………………",0,0)
-					do return end  --无条件结束事件
-				else
-					say("不错，这是奖励。", 617, 0,"如花")
-					say("嘿嘿嘿！",0,0)
-					AddPersonAttrib(diyid, "实战", 50)
-					instruct_2(348,5)    --无极丹
-					QZXS(JY.Person[diyid]["姓名"].."实战增加50点！")
-					Cls()
-					do return end  --无条件结束事件
-				end	
-			elseif r == 2 then	
-				say(JY.Person[diyid]["姓名"].."支付"..money.."两银子给竹老板！", 617, 0,"如花")
-				say("………………真贵！", 0, 0)
-				instruct_2(174, -8888)
-				if WarMain(387, 0) == false then  --战斗开始
-					say("骚年，你还需要提升自己的实力！", 617, 0,"如花")
-					say("………………",0,0)
-					do return end  --无条件结束事件
-				else
-					say("不错，这是奖励。", 617, 0,"如花")
-					say("嘿嘿嘿！",0,0)
-					AddPersonAttrib(diyid, "实战", 100)
-					instruct_2(348,8)    --无极丹
-					QZXS(JY.Person[diyid]["姓名"].."实战增加100点！")
-					Cls()
-					do return end  --无条件结束事件
-				end	
-			elseif r == 3 then	
-				say(JY.Person[diyid]["姓名"].."支付"..money.."两银子给竹老板！", 617, 0,"如花")
-				say("………………真贵！", 0, 0)
-				instruct_2(174, -8888)
-				if WarMain(401, 0) == false then  --战斗开始
-					say("骚年，你还需要提升自己的实力！", 617, 0,"如花")
-					say("………………",0,0)
-					do return end  --无条件结束事件
-				else
-					say("不错，这是奖励。", 617, 0,"如花")
-					say("嘿嘿嘿！",0,0)
-					AddPersonAttrib(diyid, "实战", 150)
-					instruct_2(348,12)    --无极丹
-					QZXS(JY.Person[diyid]["姓名"].."实战增加150点！")
-					Cls()
-					do return end  --无条件结束事件
-				end	
-			else 
-				say("算了，下次再来挑战。", 0, 0)	
-			end
+newkdef[10148]=function()
+	say("世事如棋，乾坤莫测，笑尽英雄，众生皆苦，莫生莫生，在下莫生！",784, 0);	
+	say("深奥，不懂。",0, 1);
+	say("说明你还是太年轻。",784, 0);	
+	say("无奈........",0, 1);
+end
+
+newkdef[10149]=function()
+say("是/否加入天魔教。入门条件 : 拳掌 >= 200，耍刀 >= 200，特系 >= 300，道德<10 ", 1050, 0,"天魔教弟子")  --对话
+    if MPPD(0) == 0 and TrueQZ(0) >= 200 and TrueSD(0) >= 200 and TrueTS(0) >= 300 and JY.Person[0]["品德"] <= 10 then
+		if DrawStrBoxYesNo(-1, -1, "是否要加入？", C_WHITE, CC.DefaultFont) then	
+			JoinMP(0, 31, 1)
+			MPAttrib(0)
+			QZXS(CC.MPINFO2[31])
+			say("恭喜你加入天魔教。 ",1050, 0,"天魔教弟子");
 		else
-			say("骚年，你的钱不够！", 617, 0,"如花")	
+			say("你可要好生考虑。 ",1050, 0,"天魔教弟子");
+		end	
+	else
+		say("可惜，你不符资格",1050, 0,"天魔教弟子");	
+	end	
+	Cls()  --清屏
+    do return end
+	if MPPD(0) == 31 then
+		if MPDJ(0) == 1 and instruct_18(336) then 
+			say("恭喜你拿到武穆遗书，这些秘籍你拿着。 ",1050, 0,"天魔教弟子");
+			dark()
+			light()
+			instruct_2(327,1)  --天魔策
+			--SetTF(0,9738,1)
+			if MPDJ(0) < 2 then
+				JoinMP(0,31,2)
+			end
+			do return end
+		elseif MPDJ(0) == 2 and instruct_18(342) then 
+			say("长生诀你都拿到了，这些东西你拿着。 ",1050, 0,"天魔教弟子");
+			instruct_2(413,1)
+			--SetTF(0,9740,1)
+			
+			if MPDJ(0) < 3 then
+				JoinMP(0,31,3)
+			end
+			do return end
+		elseif MPDJ(0) == 3 and instruct_18(468) then 
+			say("长生诀你都拿到了，这些东西你拿着。 ",1050, 0,"天魔教弟子");
+			instruct_2(413,1)
+			--SetTF(0,9740,1)
+			if MPDJ(0) < 3 then
+				JoinMP(0,31,4)
+			end
+			do return end	
+		else
+			say("有没有好好练功啊！",514, 0,"杨冰羽");
 		end
 	end
-end
+	Cls()  --清屏
+	do return end
+end	
+
 --[[
 newkdef[1010]=function()
 if instruct_43(220) == false then  --判断是否有物品
@@ -10992,6 +10984,10 @@ say("什么人？", 0, 1)  --对话
         Cls()
         do return end
     end
+	instruct_2(8,5)               --天王保命丹
+    instruct_2(14,3)              --千年灵芝
+    instruct_2(174,30000)         --银两
+    JY.Person[524]["声望"] = JY.Person[524]["声望"] + 120
 Cls()  --清屏
 dark()
 null(-2,0)
@@ -12558,6 +12554,10 @@ say("什么人？", 0, 1)  --对话
         Cls()
         do return end
     end
+	instruct_2(8,5)               --天王保命丹
+    instruct_2(14,3)              --千年灵芝
+    instruct_2(174,30000)         --银两
+    JY.Person[524]["声望"] = JY.Person[524]["声望"] + 120
 Cls()  --清屏
 say("咦？这不是天书么？原来一直在他身上！", 0, 1)  --对话
 Cls()  --清屏
@@ -12656,6 +12656,10 @@ say("什么人？", 0, 1)  --对话
         Cls()
         do return end
     end
+	instruct_2(8,5)               --天王保命丹
+    instruct_2(14,3)              --千年灵芝
+    instruct_2(174,30000)         --银两
+    JY.Person[524]["声望"] = JY.Person[524]["声望"] + 120
 Cls()  --清屏
 say("这"..JY.Person[0]["外号2"].."武功厉害，大家暂避一时。反正张召重护驾不利，不是杀头，也要坐牢。我们今日就放过他，咱们走！", 75, 0)  --对话
 Cls()  --清屏
@@ -14232,6 +14236,10 @@ say("什么人？", 0, 1)  --对话
         Cls()
         do return end
     end
+	instruct_2(8,8)               --天王保命丹
+    instruct_2(14,10)              --千年灵芝
+    instruct_2(174,60000)         --银两
+    JY.Person[524]["声望"] = JY.Person[524]["声望"] + 300
 Cls()  --清屏
 instruct_3(-2, -2,1,0,4142,0,0,-2,-2,-2,-2,-2,-2)  --修改场景事件
 do return end
@@ -15535,6 +15543,10 @@ newkdef[301]=function()
 	        Cls()
 	        do return end
 	    end
+		instruct_2(8,10)               --天王保命丹
+	    instruct_2(14,8)              --千年灵芝
+	    instruct_2(174,60000)         --银两
+	    JY.Person[524]["声望"] = JY.Person[524]["声望"] + 200
         instruct_0();   --  0(0)::空语句(清屏)
         instruct_1(2486,0,0);   --  1(1):[AAA]说: 多谢大哥。不知大哥今后有何打算？
         instruct_0();   --  0(0)::空语句(清屏)
@@ -15867,6 +15879,10 @@ newkdef[301]=function()
 		        Cls()
 		        do return end
 	        end
+			instruct_2(8,10)               --天王保命丹
+	        instruct_2(14,8)              --千年灵芝
+	        instruct_2(174,60000)         --银两
+	        JY.Person[524]["声望"] = JY.Person[524]["声望"] + 200
 			CC.TX['邪线判定'] = CC.TX['邪线判定'] + 1
 			if MPPD(0) == 7 and MPDJ(0) == 1 then        --主角升为逍遥2级弟子  
 		        JoinMP(0, 7, 2)            
@@ -17490,6 +17506,10 @@ if instruct_16(16) then  --是否在队伍
         Cls()
         do return end
     end
+	instruct_2(8,5)               --天王保命丹
+    instruct_2(14,3)              --千年灵芝
+    instruct_2(174,30000)         --银两
+    JY.Person[524]["声望"] = JY.Person[524]["声望"] + 120
 	Cls()  --清屏
 	--五毒教升阶
     if MPPD(0) == 29 and MPDJ(0) <= 3 then
@@ -17579,6 +17599,10 @@ if instruct_16(28) then  --是否在队伍
         Cls()
         do return end
     end
+	instruct_2(8,5)               --天王保命丹
+    instruct_2(14,3)              --千年灵芝
+    instruct_2(174,30000)         --银两
+    JY.Person[524]["声望"] = JY.Person[524]["声望"] + 120
 	Cls()  --清屏
 	--五毒教升阶
     if MPPD(0) == 29 and MPDJ(0) <= 3 then
@@ -17669,6 +17693,10 @@ if instruct_16(45) then  --是否在队伍
         Cls()
         do return end
     end
+	instruct_2(8,5)               --天王保命丹
+    instruct_2(14,3)              --千年灵芝
+    instruct_2(174,30000)         --银两
+    JY.Person[524]["声望"] = JY.Person[524]["声望"] + 120
 	Cls()  --清屏
 	--五毒教升阶
     if MPPD(0) == 29 and MPDJ(0) <= 3 then
@@ -17842,6 +17870,10 @@ if instruct_20() == false then  --判断队伍是否已满
         Cls()
         do return end
     end
+	instruct_2(8,5)               --天王保命丹
+    instruct_2(14,3)              --千年灵芝
+    instruct_2(174,30000)         --银两
+    JY.Person[524]["声望"] = JY.Person[524]["声望"] + 120
 	Cls()  --清屏
 	do return end  --无条件结束事件
 end
@@ -17865,6 +17897,10 @@ say("什么人？", 0, 1)  --对话
         Cls()
         do return end
     end
+	instruct_2(8,5)               --天王保命丹
+    instruct_2(14,3)              --千年灵芝
+    instruct_2(174,30000)         --银两
+    JY.Person[524]["声望"] = JY.Person[524]["声望"] + 120
 Cls()  --清屏
 do return end  --无条件结束事件
 end
@@ -17889,6 +17925,10 @@ if instruct_28(0,75,999) then --判断品德是否在范围之内
         Cls()
         do return end
     end
+	instruct_2(8,5)               --天王保命丹
+    instruct_2(14,3)              --千年灵芝
+    instruct_2(174,30000)         --银两
+    JY.Person[524]["声望"] = JY.Person[524]["声望"] + 120
 	Cls()  --清屏
 	say("看到你高兴的样子，我的心*也再度活跃起来。", 54, 0)  --对话
 	Cls()  --清屏
@@ -17940,6 +17980,10 @@ if instruct_5() then  --是否与之过招
         Cls()
         do return end
     end
+	instruct_2(8,5)               --天王保命丹
+    instruct_2(14,3)              --千年灵芝
+    instruct_2(174,30000)         --银两
+    JY.Person[524]["声望"] = JY.Person[524]["声望"] + 120
 	Cls()  --清屏
 	instruct_37(-3)  --增加品德
 	Cls()  --清屏
@@ -18282,6 +18326,10 @@ say("什么人？", 0, 1)  --对话
         Cls()
         do return end
     end
+	instruct_2(8,5)               --天王保命丹
+    instruct_2(14,3)              --千年灵芝
+    instruct_2(174,30000)         --银两
+    JY.Person[524]["声望"] = JY.Person[524]["声望"] + 120
 instruct_0()
 say("原来天书就在他们手里。", 0, 1)  --对话
 instruct_0()
@@ -18358,6 +18406,10 @@ newkdef[360]=function()
         Cls()
         do return end
     end
+	instruct_2(8,5)               --天王保命丹
+    instruct_2(14,3)              --千年灵芝
+    instruct_2(174,30000)         --银两
+    JY.Person[524]["声望"] = JY.Person[524]["声望"] + 120
   instruct_0()
   say("１此书果然在这里！Ｈ９…………１可叹华山众人暴尸荒野，还是把他们埋了吧！",0,1)
   instruct_14()
@@ -21574,7 +21626,10 @@ say("什么人？", 0, 1)  --对话
         Cls()
         do return end
     end
-
+    instruct_2(8,8)               --天王保命丹
+    instruct_2(14,10)              --千年灵芝
+    instruct_2(174,60000)         --银两
+    JY.Person[524]["声望"] = JY.Person[524]["声望"] + 300
 say("今日重得见识当世贤豪，至感欣幸，阁下更是出类拔萃。",597,4)
 
 say("这本金刚狮子吼，乃是少林至高无上的内功心法，今日以此相赠，唯望阁下多多造福苍生，方不负此大好身手。",597,4)
@@ -21609,7 +21664,10 @@ say("什么人？", 0, 1)  --对话
         Cls()
         do return end
     end
-
+    instruct_2(8,8)               --天王保命丹
+    instruct_2(14,10)              --千年灵芝
+    instruct_2(174,60000)         --银两
+    JY.Person[524]["声望"] = JY.Person[524]["声望"] + 300
 say("今日重得见识当世贤豪，至感欣幸，阁下更是出类拔萃。",597,4)
 
 say("这本金刚伏魔圈，乃是老衲师兄弟的看家本领，今日以此相赠，唯望阁下多多造福苍生，方不负此大好身手。",597,4)
@@ -25021,6 +25079,10 @@ say("什么人？", 0, 1)  --对话
         Cls()
         do return end
     end
+	instruct_2(8,6)               --天王保命丹
+    instruct_2(14,5)              --千年灵芝
+    instruct_2(174,40000)         --银两
+    JY.Person[524]["声望"] = JY.Person[524]["声望"] + 150
 Cls()  --清屏
 say("多谢石兄弟，多谢二位岛主。", 0, 1)  --对话
 Cls()  --清屏
@@ -25507,7 +25569,10 @@ say("什么人？", 0, 1)  --对话
         Cls()
         do return end
     end
-
+    instruct_2(8,20)               --天王保命丹
+    instruct_2(14,12)              --千年灵芝
+    instruct_2(174,100000)         --银两
+    JY.Person[524]["声望"] = JY.Person[524]["声望"] + 400
 --主角
 say("今日解了襄阳之围，我也收获了神雕的天书，可谓一举两得。",0,5)
 
@@ -26194,7 +26259,8 @@ if instruct_6(277,4,0,0) ==false then
     instruct_0();   --  0(0)::空语句(清屏)
     do return; end
 end
-
+JY.Person[523]["声望"] = JY.Person[523]["声望"] + 200     
+instruct_2(348,3)     --无极丹
 --SetTF(0,9919,1)
 
 --李莫愁血量翻倍还原
@@ -26499,6 +26565,10 @@ say("什么人？", 0, 1)  --对话
         Cls()
         do return end
     end
+	instruct_2(8,20)               --天王保命丹
+    instruct_2(14,12)              --千年灵芝
+    instruct_2(174,100000)         --银两
+    JY.Person[524]["声望"] = JY.Person[524]["声望"] + 400
 CC.TX['邪线判定'] = CC.TX['邪线判定'] + 1
 
 --主角
@@ -29806,6 +29876,10 @@ newkdef[4261]=function()
 		Cls()
 		do return end
 	end
+	instruct_2(8,5)               --天王保命丹
+	instruct_2(14,3)              --千年灵芝
+	instruct_2(174,30000)         --银两
+	JY.Person[524]["声望"] = JY.Person[524]["声望"] + 120
 	instruct_0() --清屏
 	instruct_2(117, 1)  --得到苗家剑法
 	instruct_0() --清屏
@@ -29930,6 +30004,10 @@ newkdef[428]=function()
                 Cls()
                 do return end
             end
+			instruct_2(8,6)               --天王保命丹
+            instruct_2(14,5)              --千年灵芝
+            instruct_2(174,40000)         --银两
+            JY.Person[524]["声望"] = JY.Person[524]["声望"] + 150
 		CC.TX['邪线判定'] = CC.TX['邪线判定'] + 1
 		instruct_0();   --  0(0)::空语句(清屏)		
 		instruct_2(80,1);   --  2(2):得到物品[太玄经][1]
@@ -32356,6 +32434,10 @@ newkdef[49]=function()
 		Cls()
 		do return end
 	end
+	instruct_2(8,6)               --天王保命丹
+	instruct_2(14,5)              --千年灵芝
+	instruct_2(174,40000)         --银两
+	JY.Person[524]["声望"] = JY.Person[524]["声望"] + 150
 	if JY.Person[37]["品德"] == 40 then
     	CC.TX['邪线判定'] = CC.TX['邪线判定'] + 1
     end
@@ -32575,6 +32657,10 @@ say("什么人？", 0, 1)  --对话
 	     Cls()
 	    do return end
     end
+	instruct_2(8,8)               --天王保命丹
+    instruct_2(14,6)              --千年灵芝
+    instruct_2(174,50000)         --银两
+    JY.Person[524]["声望"] = JY.Person[524]["声望"] + 180
 Cls()  --清屏
 say("咱们有缘再见！", 129, 0)  --对话
 Cls()  --清屏
@@ -33770,6 +33856,10 @@ newkdef[510]=function()
 	        Cls()
 	        do return end
         end
+		instruct_2(8,8)               --天王保命丹
+        instruct_2(14,6)              --千年灵芝
+        instruct_2(174,50000)         --银两
+        JY.Person[524]["声望"] = JY.Person[524]["声望"] + 180
 		instruct_0();   --  0(0)::空语句(清屏)
 		--instruct_2(286,1);   --  2(2):得到物品[九阴真经][1]
 		instruct_0();   --  0(0)::空语句(清屏)
@@ -33876,6 +33966,10 @@ newkdef[510]=function()
 	    Cls()
 	    do return end
     end
+	instruct_2(8,8)               --天王保命丹
+    instruct_2(14,6)              --千年灵芝
+    instruct_2(174,50000)         --银两
+    JY.Person[524]["声望"] = JY.Person[524]["声望"] + 180
 	CC.TX['邪线判定'] = CC.TX['邪线判定'] + 1
     instruct_0();   --  0(0)::空语句(清屏)
     --instruct_2(286,1);   --  2(2):得到物品[九阴真经][1]
@@ -35436,6 +35530,10 @@ say("什么人？", 0, 1)  --对话
 	    Cls()
 	    do return end
     end
+	instruct_2(8,5)               --天王保命丹
+    instruct_2(14,3)              --千年灵芝
+    instruct_2(174,30000)         --银两
+    JY.Person[524]["声望"] = JY.Person[524]["声望"] + 120
 Cls()  --清屏
 instruct_26(3,3,1,0,0)  --修改场景事件
 instruct_26(3,2,1,0,0)  --修改场景事件
@@ -45944,6 +46042,10 @@ if instruct_5() then  --是否与之过招
 		Cls()
 		do return end
 	end
+	instruct_2(8,5)               --天王保命丹
+	instruct_2(14,3)              --千年灵芝
+	instruct_2(174,30000)         --银两
+	JY.Person[524]["声望"] = JY.Person[524]["声望"] + 120
 	instruct_3(-2, 12,-2,0,16,0,0,-2,-2,-2,-2,-2,-2)  --修改场景事件
 	instruct_3(-2, -2,-2,0,17,0,0,-2,-2,-2,-2,-2,-2)  --修改场景事件
 	instruct_3(3, 9,1,0,640,0,0,-2,-2,-2,-2,-2,-2)  --修改场景事件
@@ -47036,6 +47138,10 @@ say("什么人？", 0, 1)  --对话
         Cls()
         do return end
     end
+	instruct_2(8,16)               --天王保命丹
+    instruct_2(14,10)              --千年灵芝
+    instruct_2(174,80000)         --银两
+    JY.Person[524]["声望"] = JY.Person[524]["声望"] + 360
 Cls()  --清屏
 instruct_3(-2, 35,1,0,889,0,0,-2,-2,-2,-2,-2,-2)  --修改场景事件
 instruct_3(-2, 34,1,0,889,0,0,-2,-2,-2,-2,-2,-2)  --修改场景事件
@@ -47549,6 +47655,10 @@ if instruct_5() then  --是否与之过招
 		Cls()
 		do return end
 	end
+	instruct_2(8,5)               --天王保命丹
+	instruct_2(14,3)              --千年灵芝
+	instruct_2(174,30000)         --银两
+	JY.Person[524]["声望"] = JY.Person[524]["声望"] + 120
 	instruct_3(-2, 12,-2,0,16,0,0,-2,-2,-2,-2,-2,-2)  --修改场景事件
 	instruct_3(-2, -2,-2,0,17,0,0,-2,-2,-2,-2,-2,-2)  --修改场景事件
 	instruct_3(3, 9,1,0,640,0,0,-2,-2,-2,-2,-2,-2)  --修改场景事件
@@ -48903,6 +49013,10 @@ say("什么人？", 0, 1)  --对话
         Cls()
         do return end
     end
+	instruct_2(8,5)               --天王保命丹
+    instruct_2(14,3)              --千年灵芝
+    instruct_2(174,30000)         --银两
+    JY.Person[524]["声望"] = JY.Person[524]["声望"] + 120
 null(-2,29)
 do return end
 end
@@ -50289,6 +50403,10 @@ say("什么人？", 0, 1)  --对话
         Cls()
         do return end
     end
+	instruct_2(8,5)               --天王保命丹
+    instruct_2(14,3)              --千年灵芝
+    instruct_2(174,30000)         --银两
+    JY.Person[524]["声望"] = JY.Person[524]["声望"] + 120
 null(-2,29)
 do return end
 end
@@ -51470,6 +51588,10 @@ say("什么人？", 0, 1)  --对话
         Cls()
         do return end
     end
+	instruct_2(8,5)               --天王保命丹
+    instruct_2(14,3)              --千年灵芝
+    instruct_2(174,30000)         --银两
+    JY.Person[524]["声望"] = JY.Person[524]["声望"] + 120
 dark()
 null(-2,0)
 null(-2,1)
@@ -51657,6 +51779,10 @@ say("什么人？", 0, 1)  --对话
 	    Cls()
 	    do return end
     end
+	instruct_2(8,16)               --天王保命丹
+    instruct_2(14,10)              --千年灵芝
+    instruct_2(174,80000)         --银两
+    JY.Person[524]["声望"] = JY.Person[524]["声望"] + 360
 Cls()  --清屏
 instruct_3(-2, 35,1,0,889,0,0,-2,-2,-2,-2,-2,-2)  --修改场景事件
 instruct_3(-2, 34,1,0,889,0,0,-2,-2,-2,-2,-2,-2)  --修改场景事件
@@ -53993,6 +54119,10 @@ if WarMain(476) == false then
     Cls()
     do return end
 end
+instruct_2(8,5)               --天王保命丹
+instruct_2(14,3)              --千年灵芝
+instruct_2(174,30000)         --银两
+JY.Person[524]["声望"] = JY.Person[524]["声望"] + 120
 Cls()  --清屏
 
 instruct_26(1,10,1,0,0)  --修改场景事件
@@ -57920,6 +58050,10 @@ newkdef[1155]=function()
 		Cls()
 		do return end
 	end
+	instruct_2(8,5)               --天王保命丹
+	instruct_2(14,3)              --千年灵芝
+	instruct_2(174,30000)         --银两
+	JY.Person[524]["声望"] = JY.Person[524]["声望"] + 120
 	do return end
 end
 
@@ -61233,7 +61367,7 @@ newkdef[3219]=function()
 						if taid == 1 or taid == 2 or taid == 662 or taid == 663 or taid == 517 or taid == 525 or taid == 526 or taid == 761
 						or taid == 520 or taid == 524 or taid == 743 or taid == 747 or taid == 758 or taid == 759 or taid == 760 or taid == 764
 						or taid == 771 or taid == 772 or taid == 773 or taid == 774 or taid == 775 or taid == 776 or taid == 778 or taid == 779
-						or taid == 780 or taid == 781 or taid == 782 or taid == 783 then
+						or taid == 780 or taid == 781 or taid == 782 or taid == 783 or taid == 784 then
 						else
 							target[#target+1] = taid
 						end
@@ -61276,7 +61410,7 @@ newkdef[3219]=function()
 									if taid == 1 or taid == 2 or taid == 662 or taid == 663 or taid == 517 or taid == 525 or taid == 526 or taid == 761
 									or taid == 520 or taid == 524 or taid == 743 or taid == 747 or taid == 758 or taid == 759 or taid == 760 or taid == 764
 						            or taid == 771 or taid == 772 or taid == 773 or taid == 774 or taid == 775 or taid == 776 or taid == 778 or taid == 779
-						            or taid == 780 or taid == 781 or taid == 782 or taid == 783 then
+						            or taid == 780 or taid == 781 or taid == 782 or taid == 783 or taid == 784 then
 									else
 										target[#target+1] = taid
 									end
@@ -61416,7 +61550,7 @@ newkdef[3220]=function()
 						if taid == 1 or taid == 2 or taid == 662 or taid == 663 or taid == 517 or taid == 525 or taid == 526 or taid == 761
 						or taid == 520 or taid == 524 or taid == 743 or taid == 747 or taid == 758 or taid == 759 or taid == 760 or taid == 764
 						or taid == 771 or taid == 772 or taid == 773 or taid == 774 or taid == 775 or taid == 776 or taid == 778 or taid == 779
-						or taid == 780 or taid == 781 or taid == 782 or taid == 783 then
+						or taid == 780 or taid == 781 or taid == 782 or taid == 783 or taid == 784 then
 						else
 							target[#target+1] = taid
 						end
@@ -61461,7 +61595,7 @@ newkdef[3220]=function()
 								if taid == 1 or taid == 2 or taid == 662 or taid == 663 or taid == 517 or taid == 525 or taid == 526 or taid == 761
 								or taid == 520 or taid == 524 or taid == 743 or taid == 747 or taid == 758 or taid == 759 or taid == 760 or taid == 764
 						        or taid == 771 or taid == 772 or taid == 773 or taid == 774 or taid == 775 or taid == 776 or taid == 778 or taid == 779
-						        or taid == 780 or taid == 781 or taid == 782 or taid == 783 then
+						        or taid == 780 or taid == 781 or taid == 782 or taid == 783 or taid == 784 then
 								else
 									target[#target+1] = taid
 								end

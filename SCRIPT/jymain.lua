@@ -2289,7 +2289,10 @@ function JLSD(s1, s2, dw)
 	if MPTX(dw,21,2) then
 		chance_up =	chance_up + 5
 	end
-	
+	--天魔教
+	if MPTX(dw,31) then
+		chance_up = chance_up + 8 + math.modf((psx(dw,'品德'))/8)
+	end 	
 	if JY.Status == GAME_WMAP then
 		if WAR.PD['神经蛇毒'][dw] ~= nil or WAR.PD['凝结时空'][dw] ~= nil then
 			return false
@@ -6081,7 +6084,7 @@ function AddPersonAttrib(id, str, value)
 					value = 0
 				end
 				--肉如磐石
-				if (match_ID(id,760) or match_ID(id,771) or match_ID(id,772) or match_ID(id,773) or match_ID(id,774) or match_ID(id,780)) and (JLSD(20,55,id) or WAR.SXTJ <= 3) then
+				if (match_ID(id,760) or match_ID(id,771) or match_ID(id,772) or match_ID(id,773) or match_ID(id,774) or match_ID(id,780) or match_ID(id,784)) and (JLSD(20,55,id) or WAR.SXTJ <= 3) then
 					value = 0
 				end	
 				--斗气
@@ -7753,6 +7756,9 @@ function CanUseThing(id, personid)
 	--方证学金刚不坏体
 	elseif match_ID(personid, 149) and id == 265 then
 		return true
+	--天魔教学天魔策
+	elseif MPTX(personid, 31) and id == 327 then
+		return true	
 	else
 		if JY.Thing[id]["仅修炼人物"] >= 0 and JY.Thing[id]["仅修炼人物"] ~= personid and (personid == 0 and JY.Thing[id]["仅修炼人物"]==JY.Base["畅想"])==false then
 			return false
@@ -16043,7 +16049,7 @@ function NGQH(id,NGid)--这里只写有「主运」的组合
 				return true
 			elseif Curr_NG(id,106) and match_ID(id,778) then
 			    return true	 	
-			elseif match_ID(id,774) and PersonKF(id,106) then
+			elseif match_ID(id,525) and PersonKF(id,106) then
 			    return true 		
 			elseif Curr_NG(id,106) then
 				if JY.Status == GAME_WMAP then
@@ -16125,6 +16131,8 @@ function NGQH(id,NGid)--这里只写有「主运」的组合
 				return true
 			elseif match_ID(id,9991) and Curr_NG(id,160) then
 				return true
+			elseif MPTX(id,31,4) and Curr_NG(id,160) then
+				return true	
 			else
 				return false
 			end
@@ -16175,7 +16183,7 @@ function NGQH(id,NGid)--这里只写有「主运」的组合
 				return true
 			elseif match_ID(id,499) then
 			    return true	
-			elseif match_ID(id,773) then
+			elseif match_ID(id,784) then
 			    return true	
 			elseif Curr_NG(id,183) and match_ID(id,780) then
 			    return true			
@@ -16347,6 +16355,8 @@ function NGQH(id,NGid)--这里只写有「主运」的组合
 		if NGid == 180 and pd == true then
 			if Curr_NG(id,180) and PersonKF(id,107) then
 				return true 
+			elseif match_ID(id,774) and PersonKF(id,180) then
+			    return true		
 			else 
 			    return false	
 			end
@@ -16545,6 +16555,8 @@ function NGQHB(id,NGid)--这里只写有「非主运」的组合
 				return true
 			elseif match_ID(id,759) or match_ID(id,776) or match_ID(id,781) or match_ID(id,782) then
 			    return true 	
+			elseif match_ID(id,773) then
+			    return true			
 			else
 				return false
 			end
@@ -16658,6 +16670,10 @@ function NGQHC(id,NGid)--「非主运」+ 「轻功」
 	--if WAR.PJTX1 ~= 0 and (not match_ID(id,592)) then
 		--return false
 	--else
+	    --天魔教
+		if MPTX(id,31,3) and NGid == 160 then
+			return true
+		end 	
 	    --碧海奇门灵鳌
 		if NGid == 248 then
 			if PersonKF(id,248) and PersonKF(id,317) and PersonKF(id,237) then
@@ -16797,6 +16813,14 @@ function NGQHC(id,NGid)--「非主运」+ 「轻功」
 			else 
 			    return false
 			end 		
+		end
+		--怒涛长春花间
+		if NGid == 252 then
+			if PersonKF(id,252) and PersonKF(id,183) and PersonKF(id,286) then 
+				return true	
+			else 
+			    return false		
+			end
 		end
 	return false
 end	
@@ -18415,7 +18439,7 @@ function MuRongDZ(id)
     if JY.Person[id]["门派技能3"] > 0 then
         return true
     end
-	if match_ID(id,51) or match_ID(id,529) or match_ID(id,113) or match_ID(id,679) then
+	if match_ID(id,51) or match_ID(id,113) or match_ID(id,529) or match_ID(id,679) or match_ID(id,783) then
 		return true
 	end
     return false
@@ -19078,7 +19102,7 @@ function firstmenu2()--特殊角色
 	local tsmenu1 = {'雪羽宗','夜雨楼','中华阁','背巍军','护龙山庄','云梦涧','花涧派','世间百兽','诸系群侠'}
 	local menu2 = {	{514,745,744,781}, --雪
 					{526,525,527,761,457}, --夜
-					{524,743,747,758,759,760,764,771,772,773,774,775,776,778,779,780,782,783}, --中
+					{524,743,747,758,759,760,764,771,772,773,774,775,776,778,779,780,782,783,784}, --中
 					{568},--巍
 					{749,750,751,752,748}, --护
 					{754,455,762}, --云
