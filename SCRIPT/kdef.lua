@@ -5173,7 +5173,7 @@ end
 newkdef[10105]=function()
     local title = "第一关：眼力";
     local str = "封玉楼五大厨神你觉得谁最搞心态？";
-    local btn = {"梵","霍","柏","录","剑"};
+    local btn = {"梵","霍","柏","非","剑"};
     local num = #btn;
     local pic = 269;
     local r = JYMsgBox(title,str,btn,#btn,pic);
@@ -5545,19 +5545,18 @@ newkdef[10124]=function()
 end	
 
 newkdef[10125]=function()
-    if MPPD(0) == 0 or MPPD(0) ~= 22 then
-	    say("客人，封玉楼还未打点完善，稍后再来吧。", 773, 0) 
+    if MPPD(0) == 0 or MPPD(0) ~= 25 then
+	    say("护龙山庄不要乱闯，速速离去吧，以免被当做奸细抓起来。", 773, 0) 
 	else	
-	    if MPPD(0) == 22 and MPDJ(0) >= 1 then
+	    if MPPD(0) == 25 and MPDJ(0) >= 1 then
 			say("东方前辈好！", 0, 1)
-			say("干嘛那么客气，叫撸哥就行了。", 773, 0)	
-            say("撸哥好！", 0, 1)
-			say("要不要学葵花宝典？", 773, 0)	
-			say("这.....我不想自残。", 0, 1)
-			say("放心，你撸哥已窥天人化生之道，不用自残身体。", 773, 0)	
-			say("真的吗？", 0, 1)
-			say("自己人不骗自己人。", 773, 0)	
-			say("等我不懂回来请教撸哥的。", 0, 1)
+			say("前辈？不要用江湖草莽的套来称呼我。", 773, 0)	
+            say(".......那应该怎么称呼？", 0, 1)
+			say("叫我大学士大人！", 773, 0)	
+			say("这.....", 0, 1)
+			say("怎么？我东方录是励志要做大学士的人，现在只是暂屈居在护龙山庄。", 773, 0)	
+			say("大学士大人！", 0, 1)
+			say("孺子可教也！哈哈哈哈！", 773, 0)	
 		end
 	end
 end	
@@ -6490,7 +6489,7 @@ newkdef[10146]=function()
 	if p > 0 then
 		local diyid = JY.Base["队伍" .. p]
 		if instruct_31(10000) and p > 0 then
-		    local r = JYMsgBox("封玉楼为您服务", "请选择以下您觉得有能力获胜的挑战！记得给钱。", {"梵","柏","录","霍","剑","退出"}, 6, 617)
+		    local r = JYMsgBox("封玉楼为您服务", "请选择以下您觉得有能力获胜的挑战！记得给钱。", {"梵","柏","非","霍","剑","退出"}, 6, 617)
 		    Cls()
 		    if r == 1 then 
 			    say(JY.Person[diyid]["姓名"].."支付"..money.."两银子给竹老板！", 780, 0)
@@ -6595,7 +6594,7 @@ newkdef[10147]=function()
 	say("来呀！",0, 1);
 	say("好！有种！！！",781, 0);	
     instruct_0();   --  0(0)::空语句(清屏)
-	if WarMain(511) == false then			
+	if WarMain(512) == false then			
 		instruct_15();			--战斗失败，死亡
 		return;
 	end
@@ -50962,12 +50961,12 @@ end
 
 --明台桥进观澜轩
 newkdef[9134]=function()
-My_Enter_SubScene(208,31,2,0)  --场景跳跃
+My_Enter_SubScene(208,31,4,0)  --场景跳跃
 instruct_40(1)
 do return end
 end
 newkdef[9135]=function()
-My_Enter_SubScene(209,28,61,0)  --场景跳跃
+My_Enter_SubScene(209,28,60,0)  --场景跳跃
 instruct_40(1)
 do return end
 end
