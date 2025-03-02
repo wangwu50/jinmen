@@ -2291,7 +2291,7 @@ function JLSD(s1, s2, dw)
 	end
 	--天魔教
 	if MPTX(dw,31) then
-		chance_up = chance_up + 8 + math.modf((psx(dw,'品德'))/8)
+		chance_up = chance_up + 8 + math.modf((120-psx(dw,'品德'))/8)
 	end 	
 	if JY.Status == GAME_WMAP then
 		if WAR.PD['神经蛇毒'][dw] ~= nil or WAR.PD['凝结时空'][dw] ~= nil then
@@ -6084,7 +6084,7 @@ function AddPersonAttrib(id, str, value)
 					value = 0
 				end
 				--肉如磐石
-				if (match_ID(id,760) or match_ID(id,771) or match_ID(id,772) or match_ID(id,773) or match_ID(id,774) or match_ID(id,780) or match_ID(id,784)) and (JLSD(20,55,id) or WAR.SXTJ <= 3) then
+				if (match_ID(id,760) or match_ID(id,771) or match_ID(id,772) or match_ID(id,774) or match_ID(id,780) or match_ID(id,784)or match_ID(id,785)) and (JLSD(20,55,id) or WAR.SXTJ <= 3) then
 					value = 0
 				end	
 				--斗气
@@ -9608,9 +9608,6 @@ function UseThing_Type2(id)
 			--主角打赢葵花尊者，可以直接学
 			--elseif personid == 0 and CC.TX["笑傲邪线"] == 2 then
 				--yes = 1
-			elseif personid == 0 and JY.Base["畅想"] == 773 then	
-			    say("老夫已窥得天人化生之道，无需自宫！哈哈哈哈！！！",773,1)
-			    yes = 1
 			elseif personid == 0 and JY.Base["畅想"] == 457 then	
 			    say("我东方亦集百家所长，区区葵花还不用自残身体来修炼！",457,1)
 			    yes = 1	
@@ -16415,7 +16412,7 @@ function NGQHB(id,NGid)--这里只写有「非主运」的组合
 				return true
 			elseif PersonKF(id,375) and PersonKF(id,89) then
 				return true
-			elseif match_ID(id,524) or JXPD(id,189,1) or match_ID(id,783) then
+			elseif match_ID(id,524) or JXPD(id,189,1) or match_ID(id,783) or match_ID(id,785) then
 				return true		
 			elseif JXPD(id,58,1) then
 				return true	
@@ -16481,7 +16478,7 @@ function NGQHB(id,NGid)--这里只写有「非主运」的组合
 				return true
 			elseif match_ID(id,65) or match_ID(id,129) then
 				return true
-			elseif match_ID(id,758) or match_ID(id,782) then	
+			elseif match_ID(id,758) or match_ID(id,782) or match_ID(id,786) then	
 			    return true
 			else 
 				return false		
@@ -16503,7 +16500,7 @@ function NGQHB(id,NGid)--这里只写有「非主运」的组合
 		if NGid == 106 then
 			if PersonKF(id, 106) and PersonKF(id,97) then
 				return true
-			elseif match_ID(id,9) then
+			elseif match_ID(id,9) or match_ID(id,785) then
 				return true
 			else 
 				return false		
@@ -16565,7 +16562,7 @@ function NGQHB(id,NGid)--这里只写有「非主运」的组合
 	    if NGid ==	190 then
 			if PersonKF(id,190) and PersonKF(id,227) then
 				return true
-			elseif match_ID(id,5) then
+			elseif match_ID(id,5) or match_ID(id,524) or match_ID(id,786) then
 			    return true
 			else 
 			    return false		
@@ -16633,7 +16630,7 @@ function NGQHB(id,NGid)--这里只写有「非主运」的组合
 	    if NGid == 248 then
 			if PersonKF(id,248) and PersonKF(id,317) then
 				return true
-			elseif match_ID(id,56) or match_ID(id,57) or match_ID(id,588) then
+			elseif match_ID(id,56) or match_ID(id,57) or match_ID(id,588) or match_ID(id,785) then
 			    return true
 			else 
 			    return false		
@@ -19102,9 +19099,9 @@ function firstmenu2()--特殊角色
 	local tsmenu1 = {'雪羽宗','夜雨楼','中华阁','背巍军','护龙山庄','云梦涧','花涧派','世间百兽','诸系群侠'}
 	local menu2 = {	{514,745,744,781}, --雪
 					{526,525,527,761,457}, --夜
-					{524,743,747,758,759,760,764,771,772,773,774,775,776,778,779,780,782,783,784}, --中
+					{524,743,747,758,759,760,764,771,772,774,775,776,778,779,780,782,783,784,785,786}, --中
 					{568},--巍
-					{749,750,751,752,748}, --护
+					{749,750,751,752,748,773}, --护
 					{754,455,762}, --云
 					{515,763}, --花
 					{419,429,439},--百兽
