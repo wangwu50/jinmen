@@ -5834,7 +5834,7 @@ function AddPersonAttrib(id, str, value)
 			attribmax = 8000
 		end
 		--东方不败
-		if match_ID(id, 27) or match_ID(id, 777) then
+		if match_ID(id, 27) then
 			attribmax = 7000
 		end
 		--剑太一
@@ -6036,6 +6036,12 @@ function AddPersonAttrib(id, str, value)
 				if WAR.ZZTM == 1 then
 					value = 0
 				end
+				if WAR.PD['独孤求败'][id] == 2 and JY.Person[id]["生命"] > (JY.Person[id]["生命最大值"]/3*2) then
+					value = 0
+				end
+				if WAR.PD['独孤求败'][id] == 3 and JY.Person[id]["生命"] > (JY.Person[id]["生命最大值"]/3) then
+					value = 0
+				end
 				if WAR.PD['凝结时空'][id] ~= nil then
 					value = 0
 				end
@@ -6088,7 +6094,7 @@ function AddPersonAttrib(id, str, value)
 					value = 0
 				end	
 				--斗气
-				if (match_ID(id,767) or match_ID(id,768) or match_ID(id,769) or match_ID(id,770)) and (JLSD(20,55,id) or WAR.SXTJ <= 20) then
+				if (match_ID(id,767) or match_ID(id,768) or match_ID(id,769) or match_ID(id,770)) and (JLSD(20,55,id) or WAR.SXTJ <= 50) then
 					value = 0
 				end	
 				if WAR.PD['柳如絮'][id] ~= nil and WAR.PD['柳如絮'][id] > 0 then
@@ -6161,9 +6167,6 @@ function AddPersonAttrib(id, str, value)
 				--张三丰觉醒
 				if JXPD(id,5,1) and JY.Person[id]["生命"] > (JY.Person[id]["生命最大值"]/2) then
 					local sm = math.modf(JY.Person[id]["生命"]/8)
-					if sm < 888 then
-						sm = 888
-					end
 					if value <= -sm then
 						value = -sm
 					end	
@@ -6177,6 +6180,12 @@ function AddPersonAttrib(id, str, value)
 				if WAR.PD['血战到底'][id] ~= nil and WAR.PD['血战到底'][id] == 1 then
 					local aa = (5 - JY.Person[id]['畅想分阶'])*2
 					value = math.modf(value/aa)
+				end
+				if WAR.PD['独孤求败'][id] == 2 then
+					value = math.modf(value/2)
+				end
+				if WAR.PD['独孤求败'][id] == 3 then
+					value = math.modf(value/10)
 				end
 				--车神
 				if match_ID(id,524) then
@@ -13529,7 +13538,7 @@ function get_skill_power(personid,wugongid, wugonglvl)
 	
 	if wugongid == 313 and PersonKF(personid, 105) then
 		power = power + 300
-		if Curr_NG(personid,105) or match_ID(personid,27) or match_ID(personid,777) then
+		if Curr_NG(personid,105) or match_ID(personid,27) then
 			power = power + 200
 		end	
 	end
@@ -14474,7 +14483,7 @@ function Curr_NG(personid, NGid)
 	 		if match_ID(id,26) and (ng == 88 or ng == 219) then
 	 			return true
 	 		end
-	 		if (match_ID(id,27) or match_ID(id,777) or match_ID(id,26)) and ng == 105 then
+	 		if (match_ID(id,27) or match_ID(id,26)) and ng == 105 then
 	 			return true
 	 		end	
 	 		if match_ID(id,641) and ng == 93 then
@@ -14944,6 +14953,14 @@ function JFZH(id,WGid,NGid)
 			return true
 		end
 	end
+	--苗剑飞天
+	if WGid == 44 and NGid == 99 then
+		if PersonKF(id,44) and PersonKF(id,99) then
+			return true
+		elseif match_ID(id,3) then
+		    return true				
+		end
+	end
 	return false
 end
 --指法外功+内功组合
@@ -15048,7 +15065,7 @@ function ZFZH(id,WGid,NGid)
 	if WGid == 226 and NGid == 105 then
 		if PersonKF(id,226) and (PersonKF(id,126) or PersonKF(id,127)) and PersonKF(id,201) and Curr_NG(id,105) then 
 			return true
-		elseif JXPD(id,27,2) or match_ID(id,777) then
+		elseif JXPD(id,27,2) then
 			return true
 		end
 	end
@@ -15061,6 +15078,14 @@ function ZFZH(id,WGid,NGid)
 		elseif match_ID(id,83) or match_ID(id,46) then
 			return true
 		end
+	end
+	--金刚不坏+金刚指
+	if WGid == 135 and NGid == 144 then
+		if PersonKF(id,135) and PersonKF(id,144) then
+		   return true 
+		elseif match_ID(id,170) then 
+		   return true 
+		end 
 	end
 	return false
 end
@@ -15268,6 +15293,14 @@ function QFZH(id,WGid,NGid)
 		elseif match_ID(id,635) then
 			return true
 		end
+	end
+	--百花大周天
+	if WGid == 10 and NGid == 190 then 
+		if PersonKF(id,10) and PersonKF(id,190) then
+		   return true 
+		elseif match_ID(id,658) then 
+		   return true 
+		end 
 	end
 	return false
 end
@@ -15614,7 +15647,7 @@ function WGZH(id,WGid1,WGid2)
 	if WGid1 == 226 and WGid2 == 126 then
 		if PersonKF(id,226) and PersonKF(id,126) then 
 			return true
-		elseif JXPD(id,27,2) or match_ID(id,511) or match_ID(id,777) then
+		elseif JXPD(id,27,2) or match_ID(id,511) then
 			return true
 		end
 	end	
@@ -15622,7 +15655,7 @@ function WGZH(id,WGid1,WGid2)
 	if WGid1 == 226 and WGid2 == 126 then
 		if PersonKF(id,226) and PersonKF(id,127) then 
 			return true
-		elseif JXPD(id,27,2) or match_ID(id,511) or match_ID(id,777) then
+		elseif JXPD(id,27,2) or match_ID(id,511) then
 			return true
 		end
 	end	
@@ -15630,7 +15663,7 @@ function WGZH(id,WGid1,WGid2)
 	if WGid1 == 226 and WGid2 == 201 then
 		if PersonKF(id,226) and (PersonKF(id,126) or PersonKF(id,127)) and PersonKF(id,201) then 
 			return true
-		elseif JXPD(id,27,2) or match_ID(id,511) or match_ID(id,777) then
+		elseif JXPD(id,27,2) or match_ID(id,511) then
 			return true
 		end
 	end	
@@ -15681,7 +15714,7 @@ function WGZH(id,WGid1,WGid2)
 	return false
 end
 
---五岳心法判断
+--五岳心法、五岳剑诀判断
 function WYXF(id)
 	local pd = false
 	if PersonKF(id,89) and PersonKF(id,216) and PersonKF(id,259) and PersonKF(id,263) and PersonKF(id,264) then
@@ -15717,19 +15750,6 @@ function WuyueJFSL(id)
 		num = 7
 	end
 	return num
-end
---判断五岳剑诀
-function WYJJ(id)
-	if PersonKF(id,175) then
-		return true
-	end	
-	for i = 19, 23 do
-		if JXPD(id,i,1) then
-			return true
-			--break
-		end
-	end
-	return false	
 end
 --无酒不欢：判定一个人物是否满足毒布武林的条件
 function DubuWL(id)
@@ -15854,7 +15874,7 @@ function NGQH(id,NGid)--这里只写有「主运」的组合
 			return true
 		elseif match_ID(id,635) and (NGid == 180) then 
 		    return true 	
-		elseif (match_ID(id,27) or match_ID(id,777)) and (NGid == 105) then
+		elseif match_ID(id,27) and (NGid == 105) then
 		    return true 	
 		elseif match_ID(id,514) and (NGid == 43) then
 		    return true	
@@ -16028,7 +16048,7 @@ function NGQH(id,NGid)--这里只写有「主运」的组合
 			    return true	
 			elseif match_ID(id,762) and Curr_NG(id,105) then
 			    return true 	
-			elseif match_ID(id,27) or match_ID(id,92) or match_ID(id,773) or match_ID(id,777) then
+			elseif match_ID(id,27) or match_ID(id,92) or match_ID(id,773) then
    			    return true	
 			elseif match_ID(id,769) and Curr_NG(id,105) then 
 			    return true 	
@@ -16526,14 +16546,6 @@ function NGQHB(id,NGid)--这里只写有「非主运」的组合
 				return false		
 			end
 		end
-		--五岳剑诀强化（非组合、绑门派）
-		if NGid == 175 then
-			if MPTX(id,14,6) and PersonKF(id,175) then
-				return true
-			else
-				return false
-			end
-		end	
 		--忘情怒涛
 		if NGid == 177 then
 			if PersonKF(id,177) and PersonKF(id,252) then
@@ -16987,10 +16999,14 @@ function match_ID(personid, id)
 		if personid == 742 and id == 596 then
 			return true
 		end	
-		--楼主默苍离
-		if personid == 750 and id == 517 then
+		--队友东方
+		if personid == 777 and id == 27 then
 			return true
 		end	 
+		--楼主默苍离
+		--if personid == 750 and id == 517 then
+			--return true
+		--end	 
 	end	
 	
 	if personid == 512 and JY.Person[512]["暂时无用"] > 0 then
@@ -21087,6 +21103,7 @@ function SetTF(i,tf,n)
     local zjtf = false
 	local npctf = false
 	local limit = 0
+	local limit1 = 0
 	if CC.PTFSM[tf][1] == nil then
 		do return end
 	end	
@@ -21116,16 +21133,23 @@ function SetTF(i,tf,n)
 			if DrawStrBoxYesNo(-1, -1,JY.Person[i]['姓名'].."天赋已满，是否遗忘天赋？", C_WHITE, CC.DefaultFont) then
 				Cls();
 				Cat('遗忘天赋')
-				CC.PTF[i][tf] = n
-				QZXS(JY.Person[i]['姓名'].."获得"..CC.PTFSM[tf][1].."天赋")
-				if JY.Base['畅想'] == i then
-					if DrawStrBoxYesNo(-1, -1,'畅想'..JY.Person[0]['姓名'].."是否要学习"..CC.PTFSM[tf][1].."天赋？", C_WHITE, CC.DefaultFont) then
-						CC.PTF[0][tf] = n
-						QZXS('畅想'..JY.Person[0]['姓名'].."获得"..CC.PTFSM[tf][1].."天赋")
+				for k, v in pairs(CC.PTF[i]) do
+					if v == 1 then
+						limit1 = limit1 + 1
+					end	
+				end
+				if limit1 < 10 then
+					CC.PTF[i][tf] = n
+					QZXS(JY.Person[i]['姓名'].."获得"..CC.PTFSM[tf][1].."天赋")
+					if JY.Base['畅想'] == i then
+						if DrawStrBoxYesNo(-1, -1,'畅想'..JY.Person[0]['姓名'].."是否要学习"..CC.PTFSM[tf][1].."天赋？", C_WHITE, CC.DefaultFont) then
+							CC.PTF[0][tf] = n
+							QZXS('畅想'..JY.Person[0]['姓名'].."获得"..CC.PTFSM[tf][1].."天赋")
+						end
 					end
 				end
 			end
-		end	
+		end		
 	else
 		CC.PTF[i][tf] = nil
 		QZXS(JY.Person[i]['姓名'].."遗忘"..CC.PTFSM[tf][1].."天赋")
@@ -24344,19 +24368,13 @@ function MPTX(id,mp,dj)
 	if match_ID(id,577) and mp == 5 then
 		return true
 	end	
-	if match_ID(id,62) and mp == 6 then
+	if JXPD(id,3,1) and mp == 5 and dj <= 2 then
 		return true
 	end
-	if match_ID(id,97) and mp == 6  then
-		return true
-	end	
-	if match_ID(id,116) and mp == 7 then
+	if (match_ID(id,62) or match_ID(id,97)) and mp == 6 then
 		return true
 	end
-	if match_ID(id,117) and mp == 7 then
-		return true
-	end
-	if match_ID(id,118) and mp == 7 then
+	if (match_ID(id,116) or match_ID(id,117) or match_ID(id,118)) and mp == 7 then
 		return true
 	end
 	if match_ID(id,60) and mp == 8 then
@@ -24371,34 +24389,25 @@ function MPTX(id,mp,dj)
 	if (match_ID(id,501) or match_ID(id,596)) and mp == 11 then
 		return true
 	end
-	if match_ID(id,26) and mp == 12 then
+	if (match_ID(id,27) or match_ID(id,26) or match_ID(id,456)) and mp == 12 then
 		return true
 	end
-	if (match_ID(id,27) or match_ID(id,777) or match_ID(id,26)) and mp == 12 then
+	if (match_ID(id,641) or match_ID(id,456)) and mp == 13 then
 		return true
 	end
-	if match_ID(id,641) and mp == 13 then
+	if match_ID(id,140) and mp == 14 then
 		return true
 	end
-	if match_ID(id,456) and (mp == 12 or mp == 13) then
-		return true
-	end	
-	if match_ID(id,499) and mp == 15 then
+	if (match_ID(id,499) or match_ID(id,65)) and mp == 15 then
 		return true
 	end
-	if match_ID(id,65) and mp == 15 then
-		return true
-	end
-	if match_ID(id,129) and mp == 16 then
-		return true
-	end
-	if match_ID(id,64) and mp == 16 then
+	if (match_ID(id,129) or match_ID(id,64)) and mp == 16 then
 		return true
 	end
 	if match_ID(id,626) and mp == 17 then
 		return true
 	end
-	if mp == 19 and (match_ID(id,586) or match_ID(id,604)) then
+	if (match_ID(id,586) or match_ID(id,604)) and mp == 19 then
 		return true
 	end	
 	if match_ID(id,514) and mp == 20 then
@@ -28727,7 +28736,7 @@ local nk,dk,hk,bk,xk,fk = 100-nskx(id,100),100-zdkx(id,100),100-zskx(id,100),100
 			if WAR.PD['血淬'][id] ~= nil then
 				str1_gain = str1_gain + WAR.PD['血淬'][id]
 			end
-			if PersonKF(id,263) or NGQH(id,175) then
+			if PersonKF(id,263) then
 				if Curr_NG(id,263) then
 					str1_gain = math.modf(str1_gain*1.1)
 				else
@@ -28751,7 +28760,7 @@ local nk,dk,hk,bk,xk,fk = 100-nskx(id,100),100-zdkx(id,100),100-zskx(id,100),100
 					end
 				end
 			end
-			if PersonKF(id,264) or NGQH(id,175) then
+			if PersonKF(id,264) then
 				if Curr_NG(id,264) then
 					def1_gain = math.modf(def1_gain*1.1)
 				else
@@ -31017,7 +31026,7 @@ function PersonStatusA(t,page)
 			if WAR.PD['血淬'][id] ~= nil then
 				str1_gain = str1_gain + WAR.PD['血淬'][id]
 			end
-			if PersonKF(id,263) or NGQH(id,175) then
+			if PersonKF(id,263) then
 				if Curr_NG(id,263) then
 					str1_gain = math.modf(str1_gain*1.1)
 				else
@@ -31041,7 +31050,7 @@ function PersonStatusA(t,page)
 					end
 				end
 			end
-			if PersonKF(id,264) or NGQH(id,175) then
+			if PersonKF(id,264) then
 				if Curr_NG(id,264) then
 					def1_gain = math.modf(def1_gain*1.1)
 				else
@@ -31076,7 +31085,7 @@ function PersonStatusA(t,page)
 				qg = math.modf(JY.Person[id]["轻功"]*0.15)
 				agi1_gain = agi1_gain +qg
 			end
-			if PersonKF(id,259) or NGQH(id,175) then
+			if PersonKF(id,259) then
 				if Curr_NG(id,259) then
 					agi1_gain = math.modf(agi1_gain*1.1)
 				else
