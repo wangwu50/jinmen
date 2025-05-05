@@ -40028,6 +40028,9 @@ function DrawTimeBar()
 						local mpdj=math.modf(TrueYJ(jqid)/30)
 						if dead(j) == false and DWPD(i,j) and RealJL(i,j,mpdj) then
 							local xn=10+mpdj
+							local offset1 = math.abs(WAR.Person[i]["坐标X"] - WAR.Person[j]["坐标X"]) 
+					        local offset2 = math.abs(WAR.Person[i]["坐标Y"] - WAR.Person[j]["坐标Y"])
+					        local offset = 20-offset1-offset2	
 							if offset<=10 then
 								xn=xn+math.modf(offset*2)
 							end
@@ -49958,7 +49961,7 @@ function DGFJ()
 			local eft = GetWarMap(x,y,4)
 			local yj = math.modf(TrueYJ(id)/30)
 			local yj1 = math.modf(TrueYJ(id)/60)
-			if ((match_ID(id,9982) and JLSD(0,yj,id)) or WAR.PD['接化发'][id] == 2 or match_ID(id,592) or (WAR.ZDDH == 424 and id == 670))
+			if ((match_ID(id,9982) and JLSD(0,yj,id)) or (match_ID(id,783) and JLSD(0,yj,id)) or WAR.PD['接化发'][id] == 2 or match_ID(id,592) or (WAR.ZDDH == 424 and id == 670))
 			and JY.Person[id]['内力'] > 50	and JY.Person[id]['生命'] > 0 and JY.Person[id]['体力'] > 10 and fjpd(WAR.CurID) == false and eft > 0 then
 				WAR.Person[i]['先手反击'] = 1
 				WAR.Person[i]["移动步数"] = 0
@@ -56621,7 +56624,7 @@ end
 
 Ct['剑魔再临'] = function(id,kf)
     --拥有剑魔再临天赋、使用玄铁
-    if match_ID(id,9975) then
+    if match_ID(id,9975) or match_ID(id,783) then
         if kf == 45 then
             return true
         end
