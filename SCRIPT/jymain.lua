@@ -16344,6 +16344,8 @@ function NGQH(id,NGid)--这里只写有「主运」的组合
 		if NGid == 184 and pd == true then 
 			if Curr_NG(id,184) and PersonKF(id,252) then
 				return true	
+			elseif Curr_NG(id,184) and match_ID(id,780) then
+				return true
 			else 
 			    return false	
 			end
@@ -24368,9 +24370,7 @@ function MPTX(id,mp,dj)
 	if match_ID(id,577) and mp == 5 then
 		return true
 	end	
-	if JXPD(id,3,1) and mp == 5 and dj <= 2 then
-		return true
-	end
+	
 	if (match_ID(id,62) or match_ID(id,97)) and mp == 6 then
 		return true
 	end
