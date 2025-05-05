@@ -19030,9 +19030,9 @@ function firstmenu1()
 			if i > 7 then
 				tsk = by * 68 * (i - 8)
 			end
-			lib.DrawStr(tsbx, tsby + tsk, tsmenu[i], cl, size * 2, "./FONT/6.ttf", 0, 0)
+			lib.DrawStr(tsbx, tsby + tsk, tsmenu[i], cl, size * 2, CONFIG.FontName, 0, 0)
 			lib.DrawStr(bx * 644 - string.len(tsmenu1[tb]) * size / 4, by * 70, tsmenu1[tb], C_WHITE, size * 1.6,
-				"./FONT/6.ttf", 0, 0)
+			CONFIG.FontName, 0, 0)
 		end
 		if lb == 1 or lb == 2 then
 			for i = 1, 6 do
@@ -19121,7 +19121,7 @@ function firstmenu1()
 					lib.LoadPNG(1, pic * 2, rwx + (i - 1) * rww, rwy, 1, 0, 90)
 
 					lib.DrawStr(rwx + size * 1.8 + (i - 1) * rww - string.len(name) * size / 4, rwy + size * 3.8, name,
-						cl, size, "./FONT/0.ttf", 0, 0)
+						cl, size, CONFIG.FontName, 0, 0)
 				end
 			end
 		end
@@ -19376,9 +19376,9 @@ function firstmenu2() --特殊角色
 			if i > 7 then
 				tsk = by * 68 * (i - 8)
 			end
-			lib.DrawStr(tsbx, tsby + tsk, tsmenu[i], cl, size * 2, "./FONT/6.ttf", 0, 0)
+			lib.DrawStr(tsbx, tsby + tsk, tsmenu[i], cl, size * 2, CONFIG.FontName, 0, 0)
 			lib.DrawStr(bx * 644 - string.len(tsmenu1[tb]) * size / 4, by * 70, tsmenu1[tb], C_WHITE, size * 1.6,
-				"./FONT/6.ttf", 0, 0)
+			CONFIG.FontName, 0, 0)
 		end
 		if lb == 1 or lb == 2 then
 			for i = 1, 6 do
@@ -19471,7 +19471,7 @@ function firstmenu2() --特殊角色
 					lib.LoadPNG(1, pic * 2, rwx + (i - 1) * rww, rwy, 1, 0, 90)
 
 					lib.DrawStr(rwx + size * 1.8 + (i - 1) * rww - string.len(name) * size / 4, rwy + size * 3.8, name,
-						cl, size, "./FONT/0.ttf", 0, 0)
+						cl, size, CONFIG.FontName, 0, 0)
 				end
 			end
 		end
