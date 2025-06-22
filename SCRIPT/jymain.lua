@@ -9703,8 +9703,14 @@ function UseThing_Type2(id)
 			elseif (personid == 0 and JY.Base["标准"] == 5) or (personid == 0 and JY.Base["标准"] == 7) or (personid == 0 and JY.Base["标准"] == 8) then
 				say("武功本身无优势之分，但跟要看使用者！", 0, 1)
 				yes = 1
-				--主角打赢葵花尊者，可以直接学
-				--elseif personid == 0 and CC.TX["笑傲邪线"] == 2 then
+			elseif personid == 0 and JY.Base["畅想"] == 773 then
+			    say("老夫已窥得天人化生之秘，自宫大可不必。哈哈哈！！！",773,1)
+			    yes = 1	
+			elseif personid == 0 and JY.Base["畅想"] == 787 then
+			    say("原来葵花真谛竟是这般。",787,1)
+			    yes = 1		
+			--主角打赢葵花尊者，可以直接学
+			--elseif personid == 0 and CC.TX["笑傲邪线"] == 2 then
 				--yes = 1
 			elseif personid == 0 and JY.Base["畅想"] == 457 then	
 			    say("我东方亦集百家所长，区区葵花还不用自残身体来修炼！",457,1)
@@ -16215,7 +16221,7 @@ function NGQH(id, NGid) --这里只写有「主运」的组合
 			    return true	
 			elseif match_ID(id,762) and Curr_NG(id,105) then
 			    return true 	
-			elseif match_ID(id,27) or match_ID(id,92) or match_ID(id,773) then
+			elseif match_ID(id,27) or match_ID(id,92) or match_ID(id,773) or match_ID(id,787) then
    			    return true	
 			elseif match_ID(id,769) and Curr_NG(id,105) then 
 			    return true 	
@@ -16573,14 +16579,20 @@ function NGQH(id, NGid) --这里只写有「主运」的组合
 		end
 	end
 	return false
-end
+end	
 
-function NGQHB(id, NGid) --这里只写有「非主运」的组合
+function NGQHB(id,NGid)--这里只写有「非主运」的组合
 	--if WAR.PJTX1 ~= 0 and (not match_ID(id,592)) then
 	--return false
 	--else
-	    if match_ID(id,577) and NGid ~= nil and NGid > 0 then
+	--if WAR.PJTX1 ~= 0 and match_ID(id,592) == false then
+		--return false
+	--else
+		--if match_ID(id,634) and NGid ~= nil and NGid > 0 and NGid ~= 315 and NGid ~= 359 and NGid ~= 184 and NGid ~= 180 and NGid ~= 43 then
+	    if match_ID(id,577) and NGid ~= nil and NGid > 0 and NGid ~= 90 then
 			return true
+		elseif match_ID(id,790) and NGid ~= nil and NGid > 0 then
+		    return true		
 		end
 		--化功五毒
 		if NGid == 87 then
@@ -16594,9 +16606,9 @@ function NGQHB(id, NGid) --这里只写有「非主运」的组合
 				return false
 			end
 		end
-		--混元紫霞
-		if NGid == 90 then
-			if PersonKF(id,90) and PersonKF(id,89) then
+		--紫霞混元
+		if NGid == 89 then
+			if PersonKF(id,89) and PersonKF(id,90) then
 				return true
 			elseif PersonKF(id,375) and PersonKF(id,89) then
 				return true
@@ -16734,8 +16746,6 @@ function NGQHB(id, NGid) --这里只写有「非主运」的组合
 				return true
 			elseif match_ID(id,759) or match_ID(id,776) or match_ID(id,781) or match_ID(id,782) then
 			    return true 	
-			elseif match_ID(id,773) then
-			    return true	
 			else
 				return false
 			end
@@ -16756,7 +16766,7 @@ function NGQHB(id, NGid) --这里只写有「非主运」的组合
 				return true
 			elseif match_ID(id,603) or match_ID(id,9807) then
 				return true
-			elseif match_ID(id,771) or match_ID(id,743) then 
+			elseif match_ID(id,771) or match_ID(id,743) or match_ID(id,788) then 
 			    return true	
 			else 
 				return false	
@@ -16836,6 +16846,16 @@ function NGQHB(id, NGid) --这里只写有「非主运」的组合
 			if PersonKF(id,369) and PersonKF(id,90) then
 				return true
 			elseif match_ID(id,524) or match_ID(id,758) then
+			    return true
+			else
+			    return false		
+			end
+		end
+		--混元长春
+		if NGid == 90 then
+			if PersonKF(id,90) and PersonKF(id,183) then
+				return true
+			elseif match_ID(id,524) then
 			    return true
 			else
 			    return false		
@@ -19300,13 +19320,13 @@ function firstmenu2() --特殊角色
 	local tsmenu1 = {'雪羽宗','夜雨楼','中华阁','背巍军','护龙山庄','云梦涧','花涧派','世间百兽','诸系群侠'}
 	local menu2 = {	{514,745,744,781}, --雪
 					{526,525,527,761,457}, --夜
-					{524,743,747,758,759,760,764,771,772,774,775,776,778,779,780,782,783,784,785,786}, --中
+					{524,743,747,758,759,760,764,771,772,773,774,775,776,778,779,780,782,783,784,785,786,787}, --中
 					{568},--巍
-					{749,750,751,752,748,773}, --护
+					{749,750,751,752,748}, --护
 					{754,455,762}, --云
 					{515,763}, --花
 					{419,429,439},--百兽
-					{511,578,579,584,652,500,498,497,635,501,596,505,507,721,546}, --群
+					{511,578,579,584,652,500,498,497,635,501,596,505,507,721,546,788,790}, --群
 					--{74,75,80,151,152,153,154,155,156,311,313,570,571,569,657,658,656,655,606}, --书
 					--{58,59,63,626,62,84,89,580,161,616,617,160,157,158,159,530,592,627}, --神
 					--{38,581,582,39,40,41,42,43,85,164,162,163,636}, --侠

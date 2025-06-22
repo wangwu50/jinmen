@@ -3316,7 +3316,7 @@ newkdef[10032]=function()
 		SetTF(741,9976,nil)
 		SetTF(742,9976,nil)
 		SetTF(0,9976,1)    --神游太虚
-		SetTF(0,9723,1)    --万般皆通
+		--SetTF(0,9723,1)    --万般皆通
 		instruct_2(316,1)
 		instruct_2(348,1)
 		instruct_2(312,-1)
@@ -4447,6 +4447,7 @@ newkdef[10064]=function()
 					instruct_2(408, 1)   --忘情天书
 					instruct_2(409, 1)   --怒涛海潮功
 					instruct_2(174, 10000)
+					SetTF(0,9723,1)    --万般皆通
 					do return end  --无条件结束事件
 				end									
 			else 
@@ -5548,18 +5549,19 @@ newkdef[10124]=function()
 end	
 
 newkdef[10125]=function()
-    if MPPD(0) == 0 or MPPD(0) ~= 25 then
-	    say("护龙山庄不要乱闯，速速离去吧，以免被当做奸细抓起来。", 773, 0) 
+    if MPPD(0) == 0 or MPPD(0) ~= 22 then
+	    say("客人，封玉楼还未打点完善，稍后再来吧。", 773, 0) 
 	else	
-	    if MPPD(0) == 25 and MPDJ(0) >= 1 then
+	    if MPPD(0) == 22 and MPDJ(0) >= 1 then
 			say("东方前辈好！", 0, 1)
-			say("前辈？不要用江湖草莽的套来称呼我。", 773, 0)	
-            say(".......那应该怎么称呼？", 0, 1)
-			say("叫我大学士大人！", 773, 0)	
-			say("这.....", 0, 1)
-			say("怎么？我东方录是励志要做大学士的人，现在只是暂屈居在护龙山庄。", 773, 0)	
-			say("大学士大人！", 0, 1)
-			say("孺子可教也！哈哈哈哈！", 773, 0)	
+			say("干嘛那么客气，叫撸哥就行了。", 773, 0)	
+            say("撸哥好！", 0, 1)
+			say("要不要学葵花宝典？", 773, 0)	
+			say("这.....我不想自残。", 0, 1)
+			say("放心，你撸哥已窥天人化生之道，不用自残身体。", 773, 0)	
+			say("真的吗？", 0, 1)
+			say("自己人不骗自己人。", 773, 0)	
+			say("等我不懂回来请教撸哥的。", 0, 1)
 		end
 	end
 end	
@@ -32794,23 +32796,23 @@ newkdef[50]=function()
 		-- end	
 	elseif r == 3 then		--偷窃：减少5点道德得100两
 		if instruct_28(0, 5, 999, 6, 0) == false then
-	    instruct_1(235, 0, 1)
-	    return 
-	    instruct_0()
-	  end
-	  instruct_1(234, 0, 1)
-	  instruct_0()
-	  if instruct_11(0, 8) == true then
-	    instruct_0()
-	    if JY.Base["标准"] ~= 7 then		--仁者没有钱得
-	    	instruct_2(174, 100)
+	        instruct_1(235, 0, 1)
+	        return 
+	        instruct_0()
 	    end
+	    instruct_1(234, 0, 1)
 	    instruct_0()
-		if JY.Base['标准'] ~= 11 then
-			instruct_37(-5)
-		end	
-	    return 
-	  end
+	    if instruct_11(0, 8) == true then
+	        instruct_0()
+	        if JY.Base["标准"] ~= 7 then		--仁者没有钱得
+	    	    instruct_2(174, 100)
+	        end
+	        instruct_0()
+		    if JY.Base['标准'] ~= 11 then
+			    instruct_37(-5)
+		    end	
+	        return 
+	    end
 		
 	elseif r == 4 then			--抢劫：根据道德判断，每次减5点
 		if instruct_28(0, 5, 999, 6, 0) == false then
@@ -32826,19 +32828,19 @@ newkdef[50]=function()
 			end
 			--JY.Person[0]["品德"] = i;
 		end
-		-- if gold > 0 then
-			-- say("大胆，连香火钱也敢偷，拿下。",70,0,"主持");
-			-- Cls()
-			-- say("……",0,1)
-			-- Cls()			
-			-- if WarMain(382) == false then
-				-- instruct_15()
-				-- Cls()
-			-- end
-			-- say("好险，还好小爷我轻功好。",0,1);
+		if gold > 0 then
+			say("大胆，连香火钱也敢偷，拿下。",788,0);
+			Cls()
+			say("……天宁寺何时多了一个老和尚？",0,1)
+			Cls()			
+			if WarMain(513) == false then
+				instruct_15()
+				Cls()
+			end
+			say("好险，还好小爷我轻功好、跑得快。",0,1);
 			
 
-		-- end
+		end
 		
 		if gold > 0 then
 			
