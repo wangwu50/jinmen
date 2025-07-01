@@ -15016,7 +15016,7 @@ function JFZH(id, WGid, NGid)
 	if WGid == 38 and NGid == 248 then
 		if PersonKF(id, 38) and PersonKF(id, 248) then
 			return true
-		elseif match_ID(id, 57) then
+		elseif match_ID(id,57) or match_ID(id,785) then 
 			return true
 		end
 	end
@@ -15326,7 +15326,7 @@ function QFZH(id, WGid, NGid)
 	if WGid == 12 and NGid == 248 then
 		if PersonKF(id, 12) and PersonKF(id, 248) then
 			return true
-		elseif match_ID(id, 56) or match_ID(id, 57) then
+		elseif match_ID(id,56) or match_ID(id,57) or match_ID(id,785) then
 			return true
 		end
 	end
@@ -15872,10 +15872,10 @@ function WGZH(id, WGid1, WGid2)
 	end
 	--玉箫落英
 	if WGid1 == 38 and WGid2 == 12 then
-		if PersonKF(id, 38) and PersonKF(id, 12) then
-			return true
-		elseif match_ID(id, 57) then
-			return true
+		if PersonKF(id,38) and PersonKF(id,12) then
+			return true 
+		elseif match_ID(id,57) or match_ID(id,785) then
+		    return true	
 		end
 	end
 	return false
@@ -16159,7 +16159,7 @@ function NGQH(id, NGid) --这里只写有「主运」的组合
 		if NGid == 101 and pd == true then
 			if Curr_NG(id, 101) and PersonKF(id, 85) then
 				return true
-			elseif match_ID(id, 117) and PersonKF(id, 101) then
+			elseif (match_ID(id,117) or match_ID(id,784)) and PersonKF(id,101) then
 				return true
 			else
 				return false
@@ -19322,7 +19322,7 @@ function firstmenu2() --特殊角色
 					{526,525,527,761,457}, --夜
 					{524,743,747,758,759,760,764,771,772,773,774,775,776,778,779,780,782,783,784,785,786,787}, --中
 					{568},--巍
-					{749,750,751,752,748}, --护
+					{749,750,751,752,748,789}, --护
 					{754,455,762}, --云
 					{515,763}, --花
 					{419,429,439},--百兽
