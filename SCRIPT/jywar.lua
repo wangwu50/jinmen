@@ -46799,69 +46799,71 @@ end
 
 --绘画整体集气条
 function DrawTimeBar_sub(x1, x2, y, flag)
+    local bx = CC.ScreenW / 1360
+    local by = CC.ScreenH / 768
+    local fontSmall = CC.FontSMALL
+    local fontDefault = CC.DefaultFont
 
-	--无酒不欢：绘画部分增加破绽区显示
-	if not x2 then
-		x2 = CC.ScreenW * 19 / 20 - 2  --X上方位置
-	end
-	if not y then
-		y = CC.ScreenH/10 + 29
-	end
-	if not x1 then
-		x1 = CC.ScreenW * 1 / 2 - 34  --X下方位置
---		lib.LoadPicture("./data/xt/23.png",0,0,1)
-		lib.LoadPNG(91, 23 * 2 , 310, 55, 1)
-	end
+    if not x2 then
+        x2 = CC.ScreenW * 19 / 20 - 2 * bx  --X上方位置
+    end
+    if not y then
+        y = CC.ScreenH / 10 + 29 * by
+    end
+    if not x1 then
+        x1 = CC.ScreenW * 1 / 2 - 34 * bx  --X下方位置
+        lib.LoadPNG(91, 23 * 2, 310 * bx, 55 * by, 1)
+    end
   
-	for i = 0, WAR.PersonNum - 1 do
-		if not WAR.Person[i]["死亡"] then
-			--无酒不欢：修正集气条显示，不会飞过1000
-			if WAR.Person[i].Time > 1001 then
-				WAR.Person[i].Time = 1001
-			end
-			local id = WAR.Person[i]["人物编号"]
-			local cx = x1 + math.modf(WAR.Person[i].Time*(x2 - x1)/1000)
-			local headid = JY.Person[id]["半身像"]
-			if headid == nil then
-				headid = JY.Person[id]["半身像"]
-			end
-			local w, h = limitX(CC.ScreenW/25,12,35),limitX(CC.ScreenW/25,12,35)
-			local jq_color = C_WHITE
-			if JY.Person[id]["中毒程度"] > 99 then
-				jq_color = RGB(56, 136, 36)
-			elseif JY.Person[id]["中毒程度"] >= 50 then
-				jq_color = RGB(120, 208, 88)
-			end
-			if (WAR.LQZ[id] or 0) >= 100 then
-				jq_color = C_RED
-			end
-			if WAR.Person[i]["我方"] then
-				drawname(cx, 1, id, CC.FontSmall)
-				lib.LoadPNG(99, headid*2, cx - w / 2, y - h - 4, 1, 0)
-				DrawString(cx-17-5, y-10-90-5, string.format("%d",(WAR.JQSDXS[id] or 0)), jq_color, CC.FontSMALL)	--集气速度
-				if JY.Person[id]["灼烧程度"] ~= 0 then
-					DrawString(cx, y-10-33, string.format("%d",JY.Person[id]["灼烧程度"]), C_ORANGE, CC.FontSMALL)	--灼烧数值
-				end
-				if JY.Person[id]["封穴程度"] ~= 0 then
-					DrawString(cx-21, y-10-33, string.format("%d",JY.Person[id]["封穴程度"]), C_GOLD, CC.FontSMALL)	--封穴数值
-				end
-			else
-				drawname(cx, y+h, id, CC.FontSmall)
-				lib.LoadPNG(99, headid*2, cx - w / 2, y + 6-5, 1, 0)
-				DrawString(cx-21, y+h-5, string.format("%d",(WAR.JQSDXS[id] or 0)), jq_color, CC.FontSMALL)	--集气速度
-				if JY.Person[id]["灼烧程度"] ~= 0 then
-					DrawString(cx, y+h-33, string.format("%d",JY.Person[id]["灼烧程度"]), C_ORANGE, CC.FontSMALL)	--灼烧数值
-				end
-				if JY.Person[id]["封穴程度"] ~= 0 then
-					DrawString(cx-21, y+h-33, string.format("%d",JY.Person[id]["封穴程度"]), C_GOLD, CC.FontSMALL)	--封穴数值
-				end
-			end
-		end
-	end
-	DrawString(x2 + 10-370, y-80-8 , WAR.SXTJ, C_GOLD, CC.DefaultFont*0.9)
-    DrawString(x2 + 10-420, y - 60-25, "时序", C_WHITE, CC.DefaultFont*0.8)	
-	DrawString(x2 + 10-370, y-40-8 , WAR.MYCHAIN, C_GOLD, CC.DefaultFont*0.9)
-    DrawString(x2 + 10-420, y -20-25, "连锁", C_WHITE, CC.DefaultFont*0.8)	
+    for i = 0, WAR.PersonNum - 1 do
+        if not WAR.Person[i]["死亡"] then
+            if WAR.Person[i].Time > 1001 then
+                WAR.Person[i].Time = 1001
+            end
+            local id = WAR.Person[i]["人物编号"]
+            local cx = x1 + math.modf(WAR.Person[i].Time * (x2 - x1) / 1000)
+            local headid = JY.Person[id]["半身像"]
+            if headid == nil then
+                headid = JY.Person[id]["半身像"]
+            end
+            local w, h = limitX(CC.ScreenW / 25, 12 * bx, 35 * bx), limitX(CC.ScreenW / 25, 12 * by, 35 * by)
+            local jq_color = C_WHITE
+            if JY.Person[id]["中毒程度"] > 99 then
+                jq_color = RGB(56, 136, 36)
+            elseif JY.Person[id]["中毒程度"] >= 50 then
+                jq_color = RGB(120, 208, 88)
+            end
+            if (WAR.LQZ[id] or 0) >= 100 then
+                jq_color = C_RED
+            end
+            if WAR.Person[i]["我方"] then
+                drawname(cx, 1, id, fontSmall)
+                lib.LoadPNG(99, headid * 2, cx - w / 2, y - h - 4 * by, 1, 0)
+                DrawString(cx - 17 * bx - 5 * bx, y - 10 * by - 90 * by - 5 * by, string.format("%d", (WAR.JQSDXS[id] or 0)), jq_color, fontSmall)
+                if JY.Person[id]["灼烧程度"] ~= 0 then
+                    DrawString(cx, y - 10 * by - 33 * by, string.format("%d", JY.Person[id]["灼烧程度"]), C_ORANGE, fontSmall)
+                end
+                if JY.Person[id]["封穴程度"] ~= 0 then
+                    DrawString(cx - 21 * bx, y - 10 * by - 33 * by, string.format("%d", JY.Person[id]["封穴程度"]), C_GOLD, fontSmall)
+                end
+            else
+                drawname(cx, y + h, id, fontSmall)
+                lib.LoadPNG(99, headid * 2, cx - w / 2, y + 6 * by - 5 * by, 1, 0)
+                DrawString(cx - 21 * bx, y + h - 5 * by, string.format("%d", (WAR.JQSDXS[id] or 0)), jq_color, fontSmall)
+                if JY.Person[id]["灼烧程度"] ~= 0 then
+                    DrawString(cx, y + h - 33 * by, string.format("%d", JY.Person[id]["灼烧程度"]), C_ORANGE, fontSmall)
+                end
+                if JY.Person[id]["封穴程度"] ~= 0 then
+                    DrawString(cx - 21 * bx, y + h - 33 * by, string.format("%d", JY.Person[id]["封穴程度"]), C_GOLD, fontSmall)
+                end
+            end
+        end
+    end
+    -- 右侧数值和标签全部用缩放变量
+    DrawString(x2 + 10 * bx - 370 * bx, y - 80 * by - 8 * by, WAR.SXTJ, C_GOLD, fontDefault * 0.9)
+    DrawString(x2 + 10 * bx - 420 * bx, y - 60 * by - 25 * by, "时序", C_WHITE, fontDefault * 0.8)
+    DrawString(x2 + 10 * bx - 370 * bx, y - 40 * by - 8 * by, WAR.MYCHAIN, C_GOLD, fontDefault * 0.9)
+    DrawString(x2 + 10 * bx - 420 * bx, y - 20 * by - 25 * by, "连锁", C_WHITE, fontDefault * 0.8)
 end
 
 --绘画集气条上的名字
