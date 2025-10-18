@@ -16118,8 +16118,6 @@ function NGQH(id,NGid)--这里只写有「主运」的组合
 			    return true	
 			elseif match_ID(id,770) and Curr_NG(id,108) then
 			    return true	
-			elseif match_ID(id,772) and Curr_NG(id,108) then
-			    return true	
 			elseif match_ID(id,781) and PersonKF(id,108) then
 			    return true 
 			elseif match_ID(id,782) and PersonKF(id,108) then
@@ -16250,7 +16248,7 @@ function NGQH(id,NGid)--这里只写有「主运」的组合
 			    return true
 			elseif Curr_NG(id,204) and match_ID(id,9728) then
 				return true		
-			elseif match_ID(id,772) and Curr_NG(id,108) then
+			elseif match_ID(id,772) and Curr_NG(id,106) then
 			    return true			
 			else
 				return false
@@ -16575,7 +16573,7 @@ function NGQHB(id,NGid)--这里只写有「非主运」的组合
 		if NGid == 180 then
 			if PersonKF(id,227) and PersonKF(id,180) then
 				return true
-			elseif match_ID(id,759) or match_ID(id,776) or match_ID(id,781) or match_ID(id,782) then
+			elseif match_ID(id,759) or match_ID(id,773) or match_ID(id,776) or match_ID(id,781) or match_ID(id,782) or match_ID(id,787) then
 			    return true 	
 			else
 				return false
@@ -16718,7 +16716,7 @@ function NGQHC(id,NGid)--「非主运」+ 「轻功」
 		if NGid == 95 then 
 			if PersonKF(id,95) and PersonKF(id,104) and PersonKF(id,150) then
 				return true
-			elseif match_ID(id,60) then 
+			elseif match_ID(id,60) or match_ID(id,525) or match_ID(id,527) then 
 			    return true 
 			else 
 			    return false		
@@ -21150,7 +21148,7 @@ function SetTF(i,tf,n)
 					end
 				end			
 			end	
-		else
+		--[[else
 			if DrawStrBoxYesNo(-1, -1,JY.Person[i]['姓名'].."天赋已满，是否遗忘天赋？", C_WHITE, CC.DefaultFont) then
 				Cls();
 				Cat('遗忘天赋')
@@ -21169,7 +21167,7 @@ function SetTF(i,tf,n)
 						end
 					end
 				end
-			end
+			end]]
 		end		
 	else
 		CC.PTF[i][tf] = nil
