@@ -16281,18 +16281,16 @@ function NGQH(id, NGid) --这里只写有「主运」的组合
 						return true
 					end
 				end
-			elseif PersonKF(id, 108) and match_ID(id, 744) then
-				return true
-			elseif match_ID(id, 770) and Curr_NG(id, 108) then
-				return true
-			elseif match_ID(id, 772) and Curr_NG(id, 108) then
-				return true
-			elseif match_ID(id, 781) and PersonKF(id, 108) then
-				return true
-			elseif match_ID(id, 782) and PersonKF(id, 108) then
-				return true
-			else
-				return false
+			elseif PersonKF(id,108) and match_ID(id,744) then
+			    return true	
+			elseif match_ID(id,770) and Curr_NG(id,108) then
+			    return true	
+			elseif match_ID(id,781) and PersonKF(id,108) then
+			    return true 
+			elseif match_ID(id,782) and PersonKF(id,108) then
+			    return true 							
+			else	
+				return false		
 			end
 		end
 		--金刚铁布
@@ -16411,14 +16409,14 @@ function NGQH(id, NGid) --这里只写有「主运」的组合
 				return true
 			elseif match_ID(id, 69) and Curr_NG(id, 204) then
 				return true
-			elseif match_ID(id, 764) and Curr_NG(id, 204) then
-				return true
-			elseif (match_ID(id, 767) and Curr_NG(id, 204)) or match_ID(id, 539) then
-				return true
-			elseif Curr_NG(id, 204) and match_ID(id, 9728) then
-				return true
-			elseif match_ID(id, 772) and Curr_NG(id, 108) then
-				return true
+			elseif match_ID(id,764) and Curr_NG(id,204) then
+			    return true	
+			elseif (match_ID(id,767) and Curr_NG(id,204)) or match_ID(id,539) then	
+			    return true
+			elseif Curr_NG(id,204) and match_ID(id,9728) then
+				return true		
+			elseif match_ID(id,772) and Curr_NG(id,106) then
+			    return true			
 			else
 				return false
 			end
@@ -16744,7 +16742,7 @@ function NGQHB(id,NGid)--这里只写有「非主运」的组合
 		if NGid == 180 then
 			if PersonKF(id,227) and PersonKF(id,180) then
 				return true
-			elseif match_ID(id,759) or match_ID(id,776) or match_ID(id,781) or match_ID(id,782) then
+			elseif match_ID(id,759) or match_ID(id,773) or match_ID(id,776) or match_ID(id,781) or match_ID(id,782) or match_ID(id,787) then
 			    return true 	
 			else
 				return false
@@ -16887,7 +16885,7 @@ function NGQHC(id, NGid) --「非主运」+ 「轻功」
 		if NGid == 95 then 
 			if PersonKF(id,95) and PersonKF(id,104) and PersonKF(id,150) then
 				return true
-			elseif match_ID(id,60) then 
+			elseif match_ID(id,60) or match_ID(id,525) or match_ID(id,527) then 
 			    return true 
 			else 
 			    return false		
@@ -21347,10 +21345,10 @@ function SetTF(i, tf, n)
 						CC.PTF[0][tf] = n
 						QZXS('畅想' .. JY.Person[0]['姓名'] .. "获得" .. CC.PTFSM[tf][1] .. "天赋")
 					end
-				end
-			end
-		else
-			if DrawStrBoxYesNo(-1, -1, JY.Person[i]['姓名'] .. "天赋已满，是否遗忘天赋？", C_WHITE, CC.DefaultFont) then
+				end			
+			end	
+		--[[else
+			if DrawStrBoxYesNo(-1, -1,JY.Person[i]['姓名'].."天赋已满，是否遗忘天赋？", C_WHITE, CC.DefaultFont) then
 				Cls();
 				Cat('遗忘天赋')
 				for k, v in pairs(CC.PTF[i]) do
@@ -21368,7 +21366,7 @@ function SetTF(i, tf, n)
 						end
 					end
 				end
-			end
+			end]]
 		end		
 	else
 		CC.PTF[i][tf] = nil

@@ -701,7 +701,8 @@ function mining()
   local sy = 80
   local x0 = CC.ScreenW / 2 - (sx / 2 + 10) * 6
   local y0 = CC.ScreenH / 2 - (sy / 2 + 10) * 5
-  local chance = 5 + math.modf((101 - JY.Person[0]["资质"]) * 0.1)
+  --local chance = 5 + math.modf((101 - JY.Person[0]["资质"]) * 0.1)
+  local chance = 12
   local bg = CONFIG.PicturePath .. "game.jpg"
   local tmp = {}
   local num = 0
@@ -794,42 +795,43 @@ function mining()
   if treasure ~= 0 then
     tb("恭喜挖到宝藏！")
     local list = {
-      36,
-      37,
-      38,
-      39,
-      40,
-      41,
-      42,
-      43,
-      44,
-      45,
-      46,
-      47,
-      48,
-      49,
-      50,
-      51,
-      52,
-      53,
-      54,
-      58,
-      59,
-      60,
-      61,
-      62,
-      63,
-      243,
-      244,
-      245,
-      246,
-      247,
-      248,
-      249,
-      250,
-      252,
-      253,
-      236
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+	  281,
+      343,
+      344,
+      345
     }
     for i = treasure, 1, -1 do
       instruct_2(174, math.random(500, 2000))
