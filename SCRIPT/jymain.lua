@@ -14469,6 +14469,12 @@ function Curr_NG(personid, NGid)
 			if NGid > 0 and PersonKF(personid, NGid) then
 				return true
 			end
+	    end
+		--逍遥派
+	    if MPTX(personid,7,4) and PersonKF(personid,85) and PersonKF(personid,98) then
+			if NGid == 95 or NGid == 97 or NGid == 100 or NGid == 101 or NGid == 171 or NGid == 183 or NGid == 203 then 
+				return true	 	
+			end
 		end
 		--东方点点试炼
 		if match_ID(personid, 457) then
@@ -14506,8 +14512,7 @@ function Curr_NG(personid, NGid)
 			if NGid == 97 and (PersonKF(personid, NGid) or inteam(personid) == false) then
 				return true
 			end
-		end
-
+		end				
 
 		--梁萧
 		if match_ID(personid, 635) then
@@ -14752,7 +14757,11 @@ function Curr_QG(personid, QGid)
 		return true
 	end
 	--胡一刀
-	if match_ID(personid, 633) and QGid == JY.Person[personid]["天赋轻功"] then
+	if match_ID(personid,633) and QGid == JY.Person[personid]["天赋轻功"] then
+		return true
+	end
+	--杨晓羽
+	if match_ID(personid,793) and QGid == 150 then
 		return true
 	end
 	if MPPD(personid) == 24 and MPDJ(personid) > 2 and QGid == JY.Person[personid]["天赋轻功"] then
@@ -16037,7 +16046,7 @@ function NGQH(id, NGid) --这里只写有「主运」的组合
 			return true
 		elseif match_ID(id, 592) and (NGid == 177 or NGid == 252) then                       --独孤：忘情、怒涛判定必成功
 			return true
-		elseif match_ID(id, 638) and NGid == 106 then                                        --斗酒：九阳判定必成功
+		elseif (match_ID(id,638) or match_ID(id,793)) and NGid == 106 then  --斗酒：九阳判定必成功
 			return true
 		elseif (match_ID(id, 637) or (match_ID(id, 526) and match_ID(id, 9757))) and NGid == 107 then --黄裳：九阴判定必成功
 			return true
@@ -16374,7 +16383,7 @@ function NGQH(id, NGid) --这里只写有「主运」的组合
 			elseif match_ID(id,784) then
 			    return true	
 			elseif Curr_NG(id,183) and match_ID(id,780) then
-			    return true			
+			    return true		
 			else
 				return false
 			end
@@ -16587,7 +16596,7 @@ function NGQHB(id,NGid)--这里只写有「非主运」的组合
 		--return false
 	--else
 		--if match_ID(id,634) and NGid ~= nil and NGid > 0 and NGid ~= 315 and NGid ~= 359 and NGid ~= 184 and NGid ~= 180 and NGid ~= 43 then
-	    if match_ID(id,577) and NGid ~= nil and NGid > 0 and NGid ~= 90 then
+	    if match_ID(id,577) and NGid ~= nil and NGid > 0 and NGid ~= 90 and NGid ~= 91 then
 			return true
 		elseif match_ID(id,790) and NGid ~= nil and NGid > 0 then
 		    return true		
@@ -16690,7 +16699,7 @@ function NGQHB(id,NGid)--这里只写有「非主运」的组合
 				return true
 			elseif JXPD(id,60,1) then
 				return true
-			elseif match_ID(id,783) then
+			elseif match_ID(id,783) or match_ID(id,791) or match_ID(id,792) then
 			    return true 	
 			else 
 				return false		
@@ -16733,7 +16742,9 @@ function NGQHB(id,NGid)--这里只写有「非主运」的组合
 			elseif match_ID(id,652) and PersonKF(id,177) then
 				return true
 			elseif match_ID(id,772) and Curr_NG(id,108) then
-			    return true			
+			    return true		
+			elseif match_ID(id,791) or match_ID(id,792) then
+			    return true				
 			else
 				return false
 			end
@@ -16832,7 +16843,7 @@ function NGQHB(id,NGid)--这里只写有「非主运」的组合
 				return true
 			elseif match_ID(id,568) and PersonKF(id,199) then
 			    return true
-			elseif match_ID(id,782) then 	
+			elseif match_ID(id,782) or match_ID(id,791) or match_ID(id,792) then 	
 			    return true
 			else 
 			    return false		
@@ -19317,8 +19328,8 @@ function firstmenu2() --特殊角色
 	local tsmenu = {'雪','夜','中','巍','护','云','花','兽','群'}
 	local tsmenu1 = {'雪羽宗','夜雨楼','中华阁','背巍军','护龙山庄','云梦涧','花涧派','世间百兽','诸系群侠'}
 	local menu2 = {	{514,745,744,781}, --雪
-					{526,525,527,761,457}, --夜
-					{524,743,747,758,759,760,764,771,772,773,774,775,776,778,779,780,782,783,784,785,786,787}, --中
+					{526,525,527,761,457,794}, --夜
+					{524,743,747,758,759,760,764,771,772,773,774,775,776,778,779,780,782,783,784,785,786,787,791,792,793}, --中
 					{568},--巍
 					{749,750,751,752,748,789}, --护
 					{754,455,762}, --云
@@ -25011,6 +25022,10 @@ function AnqiWG(id, aq)
 	if aq == 450 and (JXPD(id, 626, 1) or match_ID(id, 456)) then --霹雳雷火弹
 		return true
 	end
+	
+	if aq == 457 and (match_ID(id,59) or match_ID(id,605) or match_ID(id,686)) then--玉蜂针
+		return true
+	end
 	if aq == 458 and (JXPD(id,161,1) or match_ID(id,760) or match_ID(id,773)) then--冰魄银针	
 		return true
 	end	
@@ -29658,105 +29673,107 @@ function PersonStatus(t, page)
     if JY.Status == GAME_WMAP then
 		DrawAttrib("特殊兵器", bx*850+150,by*475+i*h,M_YellowGreen,size1)
 	end]]
-
-		i = i + 1
-		-- DrawString(bx*900,by*475+i*h,'暗器　　　'..string.format('%5s',p["暗器技巧"]),C_WHITE,size1)
-		if p["门派技能2"] > 0 then
-			local str = ""
-			if p["门派技能2"] == 458 then
-				str = "(冰魄)"
-			end
-			if p["门派技能2"] == 450 then
-				str = "(霹雳)"
-			end
-			if p["门派技能2"] == 459 then
-				str = "(生死符)"
-			end
-			if p["门派技能2"] == 460 then
-				str = "(透骨)"
-			end
-			if p["门派技能2"] == 469 then
-				str = "(黑血)"
-			end
-			if p["门派技能2"] == 486 then
-				str = "(细雨)"
-			end
-			if p["门派技能2"] == 489 then
-				str = "(五毒)"
-			end
-			if p["门派技能2"] == 490 then
-				str = "(金蛇)"
-			end
-			DrawString(bx * 900, by * 475 + i * h, '暗器手法　 ' .. p["暗器技巧"] .. str, M_Orange, size1) --string.format('%5s',)
-		else
-			DrawString(bx * 900, by * 475 + i * h, '暗器手法　 ' .. p["暗器技巧"], M_Orange, size1) --string.format('%5s',)
+  
+	i = i + 1
+ -- DrawString(bx*900,by*475+i*h,'暗器　　　'..string.format('%5s',p["暗器技巧"]),C_WHITE,size1)
+	if p["门派技能2"] > 0 then
+		local str = ""
+		if p["门派技能2"] == 457 then
+			str = "(玉蜂针)"
+		end	
+		if p["门派技能2"] == 458 then
+			str = "(冰魄)"
+		end	
+		if p["门派技能2"] == 450 then
+			str = "(霹雳)"
+		end	
+		if p["门派技能2"] == 459 then
+			str = "(生死符)"
+		end	
+		if p["门派技能2"] == 460 then
+			str = "(透骨)"
 		end
-
-		i = i + 1
-		DrawString(bx * 900, by * 475 + i * h, '人物资质　 ' .. p["资质"], M_Red, size1)                              --string.format('%5s',)
-		i = i + 1
-		DrawString(bx * 900, by * 475 + i * h, '人物体质　 ' ..
-		p["生命增长"] + limitX(math.modf(p['门派技能5'] * 0.01), 0, 8), M_Red, size1)                                 --string.format('%5s',)
-		i = i + 1
-
-		-- DrawString(bx*900,by*475+i*h,'武常　　　'..string.format('%5s',p["武学常识"]),C_WHITE,size1)
-		-- i = i + 1
-		local zyhb = nil
-		if ZYHBPD(id) >= 1 then
-			if ZYHBPD(id) == 2 then
-				zyhb = "真谛"
-			else
-				zyhb = "◎"
-			end
-		else
-			zyhb = "※"
+		if p["门派技能2"] == 469 then
+			str = "(黑血)"
+		end	
+		if p["门派技能2"] == 486 then
+			str = "(细雨)"
+		end	
+		if p["门派技能2"] == 489 then
+			str = "(五毒)"
 		end
-
-		local zyzd = nil
-		if ZhongYongZD1(id) or ZhongYongZD2(id) then
-			if JY.Person[id]["中庸"] == 3 then
-				zyzd = "天人"
-			else
-				zyzd = "◎"
-			end
-		else
-			zyzd = "※"
+		if p["门派技能2"] == 490 then
+			str = "(金蛇)"
 		end
-
-		local mrdz = nil
-		if MuRongDZ(id) == true then
-			if JY.Person[id]["门派技能3"] == 2 then
-				mrdz = "秘传"
-			else
-				mrdz = "◎"
-			end
+		DrawString(bx*900,by*475+i*h,'暗器手法　 '..p["暗器技巧"]..str,M_Orange,size1)--string.format('%5s',)
+	else
+		DrawString(bx*900,by*475+i*h,'暗器手法　 '..p["暗器技巧"],M_Orange,size1)--string.format('%5s',)
+	end
+  
+	i = i + 1
+	DrawString(bx*900,by*475+i*h,'人物资质　 '..p["资质"],M_Red,size1)--string.format('%5s',)
+	i = i + 1
+	DrawString(bx*900,by*475+i*h,'人物体质　 '..p["生命增长"] + limitX(math.modf(p['门派技能5'] *0.01),0,8),M_Red,size1)--string.format('%5s',)
+	i = i + 1
+   
+   -- DrawString(bx*900,by*475+i*h,'武常　　　'..string.format('%5s',p["武学常识"]),C_WHITE,size1)
+   -- i = i + 1
+	local zyhb = nil
+	if ZYHBPD(id) >= 1 then
+		if ZYHBPD(id) == 2 then
+			zyhb  = "真谛"
 		else
-			mrdz = "※"
-		end
-
-		local xshm = nil
-		if JY.Person[id]['门派技能4'] > 0 then
-			if JY.Person[id]["门派技能4"] == 1001 then
-				xshm = "证果"
-			else
-				xshm = JY.Person[id]['门派技能4']
-			end
+			zyhb  = "◎"
+		end	
+	else
+		zyhb  = "※"
+	end
+	
+      local zyzd = nil	
+	if ZhongYongZD1(id) or ZhongYongZD2(id) then
+		if JY.Person[id]["中庸"] == 3 then
+			zyzd  = "天人"
 		else
-			xshm = "※"
-		end
-
-		local yjmc = nil
-		if JY.Person[id]['门派技能5'] > 0 then
-			if JY.Person[id]['门派技能5'] == 801 then
-				yjmc = '无上'
-			elseif JY.Person[id]['门派技能5'] > 400 and JY.Person[id]['门派技能5'] < 801 then
-				yjmc = '无比'
-			else
-				yjmc = '初学'
-			end
+			zyzd  = "◎"
+		end	
+	else
+		zyzd  = "※"
+	end		
+	
+    local mrdz = nil	
+	if MuRongDZ(id) == true then
+		if JY.Person[id]["门派技能3"] == 2 then
+			mrdz  = "秘传"
 		else
-			yjmc = "※"
+			mrdz  = "◎"
 		end
+	else
+		mrdz  = "※"
+	end	
+	
+   	local xshm = nil	
+	if JY.Person[id]['门派技能4'] > 0 then
+		if JY.Person[id]["门派技能4"] == 1001 then
+			xshm  = "证果"
+		else
+			xshm  = JY.Person[id]['门派技能4']
+		end
+	else
+		xshm  = "※"
+	end	
+	
+	local yjmc = nil
+	if JY.Person[id]['门派技能5'] > 0 then
+		if JY.Person[id]['门派技能5'] == 801 then
+			yjmc = '无上'
+		elseif JY.Person[id]['门派技能5'] > 400 and JY.Person[id]['门派技能5'] < 801 then
+			yjmc = '无比'
+		else
+			yjmc = '初学'
+		end
+	else
+		yjmc = "※"	
+	end			
 
 
 		i = 0
@@ -31987,124 +32004,126 @@ function PersonStatusA(t, page)
     if JY.Status == GAME_WMAP then
 		DrawAttrib("特殊兵器", bx*850+150,by*475+i*h,M_YellowGreen,size1)
 	end]]
-
-		i = i + 1
-		-- DrawString(bx*900,by*475+i*h,'暗器　　　'..string.format('%5s',p["暗器技巧"]),C_WHITE,size1)
-		if p["门派技能2"] > 0 then
-			local str = ""
-			if p["门派技能2"] == 458 then
-				str = "(冰魄)"
-			end
-			if p["门派技能2"] == 450 then
-				str = "(霹雳)"
-			end
-			if p["门派技能2"] == 459 then
-				str = "(生死符)"
-			end
-			if p["门派技能2"] == 460 then
-				str = "(透骨)"
-			end
-			if p["门派技能2"] == 469 then
-				str = "(黑血)"
-			end
-			if p["门派技能2"] == 486 then
-				str = "(细雨)"
-			end
-			if p["门派技能2"] == 489 then
-				str = "(五毒)"
-			end
-			if p["门派技能2"] == 490 then
-				str = "(金蛇)"
-			end
-			DrawString(bx * 900, by * 475 + i * h, '暗器手法　 ' .. p["暗器技巧"] .. str, M_Orange, size1) --string.format('%5s',)
+  
+	i = i + 1
+ -- DrawString(bx*900,by*475+i*h,'暗器　　　'..string.format('%5s',p["暗器技巧"]),C_WHITE,size1)
+	if p["门派技能2"] > 0 then
+		local str = ""
+		if p["门派技能2"] == 457 then
+			str = "(玉蜂针)"
+		end	
+		if p["门派技能2"] == 458 then
+			str = "(冰魄)"
+		end	
+		if p["门派技能2"] == 450 then
+			str = "(霹雳)"
+		end	
+		if p["门派技能2"] == 459 then
+			str = "(生死符)"
+		end	
+		if p["门派技能2"] == 460 then
+			str = "(透骨)"
+		end
+		if p["门派技能2"] == 469 then
+			str = "(黑血)"
+		end	
+		if p["门派技能2"] == 486 then
+			str = "(细雨)"
+		end
+		if p["门派技能2"] == 489 then
+			str = "(五毒)"
+		end
+		if p["门派技能2"] == 490 then
+			str = "(金蛇)"
+		end
+		DrawString(bx*900,by*475+i*h,'暗器手法　 '..p["暗器技巧"]..str,M_Orange,size1)--string.format('%5s',)
+	else
+		DrawString(bx*900,by*475+i*h,'暗器手法　 '..p["暗器技巧"],M_Orange,size1)--string.format('%5s',)
+	end
+  
+	i = i + 1
+	DrawString(bx*900,by*475+i*h,'人物资质　 '..p["资质"],M_Red,size1)--string.format('%5s',)
+	i = i + 1
+	DrawString(bx*900,by*475+i*h,'人物体质　 '..p["生命增长"] + limitX(math.modf(p['门派技能5'] *0.01),0,8),M_Red,size1)--string.format('%5s',)
+	i = i + 1
+   
+   -- DrawString(bx*900,by*475+i*h,'武常　　　'..string.format('%5s',p["武学常识"]),C_WHITE,size1)
+   -- i = i + 1
+	local zyhb = nil
+	if ZYHBPD(id) >= 1 then
+		if ZYHBPD(id) == 2 then
+			zyhb  = "真谛"
 		else
-			DrawString(bx * 900, by * 475 + i * h, '暗器手法　 ' .. p["暗器技巧"], M_Orange, size1) --string.format('%5s',)
-		end
-
-		i = i + 1
-		DrawString(bx * 900, by * 475 + i * h, '人物资质　 ' .. p["资质"], M_Red, size1)                              --string.format('%5s',)
-		i = i + 1
-		DrawString(bx * 900, by * 475 + i * h, '人物体质　 ' ..
-		p["生命增长"] + limitX(math.modf(p['门派技能5'] * 0.01), 0, 8), M_Red, size1)                                 --string.format('%5s',)
-		i = i + 1
-
-		-- DrawString(bx*900,by*475+i*h,'武常　　　'..string.format('%5s',p["武学常识"]),C_WHITE,size1)
-		-- i = i + 1
-		local zyhb = nil
-		if ZYHBPD(id) >= 1 then
-			if ZYHBPD(id) == 2 then
-				zyhb = "真谛"
-			else
-				zyhb = "◎"
-			end
+			zyhb  = "◎"
+		end	
+	else
+		zyhb  = "※"
+	end
+	
+      local zyzd = nil	
+	if ZhongYongZD1(id) or ZhongYongZD2(id) then
+		if JY.Person[id]["中庸"] == 3 then
+			zyzd  = "天人"
 		else
-			zyhb = "※"
-		end
-
-		local zyzd = nil
-		if ZhongYongZD1(id) or ZhongYongZD2(id) then
-			if JY.Person[id]["中庸"] == 3 then
-				zyzd = "天人"
-			else
-				zyzd = "◎"
-			end
+			zyzd  = "◎"
+		end	
+	else
+		zyzd  = "※"
+	end		
+	
+    local mrdz = nil	
+	if MuRongDZ(id) == true  then
+		if JY.Person[id]["门派技能3"] == 2 then
+			mrdz  = "秘传"
 		else
-			zyzd = "※"
+			mrdz  = "◎"
 		end
-
-		local mrdz = nil
-		if MuRongDZ(id) == true then
-			if JY.Person[id]["门派技能3"] == 2 then
-				mrdz = "秘传"
-			else
-				mrdz = "◎"
-			end
+	else
+		mrdz  = "※"
+	end		
+	
+	local xshm = nil	
+	if JY.Person[id]['门派技能4'] > 0 then
+		if JY.Person[id]["门派技能4"] == 1001 then
+			xshm  = "证果"
 		else
-			mrdz = "※"
+			xshm  = JY.Person[id]['门派技能4']
 		end
-
-		local xshm = nil
-		if JY.Person[id]['门派技能4'] > 0 then
-			if JY.Person[id]["门派技能4"] == 1001 then
-				xshm = "证果"
-			else
-				xshm = JY.Person[id]['门派技能4']
-			end
+	else
+		xshm  = "※"
+	end	
+	local yjmc = nil
+	if JY.Person[id]['门派技能5'] > 0 then
+		if JY.Person[id]['门派技能5'] == 801 then
+			yjmc = '无上'
+		elseif JY.Person[id]['门派技能5'] > 400 and JY.Person[id]['门派技能5'] < 801 then
+			yjmc = '无比'
 		else
-			xshm = "※"
+			yjmc = '初学'
 		end
-		local yjmc = nil
-		if JY.Person[id]['门派技能5'] > 0 then
-			if JY.Person[id]['门派技能5'] == 801 then
-				yjmc = '无上'
-			elseif JY.Person[id]['门派技能5'] > 400 and JY.Person[id]['门派技能5'] < 801 then
-				yjmc = '无比'
-			else
-				yjmc = '初学'
-			end
-		else
-			yjmc = "※"
-		end
-
-		--人物属性2
-		i = 0
-		DrawString(bx * 1140, by * 475, '攻击能力　 ' .. str2_gain, M_Yellow, size1)
-		if str_gain > 0 then
-			DrawString(bx * 1140 + 120, by * 475, "　 ↑ " .. str_gain, M_Yellow, size1)
-		end
-		i = i + 1
-		--DrawString(bx*1140,by*475+i*h,'防御力　　　'..string.format('%5s %2s %2s',def2_gain,"↑",def_gain),M_Yellow,size1)
-		DrawString(bx * 1140, by * 475 + i * h, '防御能力　 ' .. def2_gain, M_Yellow, size1)
-		if def_gain > 0 then
-			DrawString(bx * 1140 + 120, by * 475 + i * h, "　 ↑ " .. def_gain, M_Yellow, size1)
-		end
-		i = i + 1
-		DrawString(bx * 1140, by * 475 + i * h, '轻功身法　 ' .. agi2_gain, M_Yellow, size1)
-		if agi_gain > 0 then
-			DrawString(bx * 1140 + 120, by * 475 + i * h, "　 ↑ " .. agi_gain, M_Yellow, size1)
-		end
-		--DrawString(bx*1140,by*475+i*h,'轻功　　　'..string.format('%5s %2s %2s',p["轻功"],"↑",agi1_gain),M_Yellow,size1)
-		--[[if agi_gain > -1 then
+	else
+		yjmc = "※"	
+	end
+   
+   --人物属性2
+	i = 0
+	DrawString(bx*1140,by*475,'攻击能力　 '..str2_gain,M_Yellow,size1)
+	if str_gain > 0 then
+		DrawString(bx*1140+120,by*475,"　 ↑ "..str_gain,M_Yellow,size1)
+	end	
+	i = i + 1
+	--DrawString(bx*1140,by*475+i*h,'防御力　　　'..string.format('%5s %2s %2s',def2_gain,"↑",def_gain),M_Yellow,size1)
+	DrawString(bx*1140,by*475+i*h,'防御能力　 '..def2_gain,M_Yellow,size1)
+	if def_gain > 0 then
+		DrawString(bx*1140+120,by*475+i*h,"　 ↑ "..def_gain,M_Yellow,size1)
+	end	
+	i = i + 1
+	DrawString(bx*1140,by*475+i*h,'轻功身法　 '..agi2_gain,M_Yellow,size1)
+	if agi_gain > 0 then
+		DrawString(bx*1140+120,by*475+i*h,"　 ↑ "..agi_gain,M_Yellow,size1)
+	end	
+  --DrawString(bx*1140,by*475+i*h,'轻功　　　'..string.format('%5s %2s %2s',p["轻功"],"↑",agi1_gain),M_Yellow,size1)
+	--[[if agi_gain > -1 then
 		DrawString(bx*1140,by*475+i*h,'轻功值　　　'..string.format('%5s %2s %2s',agi2_gain,"↑",agi_gain),M_Yellow,size1)
 	--	DrawString(x1+w1*2,y1+dh*2, agi_gain, M_Yellow, size*0.7)			
 	else
@@ -36199,12 +36218,14 @@ function zssdz2(pid)
 	lib.Delay(100)
 end
 
---竹清弦、商御隐防秒杀
+--竹清弦、商御隐、观止防秒杀
 function FZMS(pid)
 	if match_ID(pid, 520) then
 		return true
-	elseif match_ID(pid, 517) then
-		return true
+	elseif match_ID(pid,517) then
+	    return true
+	elseif match_ID(pid,456) then
+	    return true	
 	end
 	return false
 end
