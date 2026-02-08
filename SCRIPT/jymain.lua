@@ -4422,6 +4422,9 @@ function SelectThing(thing,thingnum)
 							if thing[id] == 450 then
 								drawitem('学会暗器特技：霹雳雷火')
 							end
+							if thing[id] == 457 then
+								drawitem('学会暗器特技：玉蜂针')
+							end	
 							if thing[id] == 458 then
 								drawitem('学会暗器特技：冰魄寒心')
 							end		
@@ -14314,6 +14317,12 @@ function Curr_NG(personid, NGid)
 				return true
 			end
 	    end
+		--逍遥派
+	    if MPTX(personid,7,4) and PersonKF(personid,85) and PersonKF(personid,98) then
+			if NGid == 95 or NGid == 97 or NGid == 100 or NGid == 101 or NGid == 171 or NGid == 183 or NGid == 203 then 
+				return true	 	
+			end
+	    end
 		--东方点点试炼
 		if match_ID(personid,457) then
 			if NGid == 105 and (inteam(personid) == false or JY.Person[457]['论剑奖励'] == 100) then 
@@ -14350,8 +14359,7 @@ function Curr_NG(personid, NGid)
 			if NGid == 97 and (PersonKF(personid, NGid) or inteam(personid) == false) then 
 			    return true
 			end
-		end
-				
+		end				
 
 		--梁萧
 		if match_ID(personid,635) then
@@ -14597,6 +14605,10 @@ function Curr_QG(personid, QGid)
 	end
 	--胡一刀
 	if match_ID(personid,633) and QGid == JY.Person[personid]["天赋轻功"] then
+		return true
+	end
+	--杨晓羽
+	if match_ID(personid,793) and QGid == 150 then
 		return true
 	end
 	if MPPD(personid) == 24 and MPDJ(personid) > 2 and QGid == JY.Person[personid]["天赋轻功"] then
@@ -15870,7 +15882,7 @@ function NGQH(id,NGid)--这里只写有「主运」的组合
 			return true
 		elseif match_ID(id,592) and (NGid == 177 or NGid == 252) then  --独孤：忘情、怒涛判定必成功
 			return true
-		elseif match_ID(id,638) and NGid == 106 then  --斗酒：九阳判定必成功
+		elseif (match_ID(id,638) or match_ID(id,793)) and NGid == 106 then  --斗酒：九阳判定必成功
 			return true
 		elseif (match_ID(id,637) or (match_ID(id,526) and match_ID(id,9757))) and NGid == 107 then  --黄裳：九阴判定必成功
 			return true
@@ -16207,7 +16219,7 @@ function NGQH(id,NGid)--这里只写有「主运」的组合
 			elseif match_ID(id,784) then
 			    return true	
 			elseif Curr_NG(id,183) and match_ID(id,780) then
-			    return true			
+			    return true		
 			else
 				return false
 			end
@@ -16420,7 +16432,7 @@ function NGQHB(id,NGid)--这里只写有「非主运」的组合
 		--return false
 	--else
 		--if match_ID(id,634) and NGid ~= nil and NGid > 0 and NGid ~= 315 and NGid ~= 359 and NGid ~= 184 and NGid ~= 180 and NGid ~= 43 then
-	    if match_ID(id,577) and NGid ~= nil and NGid > 0 and NGid ~= 90 then
+	    if match_ID(id,577) and NGid ~= nil and NGid > 0 and NGid ~= 90 and NGid ~= 91 then
 			return true
 		elseif match_ID(id,790) and NGid ~= nil and NGid > 0 then
 		    return true		
@@ -16521,7 +16533,7 @@ function NGQHB(id,NGid)--这里只写有「非主运」的组合
 				return true
 			elseif JXPD(id,60,1) then
 				return true
-			elseif match_ID(id,783) then
+			elseif match_ID(id,783) or match_ID(id,791) or match_ID(id,792) then
 			    return true 	
 			else 
 				return false		
@@ -16564,7 +16576,9 @@ function NGQHB(id,NGid)--这里只写有「非主运」的组合
 			elseif match_ID(id,652) and PersonKF(id,177) then
 				return true
 			elseif match_ID(id,772) and Curr_NG(id,108) then
-			    return true			
+			    return true		
+			elseif match_ID(id,791) or match_ID(id,792) then
+			    return true				
 			else
 				return false
 			end
@@ -16663,7 +16677,7 @@ function NGQHB(id,NGid)--这里只写有「非主运」的组合
 				return true
 			elseif match_ID(id,568) and PersonKF(id,199) then
 			    return true
-			elseif match_ID(id,782) then 	
+			elseif match_ID(id,782) or match_ID(id,791) or match_ID(id,792) then 	
 			    return true
 			else 
 			    return false		
@@ -19133,8 +19147,8 @@ function firstmenu2()--特殊角色
 	local tsmenu = {'雪','夜','中','巍','护','云','花','兽','群'}
 	local tsmenu1 = {'雪羽宗','夜雨楼','中华阁','背巍军','护龙山庄','云梦涧','花涧派','世间百兽','诸系群侠'}
 	local menu2 = {	{514,745,744,781}, --雪
-					{526,525,527,761,457}, --夜
-					{524,743,747,758,759,760,764,771,772,773,774,775,776,778,779,780,782,783,784,785,786,787}, --中
+					{526,525,527,761,457,794}, --夜
+					{524,743,747,758,759,760,764,771,772,773,774,775,776,778,779,780,782,783,784,785,786,787,791,792,793}, --中
 					{568},--巍
 					{749,750,751,752,748,789}, --护
 					{754,455,762}, --云
@@ -24769,6 +24783,9 @@ function AnqiWG(id,aq)
 	if aq == 450 and (JXPD(id,626,1) or match_ID(id,456)) then--霹雳雷火弹
 		return true
 	end
+	if aq == 457 and (match_ID(id,59) or match_ID(id,605) or match_ID(id,686)) then--玉蜂针
+		return true
+	end
 	if aq == 458 and (JXPD(id,161,1) or match_ID(id,760) or match_ID(id,773)) then--冰魄银针	
 		return true
 	end	
@@ -29282,6 +29299,9 @@ local nk,dk,hk,bk,xk,fk = 100-nskx(id,100),100-zdkx(id,100),100-zskx(id,100),100
  -- DrawString(bx*900,by*475+i*h,'暗器　　　'..string.format('%5s',p["暗器技巧"]),C_WHITE,size1)
 	if p["门派技能2"] > 0 then
 		local str = ""
+		if p["门派技能2"] == 457 then
+			str = "(玉蜂针)"
+		end	
 		if p["门派技能2"] == 458 then
 			str = "(冰魄)"
 		end	
@@ -31570,6 +31590,9 @@ function PersonStatusA(t,page)
  -- DrawString(bx*900,by*475+i*h,'暗器　　　'..string.format('%5s',p["暗器技巧"]),C_WHITE,size1)
 	if p["门派技能2"] > 0 then
 		local str = ""
+		if p["门派技能2"] == 457 then
+			str = "(玉蜂针)"
+		end	
 		if p["门派技能2"] == 458 then
 			str = "(冰魄)"
 		end	
@@ -35666,12 +35689,14 @@ function zssdz2(pid)
 	lib.Delay(100)
 end
 
---竹清弦、商御隐防秒杀
+--竹清弦、商御隐、观止防秒杀
 function FZMS(pid)
     if match_ID(pid,520) then
 		return true
 	elseif match_ID(pid,517) then
 	    return true
+	elseif match_ID(pid,456) then
+	    return true	
 	end
 	return false
 end
